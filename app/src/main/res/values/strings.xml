@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">LoomLogic</string>
+
+    <string name="logIn">Log In</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="createAccount">Create Account</string>
+    <string name="forgotPasword">Forgot pasword</string>
+</resources>
