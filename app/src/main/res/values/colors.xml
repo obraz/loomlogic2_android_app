@@ -5,6 +5,7 @@
     <color name="colorAccent">#FF4081</color>
 
     <color name="blueBtn">#03A9F4</color>
+    <color name="colorErrorMsg">#F44336</color>
 
     <color name="white">#FFFFFF</color>
     <color name="white_transparent_10">#1AFFFFFF</color>
