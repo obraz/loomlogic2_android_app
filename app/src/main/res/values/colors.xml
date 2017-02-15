@@ -4,7 +4,10 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
+    <color name="transparent">#00000000</color>
     <color name="blueBtn">#03A9F4</color>
+    <color name="continueBtn">#0398DC</color>
+
     <color name="colorErrorMsg">#F44336</color>
 
     <color name="white">#FFFFFF</color>

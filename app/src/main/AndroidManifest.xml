@@ -26,6 +26,12 @@
             android:screenOrientation="sensorPortrait"
             android:theme="@style/SignInTheme"
             android:windowSoftInputMode="adjustResize"></activity>
+        <activity
+            android:name=".signin.signup.SignUpActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="sensorPortrait"
+            android:theme="@style/SignInTheme"
+            android:windowSoftInputMode="adjustResize"></activity>
     </application>
 
 </manifest>

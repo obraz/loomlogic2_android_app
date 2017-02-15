@@ -19,4 +19,9 @@
     <!-- Create Account -->
     <string name="createAccountTitle">CREATE ACCOUNT</string>
     <string name="signIn">Sign in</string>
+    <string name="Continue">Continue</string>
+    <string name="agreeTerms">By signing up, I agree to LoomLogic\'s</string>
+    <string name="termsConditions">Terms \u0026 Conditions</string>
+    <string name="and">and</string>
+    <string name="privacyPolicy">Privacy Policy</string>
 </resources>

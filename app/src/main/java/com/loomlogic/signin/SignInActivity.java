@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
-import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -13,6 +12,7 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 
 import com.loomlogic.R;
+import com.loomlogic.signin.signup.SignUpActivity;
 
 import static com.loomlogic.R.id.btn_signIn;
 
@@ -92,19 +92,12 @@ public class SignInActivity extends BaseSignInActivity implements View.OnClickLi
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
     }
 
-    private void animateViewFadeIn(View view, int offset) {
-        Animation fadeIn = new AlphaAnimation(0, 1);
-        fadeIn.setDuration(500);
-        fadeIn.setStartOffset(offset);
-
-        view.setVisibility(View.VISIBLE);
-        view.startAnimation(fadeIn);
-    }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_createAccount:
+                startActivity(new Intent(SignInActivity.this, SignUpActivity.class));
                 break;
             case R.id.btn_forgotPassword:
                 startActivity(new Intent(SignInActivity.this, ForgotPasswordActivity.class));

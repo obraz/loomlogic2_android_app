@@ -8,6 +8,9 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.EditText;
 
 import com.loomlogic.R;
@@ -18,6 +21,15 @@ import com.loomlogic.base.BaseActivity;
  */
 
 public class BaseSignInActivity extends BaseActivity {
+
+    protected void animateViewFadeIn(View view, int offset) {
+        Animation fadeIn = new AlphaAnimation(0, 1);
+        fadeIn.setDuration(500);
+        fadeIn.setStartOffset(offset);
+
+        view.setVisibility(View.VISIBLE);
+        view.startAnimation(fadeIn);
+    }
 
     protected void setUpEditTextLeftIcon(EditText editText) {
         final int colorWhite = Color.WHITE;
@@ -53,6 +65,7 @@ public class BaseSignInActivity extends BaseActivity {
 
             @Override
             public void onAnimationUpdate(ValueAnimator animator) {
+                icon.mutate();
                 DrawableCompat.setTint(icon, (int) animator.getAnimatedValue());
             }
 
