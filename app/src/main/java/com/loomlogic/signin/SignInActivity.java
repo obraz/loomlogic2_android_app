@@ -1,15 +1,8 @@
-package com.loomlogic;
+package com.loomlogic.signin;
 
-import android.animation.ArgbEvaluator;
 import android.animation.LayoutTransition;
-import android.animation.ValueAnimator;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.drawable.DrawableCompat;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
@@ -19,11 +12,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 
-import com.loomlogic.base.BaseActivity;
+import com.loomlogic.R;
 
 import static com.loomlogic.R.id.btn_signIn;
 
-public class SignInActivity extends BaseActivity implements View.OnClickListener {
+
+public class SignInActivity extends BaseSignInActivity implements View.OnClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,10 +42,10 @@ public class SignInActivity extends BaseActivity implements View.OnClickListener
         final View signInContainerView = findViewById(R.id.ll_signIn_container);
 
         final EditText signInEmailEt = (EditText) findViewById(R.id.et_signIn_email);
-        setUpEditTextIcon(signInEmailEt);
+        setUpEditTextLeftIcon(signInEmailEt);
 
         final EditText signInPasswordEt = (EditText) findViewById(R.id.et_signIn_password);
-        setUpEditTextIcon(signInPasswordEt);
+        setUpEditTextLeftIcon(signInPasswordEt);
 
         final Button signInBtn = (Button) findViewById(btn_signIn);
         signInBtn.setOnClickListener(this);
@@ -80,47 +74,6 @@ public class SignInActivity extends BaseActivity implements View.OnClickListener
             }
         });
         logoView.startAnimation(splashAnim);
-    }
-
-    private void setUpEditTextIcon(EditText editText) {
-        final int colorWhite = Color.WHITE;
-        final int colorWhiteTransparent = ContextCompat.getColor(SignInActivity.this, R.color.white_transparent_50);
-        final Drawable icEditText = editText.getCompoundDrawables()[0];
-        DrawableCompat.setTint(icEditText, colorWhiteTransparent);
-        editText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s.length() == 1 && start == 0 && before == 0 && count == 1) {
-                    changeIconColor(icEditText, colorWhiteTransparent, colorWhite);
-                }
-                if (s.length() == 0) {
-                    changeIconColor(icEditText, colorWhite, colorWhiteTransparent);
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-            }
-        });
-    }
-
-    private void changeIconColor(final Drawable icon, int colorFrom, int colorTo) {
-        ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
-        colorAnimation.setDuration(250);
-        colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-
-            @Override
-            public void onAnimationUpdate(ValueAnimator animator) {
-                DrawableCompat.setTint(icon, (int) animator.getAnimatedValue());
-            }
-
-        });
-        colorAnimation.start();
     }
 
     @Override
@@ -154,8 +107,9 @@ public class SignInActivity extends BaseActivity implements View.OnClickListener
             case R.id.btn_createAccount:
                 break;
             case R.id.btn_forgotPassword:
+                startActivity(new Intent(SignInActivity.this, ForgotPasswordActivity.class));
                 break;
-            case btn_signIn:
+            case R.id.btn_signIn:
                 break;
         }
     }

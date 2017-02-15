@@ -6,18 +6,17 @@ import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
+import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 
 import com.loomlogic.R;
 import com.loomlogic.base.resultfix.ActivityResultFixActivity;
+import com.loomlogic.utils.ViewUtils;
 import com.novoda.merlin.Merlin;
 import com.novoda.merlin.MerlinsBeard;
 import com.novoda.merlin.registerable.connection.Connectable;
@@ -37,7 +36,7 @@ public class BaseActivity extends ActivityResultFixActivity implements Connectab
     private MerlinsBeard merlinsBeard;
     private Merlin merlin;
     private Toolbar toolbar;
-
+    private Snackbar noConnectionSnackBar;
     private View view;
 
     @Override
@@ -70,13 +69,13 @@ public class BaseActivity extends ActivityResultFixActivity implements Connectab
 
     @Override
     public void onConnect() {
-        Log.i(TAG, " Connected to network ");
+        hideNoConnectionSnackBar();
         onFragmentCallback(null, CONNECTED_ACTION, null);
     }
 
     @Override
     public void onDisconnect() {
-        Log.i(TAG, " Disconnected from network ");
+        showNoConnectionSnackBar();
         onFragmentCallback(null, DISCONNECTED_ACTION, null);
     }
 
@@ -190,11 +189,32 @@ public class BaseActivity extends ActivityResultFixActivity implements Connectab
         return merlinsBeard != null ? merlinsBeard.isConnected() : true;
     }
 
-    protected void replaceFragment(int holderId, Fragment fragment, String tag) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
 
-        if (fragmentManager.findFragmentByTag(tag) == null) {
-            fragmentManager.beginTransaction().replace(holderId, fragment, tag).commit();
+    public void showErrorSnackBar(String errorMsg) {
+        if (view != null && errorMsg != null) {
+            ViewUtils.hideSoftKeyboard(view);
+            ViewUtils.showWhiteMessageInSnackBar(view, errorMsg);
+        }
+    }
+
+    public void showGeneralErrorSnackBar() {
+        showErrorSnackBar(getString(R.string.general_error));
+    }
+
+    public void showNoConnectionSnackBar() {
+        if (noConnectionSnackBar == null && view != null) {
+            noConnectionSnackBar = ViewUtils.displayNoInternetSnackBar(this, view);
+        } else {
+            if (!noConnectionSnackBar.isShown()) {
+                noConnectionSnackBar.show();
+            }
+        }
+    }
+
+    public void hideNoConnectionSnackBar() {
+        if (noConnectionSnackBar != null) {
+            noConnectionSnackBar.dismiss();
+            noConnectionSnackBar = null;
         }
     }
 }
