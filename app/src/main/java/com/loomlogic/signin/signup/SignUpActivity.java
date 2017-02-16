@@ -48,14 +48,10 @@ public class SignUpActivity extends BaseSignInActivity implements View.OnClickLi
         overridePendingTransition(anim_activity_left_in, anim_activity_left_out);
 
         initView();
+        initKeyboardListener();
     }
 
-    private void initView() {
-        signInBtn = findViewById(btn_signIn);
-        signInBtn.setOnClickListener(this);
-
-        termContainer = findViewById(R.id.ll_terms_container);
-
+    private void initKeyboardListener() {
         KeyboardVisibilityEvent.setEventListener(this, new KeyboardVisibilityEventListener() {
             @Override
             public void onVisibilityChanged(boolean isOpen) {
@@ -63,6 +59,13 @@ public class SignUpActivity extends BaseSignInActivity implements View.OnClickLi
             }
         });
         updateKeyboardStatus(KeyboardVisibilityEvent.isKeyboardVisible(this));
+    }
+
+    private void initView() {
+        initTermsView();
+
+        signInBtn = findViewById(btn_signIn);
+        signInBtn.setOnClickListener(this);
 
         findViewById(btn_back).setOnClickListener(this);
 
@@ -83,28 +86,6 @@ public class SignUpActivity extends BaseSignInActivity implements View.OnClickLi
         bgParallaxIv.setLayoutParams(layoutParams);
 
         viewPager = (ViewPager) findViewById(R.id.viewPager);
-//        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-//            @Override
-//            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-//                int x = (int) ((viewPager.getWidth() * position + positionOffsetPixels) * computeFactor());
-//                scrollView.scrollTo(x, 0);
-//            }
-//
-//            @Override
-//            public void onPageSelected(int position) {
-//
-//            }
-//
-//            @Override
-//            public void onPageScrollStateChanged(int state) {
-//
-//            }
-//
-//            private float computeFactor() {
-//                return (bgParallaxIv.getWidth() - viewPager.getWidth()) /
-//                        (float) (viewPager.getWidth() * (viewPager.getAdapter().getCount() - 1));
-//            }
-//        });
         viewPager.setAdapter(adapter);
         viewPager.setOffscreenPageLimit(adapter.getCount());
 
@@ -116,7 +97,7 @@ public class SignUpActivity extends BaseSignInActivity implements View.OnClickLi
         } catch (Exception e) {
         }
 
-        LinePageIndicator titleIndicator = (LinePageIndicator)findViewById(R.id.indicator);
+        LinePageIndicator titleIndicator = (LinePageIndicator) findViewById(R.id.indicator);
         titleIndicator.setViewPager(viewPager);
         titleIndicator.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -140,6 +121,11 @@ public class SignUpActivity extends BaseSignInActivity implements View.OnClickLi
                         (float) (viewPager.getWidth() * (viewPager.getAdapter().getCount() - 1));
             }
         });
+
+    }
+
+    private void initTermsView() {
+        termContainer = findViewById(R.id.ll_terms_container);
 
         Paint p = new Paint();
         p.setFlags(Paint.UNDERLINE_TEXT_FLAG);

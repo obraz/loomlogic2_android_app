@@ -48,7 +48,7 @@ public class BaseSignInActivity extends BaseActivity {
         view.startAnimation(fadeOut);
     }
 
-    protected void setUpEditTextLeftIcon(EditText editText) {
+    public void setUpEditTextLeftIcon(EditText editText) {
         final int colorWhite = Color.WHITE;
         final int colorWhiteTransparent = ContextCompat.getColor(this, R.color.white_transparent_50);
         final Drawable icEditText = editText.getCompoundDrawables()[0];
