@@ -9,7 +9,9 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
+import android.util.DisplayMetrics;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
 import com.loomlogic.R;
@@ -59,5 +61,16 @@ public class ViewUtils {
     public static void showSoftKeyboard(View view) {
         InputMethodManager mgr = (InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         mgr.toggleSoftInputFromWindow(view.getApplicationWindowToken(), InputMethodManager.SHOW_FORCED, 0);
+    }
+
+    public static DisplayMetrics getDisplayMetrics(Activity activity) {
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        WindowManager windowmanager = (WindowManager) activity.getSystemService(Context.WINDOW_SERVICE);
+        windowmanager.getDefaultDisplay().getMetrics(displayMetrics);
+        return displayMetrics;
+    }
+
+    public static int getDisplayWidth(Activity activity) {
+        return getDisplayMetrics(activity).widthPixels;
     }
 }

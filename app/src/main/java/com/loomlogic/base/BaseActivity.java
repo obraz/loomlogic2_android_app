@@ -192,7 +192,7 @@ public class BaseActivity extends ActivityResultFixActivity implements Connectab
 
     public void showErrorSnackBar(String errorMsg) {
         if (view != null && errorMsg != null) {
-            ViewUtils.hideSoftKeyboard(view);
+            hideSoftKeyboard();
             ViewUtils.showWhiteMessageInSnackBar(view, errorMsg);
         }
     }
@@ -215,6 +215,17 @@ public class BaseActivity extends ActivityResultFixActivity implements Connectab
         if (noConnectionSnackBar != null) {
             noConnectionSnackBar.dismiss();
             noConnectionSnackBar = null;
+        }
+    }
+
+    public void showSoftKeyboard() {
+        if (view != null) {
+            ViewUtils.showSoftKeyboard(view);
+        }
+    }
+    public void hideSoftKeyboard() {
+        if (view != null) {
+            ViewUtils.hideSoftKeyboard(view);
         }
     }
 }

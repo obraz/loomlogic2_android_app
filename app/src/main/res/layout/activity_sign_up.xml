@@ -1,9 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/bg_signin">
+    android:layout_height="match_parent">
+
+    <HorizontalScrollView
+        android:id="@+id/scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/iv_parallaxBg"
+                android:layout_width="500dp"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"
+                android:src="@drawable/bg_signin" />
+        </FrameLayout>
+
+    </HorizontalScrollView>
 
     <ImageButton
         android:id="@+id/btn_back"
@@ -26,12 +46,38 @@
         android:textColor="@color/white"
         android:textSize="20sp" />
 
+    <TextView
+        android:id="@+id/btn_signIn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="15dp"
+        android:background="?attr/selectableItemBackground"
+        android:paddingBottom="20dp"
+        android:paddingLeft="25dp"
+        android:paddingRight="25dp"
+        android:paddingTop="20dp"
+        android:text="@string/signIn"
+        android:textColor="@color/white_transparent_50"
+        android:textSize="14sp"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+    <com.loomlogic.view.LinePageIndicator
+        android:id="@+id/indicator"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_back"
+        app:lineWidth="75dp"
+        app:selectedColor="#03A9F4"
+        app:strokeWidth="1dp"
+        app:unselectedColor="@color/white_transparent_20" />
+
     <com.loomlogic.view.StaticViewPager
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/btn_back"
-        android:layout_centerInParent="true" />
+        android:layout_below="@+id/btn_back" />
 
     <LinearLayout
         android:id="@+id/ll_terms_container"

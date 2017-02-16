@@ -22,6 +22,10 @@ import com.loomlogic.base.BaseActivity;
 
 public class BaseSignInActivity extends BaseActivity {
 
+    protected void animateViewFadeIn(View view) {
+        animateViewFadeIn(view, 0);
+    }
+
     protected void animateViewFadeIn(View view, int offset) {
         Animation fadeIn = new AlphaAnimation(0, 1);
         fadeIn.setDuration(500);
@@ -29,6 +33,19 @@ public class BaseSignInActivity extends BaseActivity {
 
         view.setVisibility(View.VISIBLE);
         view.startAnimation(fadeIn);
+    }
+
+    protected void animateViewFadeOut(View view) {
+        animateViewFadeOut(view, 0);
+    }
+
+    protected void animateViewFadeOut(View view, int offset) {
+        Animation fadeOut = new AlphaAnimation(1, 0);
+        fadeOut.setDuration(500);
+        fadeOut.setStartOffset(offset);
+
+        view.setVisibility(View.GONE);
+        view.startAnimation(fadeOut);
     }
 
     protected void setUpEditTextLeftIcon(EditText editText) {
