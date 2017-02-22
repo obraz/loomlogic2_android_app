@@ -12,16 +12,23 @@ android {
         vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
+        debug {
+            resValue "string", "AnimSplashDuration", "300"
+            resValue "string", "AnimSplashStartOffset", "100"
+        }
+
         release {
+            resValue "string", "AnimSplashDuration", "3000"
+            resValue "string", "AnimSplashStartOffset", "1000"
+
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 
-
 }
 ext {
-    supportLibVersion = '25.1.0'
+    supportLibVersion = '25.2.0'
 }
 
 dependencies {
