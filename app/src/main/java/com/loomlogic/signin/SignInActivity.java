@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 
 import com.loomlogic.R;
+import com.loomlogic.home.HomeActivity;
 import com.loomlogic.signin.signup.SignUpActivity;
 
 import static com.loomlogic.R.id.btn_signIn;
@@ -23,7 +24,6 @@ public class SignInActivity extends BaseSignInActivity implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
-
         initView();
     }
 
@@ -103,6 +103,7 @@ public class SignInActivity extends BaseSignInActivity implements View.OnClickLi
                 startActivity(new Intent(SignInActivity.this, ForgotPasswordActivity.class));
                 break;
             case R.id.btn_signIn:
+                startActivity(new Intent(SignInActivity.this, HomeActivity.class));
                 break;
         }
     }

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#E4E5E6"
+        android:weightSum="5">
+
+        <FrameLayout
+            android:id="@+id/fl_navigation_notifications"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="?attr/selectableItemBackground">
+
+            <ImageView
+                android:id="@+id/iv_navigation_notifications"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_navigation_notifications" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/fl_navigation_search"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="?attr/selectableItemBackground">
+
+            <ImageView
+                android:id="@+id/iv_navigation_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_navigation_search" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/fl_navigation_leads"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="?attr/selectableItemBackground">
+
+            <ImageView
+                android:id="@+id/iv_navigation_leads"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_navigation_leads" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/fl_navigation_tasks"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="?attr/selectableItemBackground">
+
+            <ImageView
+                android:id="@+id/iv_navigation_tasks"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_navigation_tasks" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/fl_navigation_profile"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="?attr/selectableItemBackground">
+
+            <ImageView
+                android:id="@+id/iv_navigation_profile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_navigation_profile" />
+        </FrameLayout>
+    </LinearLayout>
+</LinearLayout>
