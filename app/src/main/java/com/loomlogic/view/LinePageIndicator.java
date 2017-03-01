@@ -16,6 +16,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
+import android.view.ViewTreeObserver;
 
 import com.loomlogic.R;
 
@@ -39,7 +40,7 @@ public class LinePageIndicator extends View implements PageIndicator {
     private float mLastMotionX = -1;
     private int mActivePointerId = INVALID_POINTER;
     private boolean mIsDragging;
-
+    private float mSelectedStrokeLineHeight, mUnselectedStrokeLineHeight;
 
     public LinePageIndicator(Context context) {
         this(context, null);
@@ -69,7 +70,9 @@ public class LinePageIndicator extends View implements PageIndicator {
         mCentered = a.getBoolean(R.styleable.LinePageIndicator_centered, defaultCentered);
         mLineWidth = a.getDimension(R.styleable.LinePageIndicator_lineWidth, defaultLineWidth);
         mGapWidth = a.getDimension(R.styleable.LinePageIndicator_gapWidth, defaultGapWidth);
-        setStrokeWidth(a.getDimension(R.styleable.LinePageIndicator_strokeWidth, defaultStrokeWidth));
+        float strokeWidth = a.getDimension(R.styleable.LinePageIndicator_strokeWidth, defaultStrokeWidth);
+        setStrokeWidth(strokeWidth);
+        setUnselectedStrokeWidth(a.getDimension(R.styleable.LinePageIndicator_unselectedStrokeWidth, strokeWidth));
         mPaintUnselected.setColor(a.getColor(R.styleable.LinePageIndicator_unselectedColor, defaultUnselectedColor));
         mPaintSelected.setColor(a.getColor(R.styleable.LinePageIndicator_selectedColor, defaultSelectedColor));
 
@@ -82,8 +85,19 @@ public class LinePageIndicator extends View implements PageIndicator {
 
         final ViewConfiguration configuration = ViewConfiguration.get(context);
         mTouchSlop = ViewConfigurationCompat.getScaledPagingTouchSlop(configuration);
+
+
     }
 
+    public void setFullWidht() {
+        getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                setLineWidth(getWidth() / mViewPager.getAdapter().getCount());
+            }
+        });
+    }
 
     public void setCentered(boolean centered) {
         mCentered = centered;
@@ -122,7 +136,13 @@ public class LinePageIndicator extends View implements PageIndicator {
     }
 
     public void setStrokeWidth(float lineHeight) {
+        mSelectedStrokeLineHeight = lineHeight;
         mPaintSelected.setStrokeWidth(lineHeight);
+        invalidate();
+    }
+
+    public void setUnselectedStrokeWidth(float lineHeight) {
+        mUnselectedStrokeLineHeight = lineHeight;
         mPaintUnselected.setStrokeWidth(lineHeight);
         invalidate();
     }
@@ -163,7 +183,7 @@ public class LinePageIndicator extends View implements PageIndicator {
         final float paddingLeft = getPaddingLeft();
         final float paddingRight = getPaddingRight();
 
-        float verticalOffset = paddingTop + ((getHeight() - paddingTop - getPaddingBottom()) / 2.0f);
+        float verticalOffset = (mSelectedStrokeLineHeight - mUnselectedStrokeLineHeight) + paddingTop + ((getHeight() - paddingTop - getPaddingBottom()) / 2.0f);
         float horizontalOffset = paddingLeft;
         if (mCentered) {
             horizontalOffset += ((getWidth() - paddingLeft - paddingRight) / 2.0f) - (indicatorWidth / 2.0f);

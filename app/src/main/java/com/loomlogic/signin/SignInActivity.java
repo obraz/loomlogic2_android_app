@@ -25,6 +25,7 @@ public class SignInActivity extends BaseSignInActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
         initView();
+        startActivity(new Intent(SignInActivity.this, HomeActivity.class));
     }
 
     private void initView() {

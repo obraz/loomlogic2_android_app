@@ -3,6 +3,7 @@
     package="com.loomlogic">
 
     <application
+        android:name=".base.LoomLogicApp"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">

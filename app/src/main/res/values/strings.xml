@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">LoomLogic</string>
+    <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
+    <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
+
     <string name="submit">Submit</string>
     <string name="general_error">Oops, something went wrong. Please try again later.</string>
     <string name="internet_error">Please check your internet connection</string>
@@ -28,4 +31,17 @@
     <string name="privacyPolicy">Privacy Policy</string>
     <string name="phone">Phone</string>
     <string name="license">License</string>
+
+    <!-- Leads Menu -->
+    <string name="buyers">buyers</string>
+    <string name="sellers">sellers</string>
+    <string name="leadMenuItem_Leads">Leads</string>
+    <string name="leadMenuItem_Lender">Lender</string>
+    <string name="leadMenuItem_Shopping">Shopping</string>
+    <string name="leadMenuItem_Contract">Contract</string>
+    <string name="leadMenuItem_Closed">Closed</string>
+    <string name="leadMenuItem_ComingSoon">Coming Soon</string>
+    <string name="leadMenuItem_Active">Active</string>
+    <string name="leadMenuItem_Withdraw">Withdraw</string>
+    <string name="leadMenuItem_Pending">Pending</string>
 </resources>

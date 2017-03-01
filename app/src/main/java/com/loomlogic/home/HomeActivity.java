@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -13,6 +14,7 @@ import com.loomlogic.base.BaseActivity;
 import com.loomlogic.leads.LeadsFragment;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by alex on 2/22/17.
@@ -25,7 +27,6 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
         initNavigationButtons();
     }
 
@@ -89,5 +90,34 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
         if (fragmentManager.findFragmentByTag(tag) == null) {
             fragmentManager.beginTransaction().replace(R.id.container, fragment, tag).commit();
         }
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        BaseHomeFragment fragment = getVisibleFragment();
+        if (fragment != null) {
+            if (fragment.hasMenuOptions()) {
+                return false;
+            }
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
+    public BaseHomeFragment getVisibleFragment() {
+        FragmentManager fragmentManager = this.getSupportFragmentManager();
+        List<Fragment> fragments = fragmentManager.getFragments();
+        if (fragments != null) {
+            for (Fragment fragment : fragments) {
+                if (fragment != null && fragment.isVisible())
+                    return (BaseHomeFragment) fragment;
+            }
+        }
+        return null;
     }
 }

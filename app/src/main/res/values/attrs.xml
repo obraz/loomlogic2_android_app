@@ -7,6 +7,7 @@
     <attr name="centered" format="boolean" />
     <attr name="selectedColor" format="color" />
     <attr name="strokeWidth" format="dimension" />
+    <attr name="unselectedStrokeWidth" format="dimension" />
     <attr name="unselectedColor" format="color" />
 
     <declare-styleable name="LinePageIndicator">
@@ -20,6 +21,7 @@
         <attr name="lineWidth" format="dimension" />
         <!-- Width of each indicator line's stroke. -->
         <attr name="strokeWidth" />
+        <attr name="unselectedStrokeWidth" />
         <!-- Width of the gap between each indicator line. -->
         <attr name="gapWidth" format="dimension" />
         <!-- View background -->
