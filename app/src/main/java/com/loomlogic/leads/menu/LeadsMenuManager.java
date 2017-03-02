@@ -1,7 +1,9 @@
 package com.loomlogic.leads.menu;
 
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.view.GravityCompat;
@@ -15,6 +17,9 @@ import android.widget.TextView;
 
 import com.loomlogic.R;
 import com.loomlogic.home.HomeActivity;
+import com.loomlogic.leads.LeadRole;
+import com.loomlogic.utils.LeadPreferencesUtils;
+import com.loomlogic.utils.LeadUtils;
 import com.loomlogic.view.LinePageIndicator;
 
 /**
@@ -39,6 +44,15 @@ public class LeadsMenuManager {
     }
 
     private void initViews() {
+        final FloatingActionButton newLeadFAB = (FloatingActionButton) navigationViewContainer.findViewById(R.id.fab_leadNew);
+        newLeadFAB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                closeDrawer();
+                activity.showErrorSnackBar("new lead click");
+            }
+        });
+
         final TextView buyersTv = (TextView) navigationViewContainer.findViewById(R.id.tv_leadMenu_buyers);
         final TextView sellersTv = (TextView) navigationViewContainer.findViewById(R.id.tv_leadMenu_sellers);
 
@@ -59,17 +73,19 @@ public class LeadsMenuManager {
             public void onPageSelected(int position) {
                 switch (position) {
                     case 0:
+                        LeadPreferencesUtils.setCurrentLeadRole(LeadRole.BUYER);
                         buyersTv.setTextColor(Color.WHITE);
                         sellersTv.setTextColor(ContextCompat.getColor(activity, R.color.white_transparent_50));
-                        titleIndicator.setSelectedColor(ContextCompat.getColor(activity, R.color.colorMainBuyer));
                         break;
                     case 1:
+                        LeadPreferencesUtils.setCurrentLeadRole(LeadRole.SELLER);
                         buyersTv.setTextColor(ContextCompat.getColor(activity, R.color.white_transparent_50));
                         sellersTv.setTextColor(Color.WHITE);
-                        titleIndicator.setSelectedColor(ContextCompat.getColor(activity, R.color.colorMainSeller));
                         break;
                 }
-
+                titleIndicator.setSelectedColor(LeadUtils.getCurrentLeadRoleColor());
+                newLeadFAB.setBackgroundTintList(ColorStateList.valueOf(LeadUtils.getCurrentLeadRoleColor()));
+                activity.updateNavigationTabIcons();
             }
 
             @Override
@@ -79,7 +95,9 @@ public class LeadsMenuManager {
         });
 
         titleIndicator.setViewPager(viewPager);
-
+        if (LeadPreferencesUtils.getCurrentLeadRole() == LeadRole.SELLER) {
+            viewPager.setCurrentItem(1);
+        }
 
         buyersTv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,6 +120,8 @@ public class LeadsMenuManager {
                 }
             }
         });
+
+
     }
 
     private void initNavigation(Toolbar toolbar) {
@@ -138,6 +158,12 @@ public class LeadsMenuManager {
             drawer.closeDrawer(GravityCompat.START);
         } else {
             drawer.openDrawer(GravityCompat.START);
+        }
+    }
+
+    public void closeDrawer() {
+        if (drawer.isDrawerVisible(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
         }
     }
 

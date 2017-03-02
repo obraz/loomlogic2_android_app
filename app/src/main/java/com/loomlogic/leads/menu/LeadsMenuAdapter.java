@@ -9,6 +9,9 @@ import android.widget.TextView;
 
 import com.loomlogic.R;
 import com.loomlogic.base.LoomLogicApp;
+import com.loomlogic.base.MessageEvent;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 
@@ -17,18 +20,12 @@ import java.util.ArrayList;
  */
 
 public class LeadsMenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    interface Listener {
-        void onItemClickListener(LeadMenuItem item);
-    }
-
     private ArrayList<LeadMenuItem> items;
     private boolean isSellers;
-    private Listener listener;
 
-    public LeadsMenuAdapter(ArrayList<LeadMenuItem> items, boolean isSellers, Listener listener) {
+    public LeadsMenuAdapter(ArrayList<LeadMenuItem> items, boolean isSellers) {
         this.items = items;
         this.isSellers = isSellers;
-        this.listener = listener;
     }
 
     @Override
@@ -52,7 +49,7 @@ public class LeadsMenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         holder.layoutRoot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.onItemClickListener(item);
+                EventBus.getDefault().post(new MessageEvent(MessageEvent.MessageEventType.LEADS_MENU_SELECT, item));
             }
         });
     }

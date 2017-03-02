@@ -38,4 +38,5 @@ dependencies {
     compile "com.android.support:support-v4:${supportLibVersion}"
     compile 'com.novoda:merlin:0.8.0'
     compile 'net.yslibrary.keyboardvisibilityevent:keyboardvisibilityevent:2.0.1'
+    compile 'org.greenrobot:eventbus:3.0.0'
 }

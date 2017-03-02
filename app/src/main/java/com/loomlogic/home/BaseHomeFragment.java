@@ -9,7 +9,7 @@ import android.view.View;
  * Created by alex on 2/28/17.
  */
 
-public class BaseHomeFragment extends Fragment {
+public abstract class BaseHomeFragment extends Fragment {
     private HomeActivity activity;
 
     @Override
@@ -18,12 +18,10 @@ public class BaseHomeFragment extends Fragment {
         activity = (HomeActivity) getActivity();
     }
 
-    public HomeActivity getHomeActivity(){
+    public HomeActivity getHomeActivity() {
         return activity;
     }
 
-    public boolean hasMenuOptions(){
-        return true;
-    }
+    public abstract boolean hasMenuOptions();
 
 }

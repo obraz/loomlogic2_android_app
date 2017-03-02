@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import com.loomlogic.R;
 import com.loomlogic.base.BaseActivity;
 import com.loomlogic.leads.LeadsFragment;
+import com.loomlogic.utils.LeadUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,11 +23,14 @@ import java.util.List;
 
 public class HomeActivity extends BaseActivity implements View.OnClickListener {
     private ArrayList<ImageView> navigationIconsList;
+    private int currentTab;
+    private LeadsFragment leadsFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        leadsFragment= new LeadsFragment();
         initNavigationButtons();
     }
 
@@ -51,30 +55,35 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.fl_navigation_notifications:
-                setNavigationIconSelected(0);
+                selectNavigationTab(0, new DefaultFragment());
                 break;
             case R.id.fl_navigation_search:
-                setNavigationIconSelected(1);
+                selectNavigationTab(1, new DefaultFragment());
                 break;
             case R.id.fl_navigation_leads:
-                setNavigationIconSelected(2);
-                replaceFragment(new LeadsFragment());
+                selectNavigationTab(2, leadsFragment);
                 break;
             case R.id.fl_navigation_tasks:
-                setNavigationIconSelected(3);
+                selectNavigationTab(3, new DefaultFragment());
                 break;
             case R.id.fl_navigation_profile:
-                setNavigationIconSelected(4);
+                selectNavigationTab(4, new DefaultFragment());
                 break;
         }
     }
 
-    private void setNavigationIconSelected(int selectedIcon) {
+    private void selectNavigationTab(int currentTab, Fragment fragment) {
+        this.currentTab = currentTab;
+        updateNavigationTabIcons();
+        replaceFragment(fragment);
+    }
+
+    public void updateNavigationTabIcons() {
         int color;
         for (int i = 0; i < navigationIconsList.size(); i++) {
             ImageView view = navigationIconsList.get(i);
-            if (selectedIcon == i) {
-                color = ContextCompat.getColor(this, R.color.colorMainBuyer);
+            if (currentTab == i) {
+                color = LeadUtils.getCurrentLeadRoleColor();
             } else {
                 color = ContextCompat.getColor(this, R.color.colorNavigationDefault);
             }

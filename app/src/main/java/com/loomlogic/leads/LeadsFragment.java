@@ -10,8 +10,14 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.loomlogic.R;
+import com.loomlogic.base.MessageEvent;
 import com.loomlogic.home.BaseHomeFragment;
+import com.loomlogic.leads.menu.LeadMenuItem;
 import com.loomlogic.leads.menu.LeadsMenuManager;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 /**
  * Created by alex on 2/22/17.
@@ -53,4 +59,30 @@ public class LeadsFragment extends BaseHomeFragment {
         leadsMenuManager.navigateDrawer();
         return super.onOptionsItemSelected(item);
     }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(MessageEvent event) {
+        if (event.getType() == MessageEvent.MessageEventType.LEADS_MENU_SELECT){
+            leadsMenuManager.closeDrawer();
+            getHomeActivity().showErrorSnackBar(((LeadMenuItem)(event.getObject())).getName());
+        }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Override
+    public boolean hasMenuOptions(){
+        return true;
+    }
+
 }

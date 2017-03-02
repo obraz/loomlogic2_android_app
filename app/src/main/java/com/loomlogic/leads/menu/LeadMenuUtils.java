@@ -31,7 +31,6 @@ public class LeadMenuUtils {
                 return LoomLogicApp.getSharedContext().getString(R.string.leadMenuItem_Pending);
             default:
                 return "Unspecified";
-
         }
     }
 }

@@ -40,12 +40,7 @@ public class LeadTypeSellersFragment extends BaseHomeFragment{
         items.add(new LeadMenuItem(LeadTypes.PENDING, 1));
         items.add(new LeadMenuItem(LeadTypes.CLOSED, 7));
 
-        LeadsMenuAdapter adapter = new LeadsMenuAdapter(items, true, new LeadsMenuAdapter.Listener() {
-            @Override
-            public void onItemClickListener(LeadMenuItem item) {
-
-            }
-        });
+        LeadsMenuAdapter adapter = new LeadsMenuAdapter(items, true);
 
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         DividerItemDecoration mDividerItemDecoration = new DividerItemDecoration(getContext(), mLayoutManager.getOrientation());
@@ -56,5 +51,10 @@ public class LeadTypeSellersFragment extends BaseHomeFragment{
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
         recyclerView.addItemDecoration(mDividerItemDecoration);
+    }
+
+    @Override
+    public boolean hasMenuOptions(){
+        return false;
     }
 }
