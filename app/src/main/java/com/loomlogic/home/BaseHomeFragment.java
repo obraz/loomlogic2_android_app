@@ -22,6 +22,4 @@ public abstract class BaseHomeFragment extends Fragment {
         return activity;
     }
 
-    public abstract boolean hasMenuOptions();
-
 }

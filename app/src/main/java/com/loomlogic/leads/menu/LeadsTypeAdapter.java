@@ -2,13 +2,14 @@ package com.loomlogic.leads.menu;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.view.ViewGroup;
 
 /**
  * Created by alex on 2/28/17.
  */
 
-public class LeadsTypeAdapter extends FragmentStatePagerAdapter {
+public class LeadsTypeAdapter extends FragmentPagerAdapter {
     public LeadsTypeAdapter(FragmentManager fm) {
         super(fm);
     }
@@ -28,5 +29,9 @@ public class LeadsTypeAdapter extends FragmentStatePagerAdapter {
     @Override
     public int getCount() {
         return 2;
+    }
+
+    public Fragment getFragment(ViewGroup view, int position) {
+        return (Fragment) instantiateItem(view, position);
     }
 }

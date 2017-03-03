@@ -1,23 +1,24 @@
 package com.loomlogic.utils;
 
-import android.support.v4.content.ContextCompat;
+import android.support.annotation.ColorRes;
 
 import com.loomlogic.R;
-import com.loomlogic.base.LoomLogicApp;
 
 /**
  * Created by alex on 3/2/17.
  */
 
 public class LeadUtils {
+
+    @ColorRes
     public static int getCurrentLeadRoleColor() {
         switch (LeadPreferencesUtils.getCurrentLeadRole()) {
             case BUYER:
-                return ContextCompat.getColor(LoomLogicApp.getSharedContext(), R.color.colorMainBuyer);
+                return R.color.colorMainBuyer;
             case SELLER:
-                return ContextCompat.getColor(LoomLogicApp.getSharedContext(), R.color.colorMainSeller);
+                return R.color.colorMainSeller;
             default:
-                return ContextCompat.getColor(LoomLogicApp.getSharedContext(), R.color.colorMainBuyer);
+                return R.color.colorMainBuyer;
         }
     }
 }

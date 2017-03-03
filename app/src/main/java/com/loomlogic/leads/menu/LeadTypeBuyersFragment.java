@@ -31,6 +31,12 @@ public class LeadTypeBuyersFragment extends BaseHomeFragment {
         initViews(view);
     }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+        getHomeActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();
+    }
+
     private void initViews(View view) {
         ArrayList<LeadMenuItem> items = new ArrayList<>();
         items.add(new LeadMenuItem(LeadTypes.LEADS, 12));
@@ -52,8 +58,4 @@ public class LeadTypeBuyersFragment extends BaseHomeFragment {
         recyclerView.addItemDecoration(mDividerItemDecoration);
     }
 
-    @Override
-    public boolean hasMenuOptions(){
-        return false;
-    }
 }

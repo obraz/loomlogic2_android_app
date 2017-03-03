@@ -15,9 +15,9 @@
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="createAccount">Create Account</string>
-    <string name="forgotPasword">Forgot pasword</string>
+    <string name="forgotPasword">Forgot password</string>
 
-    <!-- Forgot Pasword -->
+    <!-- Forgot Password -->
     <string name="forgotPaswordTitle">FORGOT PASSWORD ?</string>
     <string name="forgotPaswordMsg">Enter your e-mail address below to reset your password</string>
 
@@ -31,6 +31,13 @@
     <string name="privacyPolicy">Privacy Policy</string>
     <string name="phone">Phone</string>
     <string name="license">License</string>
+
+    <!-- Navigation Bar -->
+    <string name="notifications">Notifications</string>
+    <string name="search">Search</string>
+    <string name="leads">Leads</string>
+    <string name="tasks">Tasks</string>
+    <string name="profile">Profile</string>
 
     <!-- Leads Menu -->
     <string name="buyers">buyers</string>

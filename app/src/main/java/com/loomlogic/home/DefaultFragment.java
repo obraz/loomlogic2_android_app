@@ -13,13 +13,19 @@ import com.loomlogic.R;
  */
 
 public class DefaultFragment extends BaseHomeFragment {
+
+    public static DefaultFragment newInstance() {
+        DefaultFragment fragment = new DefaultFragment();
+        return fragment;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_default, container, false);
     }
 
     @Override
-    public boolean hasMenuOptions() {
-        return false;
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
     }
 }

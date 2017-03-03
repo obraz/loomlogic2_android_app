@@ -10,7 +10,6 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -27,20 +26,23 @@ import com.loomlogic.view.LinePageIndicator;
  */
 
 public class LeadsMenuManager {
+    private static final int ROLE_BUYER_MENU_POSITION = 0;
+    private static final int ROLE_BUYER_SELLER_POSITION = 1;
     private HomeActivity activity;
     private LinearLayout mainContent;
     private DrawerLayout drawer;
     private ActionBarDrawerToggle mDrawerToggle;
     private View navigationViewContainer;
+    private LeadsTypeAdapter adapter;
+    private ViewPager viewPager;
 
     public LeadsMenuManager(HomeActivity activity, LinearLayout mainContent, DrawerLayout drawerLayout, View navigationViewContainer) {
         this.activity = activity;
         this.mainContent = mainContent;
-        Toolbar toolbar = (Toolbar) mainContent.findViewById(R.id.toolbar);
         this.drawer = drawerLayout;
         this.navigationViewContainer = navigationViewContainer;
-        initNavigation(toolbar);
         initViews();
+        initNavigation();
     }
 
     private void initViews() {
@@ -59,9 +61,9 @@ public class LeadsMenuManager {
         final LinePageIndicator titleIndicator = (LinePageIndicator) navigationViewContainer.findViewById(R.id.indicator);
         titleIndicator.setFullWidht();
 
-        LeadsTypeAdapter adapter = new LeadsTypeAdapter(activity.getSupportFragmentManager());
+        adapter = new LeadsTypeAdapter(activity.getSupportFragmentManager());
 
-        final ViewPager viewPager = (ViewPager) navigationViewContainer.findViewById(R.id.vp_leadsMenu);
+        viewPager = (ViewPager) navigationViewContainer.findViewById(R.id.vp_leadsMenu);
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -71,21 +73,32 @@ public class LeadsMenuManager {
 
             @Override
             public void onPageSelected(int position) {
+                boolean roleWasChanged = false;
                 switch (position) {
-                    case 0:
+                    case ROLE_BUYER_MENU_POSITION:
+                        if (LeadPreferencesUtils.getCurrentLeadRole() == LeadRole.SELLER) {
+                            roleWasChanged = true;
+                        }
                         LeadPreferencesUtils.setCurrentLeadRole(LeadRole.BUYER);
                         buyersTv.setTextColor(Color.WHITE);
                         sellersTv.setTextColor(ContextCompat.getColor(activity, R.color.white_transparent_50));
                         break;
-                    case 1:
+                    case ROLE_BUYER_SELLER_POSITION:
+                        if (LeadPreferencesUtils.getCurrentLeadRole() == LeadRole.BUYER) {
+                            roleWasChanged = true;
+                        }
                         LeadPreferencesUtils.setCurrentLeadRole(LeadRole.SELLER);
                         buyersTv.setTextColor(ContextCompat.getColor(activity, R.color.white_transparent_50));
                         sellersTv.setTextColor(Color.WHITE);
                         break;
                 }
-                titleIndicator.setSelectedColor(LeadUtils.getCurrentLeadRoleColor());
-                newLeadFAB.setBackgroundTintList(ColorStateList.valueOf(LeadUtils.getCurrentLeadRoleColor()));
-                activity.updateNavigationTabIcons();
+
+                titleIndicator.setSelectedColor(ContextCompat.getColor(activity, LeadUtils.getCurrentLeadRoleColor()));
+                newLeadFAB.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(activity, LeadUtils.getCurrentLeadRoleColor())));
+
+                if (roleWasChanged) {
+                    activity.refreshNavBar();
+                }
             }
 
             @Override
@@ -96,15 +109,15 @@ public class LeadsMenuManager {
 
         titleIndicator.setViewPager(viewPager);
         if (LeadPreferencesUtils.getCurrentLeadRole() == LeadRole.SELLER) {
-            viewPager.setCurrentItem(1);
+            viewPager.setCurrentItem(ROLE_BUYER_SELLER_POSITION);
         }
 
         buyersTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 switch (viewPager.getCurrentItem()) {
-                    case 1:
-                        viewPager.setCurrentItem(0);
+                    case ROLE_BUYER_SELLER_POSITION:
+                        viewPager.setCurrentItem(ROLE_BUYER_MENU_POSITION);
                         break;
                 }
             }
@@ -114,18 +127,16 @@ public class LeadsMenuManager {
             @Override
             public void onClick(View v) {
                 switch (viewPager.getCurrentItem()) {
-                    case 0:
-                        viewPager.setCurrentItem(1);
+                    case ROLE_BUYER_MENU_POSITION:
+                        viewPager.setCurrentItem(ROLE_BUYER_SELLER_POSITION);
                         break;
                 }
             }
         });
-
-
     }
 
-    private void initNavigation(Toolbar toolbar) {
-        mDrawerToggle = new ActionBarDrawerToggle(activity, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
+    private void initNavigation() {
+        mDrawerToggle = new ActionBarDrawerToggle(activity, drawer, null, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
             public void onDrawerClosed(View view) {
                 super.onDrawerClosed(view);
                 activity.supportInvalidateOptionsMenu();
@@ -151,6 +162,13 @@ public class LeadsMenuManager {
         mDrawerToggle.setHomeAsUpIndicator(drawable);
 
         drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+
+        mainContent.findViewById(R.id.ib_leadsMenu).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navigateDrawer();
+            }
+        });
     }
 
     public void navigateDrawer() {
@@ -167,11 +185,10 @@ public class LeadsMenuManager {
         }
     }
 
-    public DrawerLayout getDrawer() {
-        return drawer;
+    public void stopFragments() {
+        for (int i = 0; i < adapter.getCount(); i++) {
+            adapter.getFragment(viewPager, i).onStop();
+        }
     }
 
-    public ActionBarDrawerToggle getDrawerToggle() {
-        return mDrawerToggle;
-    }
 }

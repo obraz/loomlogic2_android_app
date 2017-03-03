@@ -7,6 +7,7 @@
     <color name="transparent">#00000000</color>
     <color name="blueBtn">#03A9F4</color>
     <color name="continueBtn">#0398DC</color>
+    <color name="navBarBgColor">#E4E5E6</color>
 
     <color name="colorNavigationDefault">#1A000000</color>
     <color name="colorMainBuyer">#03A9F4</color>

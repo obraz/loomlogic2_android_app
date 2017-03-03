@@ -1,121 +1,174 @@
 package com.loomlogic.home;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.drawable.DrawableCompat;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageView;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.util.Pair;
 
+import com.ashokvarma.bottomnavigation.BottomNavigationBar;
+import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.loomlogic.R;
-import com.loomlogic.base.BaseActivity;
 import com.loomlogic.leads.LeadsFragment;
+import com.loomlogic.multibackstack.BackStackActivity;
 import com.loomlogic.utils.LeadUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by alex on 2/22/17.
  */
 
-public class HomeActivity extends BaseActivity implements View.OnClickListener {
-    private ArrayList<ImageView> navigationIconsList;
-    private int currentTab;
-    private LeadsFragment leadsFragment;
+public class HomeActivity extends BackStackActivity implements BottomNavigationBar.OnTabSelectedListener {
+    private static final String STATE_CURRENT_TAB_ID = "current_tab_id";
+    private static final int MAIN_TAB_ID = 0;
+
+    private BottomNavigationBar bottomNavBar;
+    private Fragment curFragment;
+    private int curTabId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        leadsFragment= new LeadsFragment();
-        initNavigationButtons();
+
+        setUpBottomNavBar();
+        refreshNavBar();
+        if (savedInstanceState == null) {
+            showFragment(rootTabFragment(MAIN_TAB_ID));
+        }
     }
 
-    private void initNavigationButtons() {
-        navigationIconsList = new ArrayList<>();
-        navigationIconsList.add((ImageView) findViewById(R.id.iv_navigation_notifications));
-        navigationIconsList.add((ImageView) findViewById(R.id.iv_navigation_search));
-        navigationIconsList.add((ImageView) findViewById(R.id.iv_navigation_leads));
-        navigationIconsList.add((ImageView) findViewById(R.id.iv_navigation_tasks));
-        navigationIconsList.add((ImageView) findViewById(R.id.iv_navigation_profile));
+    private void setUpBottomNavBar() {
+        bottomNavBar = (BottomNavigationBar) findViewById(R.id.bottom_navigation);
+        bottomNavBar.setAutoHideEnabled(true);
+        bottomNavBar.setTabSelectedListener(this);
+    }
 
-        findViewById(R.id.fl_navigation_notifications).setOnClickListener(this);
-        findViewById(R.id.fl_navigation_search).setOnClickListener(this);
-        findViewById(R.id.fl_navigation_leads).setOnClickListener(this);
-        findViewById(R.id.fl_navigation_tasks).setOnClickListener(this);
-        findViewById(R.id.fl_navigation_profile).setOnClickListener(this);
+    public void refreshNavBar() {
+        bottomNavBar.clearAll();
+        bottomNavBar
+                .addItem(new BottomNavigationItem(R.drawable.ic_navigation_notifications, R.string.notifications))
+                .addItem(new BottomNavigationItem(R.drawable.ic_navigation_search, R.string.search))
+                .addItem(new BottomNavigationItem(R.drawable.ic_navigation_leads, R.string.leads))
+                .addItem(new BottomNavigationItem(R.drawable.ic_navigation_tasks, R.string.tasks))
+                .addItem(new BottomNavigationItem(R.drawable.ic_navigation_profile, R.string.profile))
+                .setActiveColor(R.color.navBarBgColor)
+                .setBarBackgroundColor(LeadUtils.getCurrentLeadRoleColor())
+                .setFirstSelectedPosition(curTabId)
+                .initialise();
+    }
 
-        findViewById(R.id.fl_navigation_leads).performClick();
+    @NonNull
+    private Fragment rootTabFragment(int tabId) {
+        switch (tabId) {
+            case 0:
+                return DefaultFragment.newInstance();
+            case 1:
+                return DefaultFragment.newInstance();
+            case 2:
+                return LeadsFragment.newInstance();
+            case 3:
+                return DefaultFragment.newInstance();
+            case 4:
+                return DefaultFragment.newInstance();
+            default:
+                return DefaultFragment.newInstance();
+        }
     }
 
     @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.fl_navigation_notifications:
-                selectNavigationTab(0, new DefaultFragment());
-                break;
-            case R.id.fl_navigation_search:
-                selectNavigationTab(1, new DefaultFragment());
-                break;
-            case R.id.fl_navigation_leads:
-                selectNavigationTab(2, leadsFragment);
-                break;
-            case R.id.fl_navigation_tasks:
-                selectNavigationTab(3, new DefaultFragment());
-                break;
-            case R.id.fl_navigation_profile:
-                selectNavigationTab(4, new DefaultFragment());
-                break;
-        }
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        curFragment = getSupportFragmentManager().findFragmentById(R.id.container);
+        curTabId = savedInstanceState.getInt(STATE_CURRENT_TAB_ID);
+        bottomNavBar.selectTab(curTabId, false);
     }
-
-    private void selectNavigationTab(int currentTab, Fragment fragment) {
-        this.currentTab = currentTab;
-        updateNavigationTabIcons();
-        replaceFragment(fragment);
-    }
-
-    public void updateNavigationTabIcons() {
-        int color;
-        for (int i = 0; i < navigationIconsList.size(); i++) {
-            ImageView view = navigationIconsList.get(i);
-            if (currentTab == i) {
-                color = LeadUtils.getCurrentLeadRoleColor();
-            } else {
-                color = ContextCompat.getColor(this, R.color.colorNavigationDefault);
-            }
-            DrawableCompat.setTint(view.getDrawable(), color);
-        }
-    }
-
-    protected void replaceFragment(Fragment fragment) {
-        String tag = fragment.getClass().getName();
-
-        FragmentManager fragmentManager = getSupportFragmentManager();
-
-        if (fragmentManager.findFragmentByTag(tag) == null) {
-            fragmentManager.beginTransaction().replace(R.id.container, fragment, tag).commit();
-        }
-    }
-
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        BaseHomeFragment fragment = getVisibleFragment();
-        if (fragment != null) {
-            if (fragment.hasMenuOptions()) {
-                return false;
-            }
-        }
-        return super.onOptionsItemSelected(item);
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putInt(STATE_CURRENT_TAB_ID, curTabId);
+        super.onSaveInstanceState(outState);
     }
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        BaseHomeFragment fragment = getVisibleFragment();
+        if (fragment!=null){
+
+        }
+
+        Pair<Integer, Fragment> pair = popFragmentFromBackStack();
+        if (pair != null) {
+            backTo(pair.first, pair.second);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
+    public void onTabSelected(int position) {
+        if (curFragment != null) {
+            pushFragmentToBackStack(curTabId, curFragment);
+        }
+        curTabId = position;
+        Fragment fragment = popFragmentFromBackStack(curTabId);
+        if (fragment == null) {
+            fragment = rootTabFragment(curTabId);
+        }
+        replaceFragment(fragment);
+    }
+
+    @Override
+    public void onTabReselected(int position) {
+        backToRoot();
+    }
+
+    @Override
+    public void onTabUnselected(int position) {
+    }
+
+    public void showFragment(@NonNull Fragment fragment) {
+        showFragment(fragment, true);
+    }
+
+    public void showFragment(@NonNull Fragment fragment, boolean addToBackStack) {
+        if (curFragment != null && addToBackStack) {
+            pushFragmentToBackStack(curTabId, curFragment);
+        }
+        replaceFragment(fragment);
+    }
+
+    private void backTo(int tabId, @NonNull Fragment fragment) {
+        if (tabId != curTabId) {
+            curTabId = tabId;
+            bottomNavBar.selectTab(curTabId, false);
+        }
+        replaceFragment(fragment);
+        getSupportFragmentManager().executePendingTransactions();
+    }
+
+    private void backToRoot() {
+        if (isRootTabFragment(curFragment, curTabId)) {
+            return;
+        }
+        resetBackStackToRoot(curTabId);
+        Fragment rootFragment = popFragmentFromBackStack(curTabId);
+        assert rootFragment != null;
+        backTo(curTabId, rootFragment);
+    }
+
+    private boolean isRootTabFragment(@NonNull Fragment fragment, int tabId) {
+        return fragment.getClass() == rootTabFragment(tabId).getClass();
+    }
+
+    private void replaceFragment(@NonNull Fragment fragment) {
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction tr = fm.beginTransaction();
+        tr.replace(R.id.container, fragment);
+        tr.commitAllowingStateLoss();
+        curFragment = fragment;
     }
 
     public BaseHomeFragment getVisibleFragment() {

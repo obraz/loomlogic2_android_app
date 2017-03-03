@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -26,10 +25,14 @@ import org.greenrobot.eventbus.ThreadMode;
 public class LeadsFragment extends BaseHomeFragment {
     private LeadsMenuManager leadsMenuManager;
 
+    public static LeadsFragment newInstance() {
+        LeadsFragment fragment = new LeadsFragment();
+        return fragment;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
     }
 
     @Override
@@ -45,8 +48,6 @@ public class LeadsFragment extends BaseHomeFragment {
 
 
     private void initViews(View view) {
-        // Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
-
         LinearLayout mainContent = (LinearLayout) view.findViewById(R.id.ll_leadsMainContent);
         DrawerLayout drawerLayout = (DrawerLayout) view.findViewById(R.id.drawer_layout);
         View navigationViewContainer = view.findViewById(R.id.leadMenuLayout);
@@ -54,17 +55,11 @@ public class LeadsFragment extends BaseHomeFragment {
         leadsMenuManager = new LeadsMenuManager(getHomeActivity(), mainContent, drawerLayout, navigationViewContainer);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        leadsMenuManager.navigateDrawer();
-        return super.onOptionsItemSelected(item);
-    }
-
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(MessageEvent event) {
-        if (event.getType() == MessageEvent.MessageEventType.LEADS_MENU_SELECT){
+        if (event.getType() == MessageEvent.MessageEventType.LEADS_MENU_SELECT) {
             leadsMenuManager.closeDrawer();
-            getHomeActivity().showErrorSnackBar(((LeadMenuItem)(event.getObject())).getName());
+            getHomeActivity().showErrorSnackBar(((LeadMenuItem) (event.getObject())).getName());
         }
     }
 
@@ -78,11 +73,7 @@ public class LeadsFragment extends BaseHomeFragment {
     public void onStop() {
         super.onStop();
         EventBus.getDefault().unregister(this);
-    }
-
-    @Override
-    public boolean hasMenuOptions(){
-        return true;
+        leadsMenuManager.stopFragments();
     }
 
 }
