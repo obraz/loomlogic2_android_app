@@ -172,17 +172,25 @@ public class LeadsMenuManager {
     }
 
     public void navigateDrawer() {
-        if (drawer.isDrawerVisible(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            drawer.openDrawer(GravityCompat.START);
+        if (!closeDrawer()) {
+            openDrawer();
         }
     }
 
-    public void closeDrawer() {
-        if (drawer.isDrawerVisible(GravityCompat.START)) {
+    public boolean isDrawerOpen() {
+        return drawer.isDrawerVisible(GravityCompat.START);
+    }
+
+    public void openDrawer() {
+        drawer.openDrawer(GravityCompat.START);
+    }
+
+    public boolean closeDrawer() {
+        if (isDrawerOpen()) {
             drawer.closeDrawer(GravityCompat.START);
+            return true;
         }
+        return false;
     }
 
     public void stopFragments() {

@@ -57,9 +57,11 @@ public class LeadsFragment extends BaseHomeFragment {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(MessageEvent event) {
-        if (event.getType() == MessageEvent.MessageEventType.LEADS_MENU_SELECT) {
-            leadsMenuManager.closeDrawer();
-            getHomeActivity().showErrorSnackBar(((LeadMenuItem) (event.getObject())).getName());
+        switch (event.getType()) {
+            case LEADS_MENU_SELECT:
+                leadsMenuManager.closeDrawer();
+                getHomeActivity().showErrorSnackBar(((LeadMenuItem) (event.getObject())).getName());
+                return;
         }
     }
 
@@ -76,4 +78,8 @@ public class LeadsFragment extends BaseHomeFragment {
         leadsMenuManager.stopFragments();
     }
 
+    @Override
+    public boolean onBackPressed() {
+        return leadsMenuManager.closeDrawer();
+    }
 }

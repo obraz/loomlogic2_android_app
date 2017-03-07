@@ -22,4 +22,8 @@ public abstract class BaseHomeFragment extends Fragment {
         return activity;
     }
 
+    public boolean onBackPressed(){
+        return false;
+    }
+
 }

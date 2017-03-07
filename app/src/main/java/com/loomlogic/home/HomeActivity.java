@@ -78,6 +78,10 @@ public class HomeActivity extends BackStackActivity implements BottomNavigationB
         }
     }
 
+    public BaseHomeFragment gerCurrentFragment() {
+        return (BaseHomeFragment) curFragment;
+    }
+
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
@@ -95,8 +99,8 @@ public class HomeActivity extends BackStackActivity implements BottomNavigationB
     @Override
     public void onBackPressed() {
         BaseHomeFragment fragment = getVisibleFragment();
-        if (fragment!=null){
-
+        if (fragment != null && fragment.onBackPressed()) {
+            return;
         }
 
         Pair<Integer, Fragment> pair = popFragmentFromBackStack();

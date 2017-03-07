@@ -59,4 +59,8 @@ public class LeadTypeSellersFragment extends BaseHomeFragment{
         recyclerView.addItemDecoration(mDividerItemDecoration);
     }
 
+    @Override
+    public boolean onBackPressed() {
+        return getHomeActivity().gerCurrentFragment().onBackPressed();
+    }
 }
