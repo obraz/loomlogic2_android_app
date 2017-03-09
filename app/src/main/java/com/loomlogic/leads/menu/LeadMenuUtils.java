@@ -1,5 +1,8 @@
 package com.loomlogic.leads.menu;
 
+import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
+
 import com.loomlogic.R;
 import com.loomlogic.base.LoomLogicApp;
 
@@ -31,6 +34,31 @@ public class LeadMenuUtils {
                 return LoomLogicApp.getSharedContext().getString(R.string.leadMenuItem_Pending);
             default:
                 return "Unspecified";
+        }
+    }
+
+    public static Drawable getLeadTypeIcon(LeadTypes type) {
+        switch (type) {
+            case LEADS:
+                return ContextCompat.getDrawable(LoomLogicApp.getSharedContext(), R.drawable.ic_lead_new);
+            case LENDER:
+                return ContextCompat.getDrawable(LoomLogicApp.getSharedContext(), R.drawable.ic_lead_lender);
+            case SHOPPING:
+                return ContextCompat.getDrawable(LoomLogicApp.getSharedContext(), R.drawable.ic_lead_shopping);
+            case CONTRACT:
+                return ContextCompat.getDrawable(LoomLogicApp.getSharedContext(), R.drawable.ic_lead_contract);
+            case CLOSED:
+                return ContextCompat.getDrawable(LoomLogicApp.getSharedContext(), R.drawable.ic_lead_closed);
+            case COMING_SOON:
+                return ContextCompat.getDrawable(LoomLogicApp.getSharedContext(), R.drawable.ic_lead_comingsoon);
+            case ACTIVE:
+                return ContextCompat.getDrawable(LoomLogicApp.getSharedContext(), R.drawable.ic_lead_active);
+            case WITHDRAW:
+                return ContextCompat.getDrawable(LoomLogicApp.getSharedContext(), R.drawable.ic_lead_withdrawn);
+            case PENDING:
+                return ContextCompat.getDrawable(LoomLogicApp.getSharedContext(), R.drawable.ic_lead_pending);
+            default:
+                return ContextCompat.getDrawable(LoomLogicApp.getSharedContext(), R.drawable.ic_lead_new);
         }
     }
 }

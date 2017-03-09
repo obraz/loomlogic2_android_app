@@ -39,6 +39,7 @@ public class LeadsMenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     public void onBindViewHolder(RecyclerView.ViewHolder h, int position) {
         LeadMenuItemViewHolder holder = (LeadMenuItemViewHolder) h;
         final LeadMenuItem item = items.get(position);
+        holder.txtName.setCompoundDrawablesWithIntrinsicBounds(item.getDrawableIcon(), null, null, null);
         holder.txtName.setText(item.getName());
         holder.txtCount.setText(String.valueOf(item.getCount()));
         if (isSellers) {

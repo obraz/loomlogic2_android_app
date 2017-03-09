@@ -57,6 +57,6 @@
         android:layout_height="55dp"
         android:layout_gravity="center_horizontal"
         android:layout_margin="10dp"
-        android:src="@drawable/ic_back"
+        android:src="@drawable/ic_lead_addnew"
         app:backgroundTint="@color/colorMainBuyer" />
 </LinearLayout>

@@ -1,5 +1,7 @@
 package com.loomlogic.leads.menu;
 
+import android.graphics.drawable.Drawable;
+
 /**
  * Created by alex on 3/1/17.
  */
@@ -23,5 +25,9 @@ public class LeadMenuItem {
 
     public String getName() {
         return LeadMenuUtils.getLeadTypeName(type);
+    }
+
+    public Drawable getDrawableIcon() {
+        return LeadMenuUtils.getLeadTypeIcon(type);
     }
 }

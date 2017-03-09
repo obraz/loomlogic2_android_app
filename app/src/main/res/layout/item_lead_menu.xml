@@ -13,7 +13,7 @@
         android:layout_gravity="center_vertical"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="15dp"
-        android:drawableLeft="@drawable/ic_navigation_leads"
+        android:drawableLeft="@drawable/ic_lead_new"
         android:drawablePadding="20dp"
         android:text="dgvurgfurwu"
         android:textColor="@color/white"
