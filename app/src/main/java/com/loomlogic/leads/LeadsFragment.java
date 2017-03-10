@@ -31,7 +31,7 @@ import java.util.ArrayList;
  * Created by alex on 2/22/17.
  */
 
-public class LeadsFragment extends BaseHomeFragment {
+public class LeadsFragment extends BaseHomeFragment implements LeadsAdapter.OnLeadClickListener{
     private LeadsMenuManager leadsMenuManager;
 
     private RecyclerView mRecyclerView;
@@ -104,7 +104,7 @@ public class LeadsFragment extends BaseHomeFragment {
         fakeList.add(new LeadItem(15, 66, 7, "", "Kakoeto", "Imja", LeadItem.Gender.NONE, "escrow status 4", true, 4));
 
 
-        LeadsAdapter mItemAdapter = new LeadsAdapter(getContext());
+        LeadsAdapter mItemAdapter = new LeadsAdapter(getContext(), this);
         mItemAdapter.setData(fakeList);
 
         mAdapter = mItemAdapter;
@@ -185,5 +185,20 @@ public class LeadsFragment extends BaseHomeFragment {
     @Override
     public boolean onBackPressed() {
         return leadsMenuManager.closeDrawer();
+    }
+
+    @Override
+    public void onItemClickListener(LeadItem item) {
+        getHomeActivity().showErrorSnackBar("onItemClickListener");
+    }
+
+    @Override
+    public void onMessageClickListener(LeadItem item) {
+        getHomeActivity().showErrorSnackBar("onMessageClickListener");
+    }
+
+    @Override
+    public void onCallClickListener(LeadItem item) {
+        getHomeActivity().showErrorSnackBar("onCallClickListener");
     }
 }

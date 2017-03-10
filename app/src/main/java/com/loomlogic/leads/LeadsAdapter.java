@@ -14,9 +14,9 @@ import android.widget.TextView;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.SwipeableItemAdapter;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.SwipeableItemConstants;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultAction;
+import com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultActionDefault;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultActionMoveToSwipedDirection;
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractSwipeableItemViewHolder;
-import com.h6ah4i.android.widget.advrecyclerview.utils.RecyclerViewAdapterUtils;
 import com.loomlogic.R;
 import com.loomlogic.utils.Utils;
 import com.squareup.picasso.Picasso;
@@ -27,14 +27,24 @@ import java.util.List;
 /**
  * Created by Alexandr on 11/19/15.
  */
-public class LeadsAdapter extends RecyclerView.Adapter<LeadsAdapter.LeadsHolder> implements SwipeableItemAdapter<LeadsAdapter.LeadsHolder> {
+public class LeadsAdapter extends RecyclerView.Adapter<LeadsAdapter.LeadsHolder> implements SwipeableItemAdapter<LeadsAdapter.LeadsHolder>, View.OnClickListener {
 
     private interface Swipeable extends SwipeableItemConstants {
     }
 
     private List<LeadItem> leads;
-    private ItemOnClickListener.EventListener eventListener;
     private Context context;
+    private float maxSwipeWidth;
+
+    private OnLeadClickListener onClickListener;
+
+    interface OnLeadClickListener {
+        void onItemClickListener(LeadItem item);
+
+        void onMessageClickListener(LeadItem item);
+
+        void onCallClickListener(LeadItem item);
+    }
 
     public class LeadsHolder extends AbstractSwipeableItemViewHolder {
         private RelativeLayout mContainer;
@@ -45,7 +55,10 @@ public class LeadsAdapter extends RecyclerView.Adapter<LeadsAdapter.LeadsHolder>
         private TextView mDeadLineDateTxt;
         private TextView mNotificationCountTxt;
         private View mEscrowStatusBgView;
-        private ItemOnClickListener mItemElementsOnClickListener;
+
+        private View mCallIv;
+        private View mMessageIv;
+
 
         public LeadsHolder(View v) {
             super(v);
@@ -58,9 +71,8 @@ public class LeadsAdapter extends RecyclerView.Adapter<LeadsAdapter.LeadsHolder>
             mNotificationCountTxt = (TextView) v.findViewById(R.id.tv_leadNotificationsCounter);
             mEscrowStatusBgView = v.findViewById(R.id.leadEscrowStatusBg);
 
-            mItemElementsOnClickListener = new ItemOnClickListener(eventListener);
-
-            mContainer.setOnClickListener(mItemElementsOnClickListener);
+            mCallIv = v.findViewById(R.id.iv_leadCall);
+            mMessageIv = v.findViewById(R.id.iv_leadMessage);
         }
 
         @Override
@@ -70,43 +82,11 @@ public class LeadsAdapter extends RecyclerView.Adapter<LeadsAdapter.LeadsHolder>
 
     }
 
-    public LeadsAdapter(Context context) {
+    public LeadsAdapter(Context context, OnLeadClickListener eventListener) {
         this.context = context;
-        this.eventListener = new ItemOnClickListener.EventListener() {
-            @Override
-            public void onItemPinned(int position) {
+        maxSwipeWidth = context.getResources().getDimension(R.dimen.lead_swipe_action_button_width) * 2 / Utils.getDisplayWidth(context);
 
-            }
-
-            @Override
-            public void onItemViewClicked(View v, int leadId) {
-
-            }
-
-            @Override
-            public void onItemPhoneClicked(View v) {
-
-            }
-
-            @Override
-            public void onItemChatClicked(View v) {
-
-            }
-
-            @Override
-            public void onItemEmailClicked(View v) {
-
-            }
-        };
-        this.leads = new ArrayList<>();
-
-        // SwipeableItemAdapter requires stable ID, and also
-        // have to implement the getItemId() method appropriately.
-        setHasStableIds(true);
-    }
-
-    public LeadsAdapter(ItemOnClickListener.EventListener eventListener) {
-        this.eventListener = eventListener;
+        this.onClickListener = eventListener;
         this.leads = new ArrayList<>();
 
         // SwipeableItemAdapter requires stable ID, and also
@@ -118,7 +98,6 @@ public class LeadsAdapter extends RecyclerView.Adapter<LeadsAdapter.LeadsHolder>
         this.leads = leads;
         notifyDataSetChanged();
     }
-
 
     @Override
     public long getItemId(int position) {
@@ -135,7 +114,15 @@ public class LeadsAdapter extends RecyclerView.Adapter<LeadsAdapter.LeadsHolder>
     @Override
     public void onBindViewHolder(LeadsHolder holder, int position) {
         LeadItem lead = leads.get(position);
-        holder.mItemElementsOnClickListener.setLeadId(lead.id);
+        holder.mContainer.setTag(lead);
+        holder.mContainer.setOnClickListener(this);
+
+        holder.mCallIv.setTag(lead);
+        holder.mCallIv.setOnClickListener(this);
+
+        holder.mMessageIv.setTag(lead);
+        holder.mMessageIv.setOnClickListener(this);
+
         setAvatar(holder, lead);
         setDeadline(holder, lead);
         setEscrowStatusBg(holder, lead);
@@ -150,9 +137,21 @@ public class LeadsAdapter extends RecyclerView.Adapter<LeadsAdapter.LeadsHolder>
             holder.mNotificationCountTxt.setVisibility(View.INVISIBLE);
         }
 
+        float density = holder.itemView.getResources().getDisplayMetrics().density;
+        float pinnedDistance = (density * 140); // 100 dp
 
-        holder.setSwipeItemHorizontalSlideAmount(
-                lead.isPinned() ? Swipeable.OUTSIDE_OF_THE_WINDOW_LEFT : 0);
+        holder.setProportionalSwipeAmountModeEnabled(false);
+        holder.setMaxLeftSwipeAmount(-pinnedDistance);
+        holder.setMaxRightSwipeAmount(0);
+        holder.setSwipeItemHorizontalSlideAmount(lead.isPinned() ? -pinnedDistance : 0);
+
+//        holder.setMaxLeftSwipeAmount(-maxSwipeWidth);
+//        holder.setMaxRightSwipeAmount(0f);
+//
+//       // holder.setSwipeItemHorizontalSlideAmount(lead.isPinned() ? -maxSwipeWidth : 0);
+//        if (!lead.isPinned() ) {
+//            holder.setSwipeItemHorizontalSlideAmount(lead.isPinned() ? -maxSwipeWidth : 0);
+//        }
     }
 
     private void setAvatar(LeadsHolder holder, LeadItem lead) {
@@ -221,14 +220,13 @@ public class LeadsAdapter extends RecyclerView.Adapter<LeadsAdapter.LeadsHolder>
     @Override
     public SwipeResultAction onSwipeItem(LeadsHolder holder, int position, int result) {
         switch (result) {
-            case Swipeable.RESULT_SWIPED_RIGHT:
             case Swipeable.RESULT_SWIPED_LEFT:
                 return new ItemSwipeResultAction(this, position);
+            case Swipeable.RESULT_SWIPED_RIGHT:
             case Swipeable.RESULT_CANCELED:
-                return null;
             default:
                 if (position != RecyclerView.NO_POSITION) {
-                    return new ItemSwipeResultAction(this, position);
+                    return new UnpinResultAction(this, position);
                 } else {
                     return null;
                 }
@@ -252,10 +250,9 @@ public class LeadsAdapter extends RecyclerView.Adapter<LeadsAdapter.LeadsHolder>
             LeadItem lead = mAdapter.leads.get(mPosition);
             if (!lead.isPinned()) {
                 lead.setPinned(true);
-            } else {
-                lead.setPinned(false);
+                mAdapter.notifyItemChanged(mPosition);
+                //   mSetPinned = true;
             }
-            mAdapter.notifyItemChanged(mPosition);
         }
 
         @Override
@@ -273,57 +270,99 @@ public class LeadsAdapter extends RecyclerView.Adapter<LeadsAdapter.LeadsHolder>
         }
     }
 
+    private static class UnpinResultAction extends SwipeResultActionDefault {
+        private LeadsAdapter mAdapter;
+        private final int mPosition;
 
-    /**
-     * Created by Alexandr on 12/10/15.
-     */
-    public static class ItemOnClickListener implements View.OnClickListener {
-
-        public interface EventListener {
-            void onItemPinned(int position);
-
-            void onItemViewClicked(View v, int leadId);
-
-            void onItemPhoneClicked(View v);
-
-            void onItemChatClicked(View v);
-
-            void onItemEmailClicked(View v);
-        }
-
-        int leadId;
-        EventListener mEventListener;
-
-        public ItemOnClickListener(EventListener mEventListener) {
-            this.mEventListener = mEventListener;
-            this.leadId = 0;
-        }
-
-        public void setLeadId(int leadId) {
-            this.leadId = leadId;
+        UnpinResultAction(LeadsAdapter adapter, int position) {
+            mAdapter = adapter;
+            mPosition = position;
         }
 
         @Override
-        public void onClick(View v) {
-            if (mEventListener != null) {
-                View view = RecyclerViewAdapterUtils.getParentViewHolderItemView(v);
+        protected void onPerformAction() {
+            super.onPerformAction();
 
-                switch (v.getId()) {
-                    case R.id.container:
-                        mEventListener.onItemViewClicked(view, leadId);
-                        break;
-//                    case R.id.iv_contactPhone:
-//                        mEventListener.onItemPhoneClicked(view);
-//                        break;
-//                    case R.id.iv_contactEmail:
-//                        mEventListener.onItemEmailClicked(view);
-//                        break;
-//                    case R.id.iv_contactChat:
-//                        mEventListener.onItemChatClicked(view);
-//                        break;
-                }
+            LeadItem lead = mAdapter.leads.get(mPosition);
+            if (lead.isPinned()) {
+                lead.setPinned(false);
+                mAdapter.notifyItemChanged(mPosition);
             }
         }
 
+        @Override
+        protected void onCleanUp() {
+            super.onCleanUp();
+            // clear the references
+            mAdapter = null;
+        }
     }
+
+    @Override
+    public void onClick(View v) {
+
+        if (onClickListener != null) {
+            switch (v.getId()) {
+                case R.id.container:
+                    onClickListener.onItemClickListener((LeadItem) v.getTag());
+                    break;
+                case R.id.iv_leadCall:
+                    onClickListener.onCallClickListener((LeadItem) v.getTag());
+                    break;
+                case R.id.iv_leadMessage:
+                    onClickListener.onMessageClickListener((LeadItem) v.getTag());
+                    break;
+            }
+        }
+    }
+    /**
+
+     public static class ItemOnClickListener implements View.OnClickListener {
+
+     public interface EventListener {
+     void onItemPinned(int position);
+
+     void onItemViewClicked(View v, int leadId);
+
+     void onItemPhoneClicked(View v);
+
+     void onItemChatClicked(View v);
+
+     void onItemEmailClicked(View v);
+     }
+
+     int leadId;
+     EventListener mEventListener;
+
+     public ItemOnClickListener(EventListener mEventListener) {
+     this.mEventListener = mEventListener;
+     this.leadId = 0;
+     }
+
+     public void setLeadId(int leadId) {
+     this.leadId = leadId;
+     }
+
+     @Override public void onClick(View v) {
+     if (mEventListener != null) {
+     View view = RecyclerViewAdapterUtils.getParentViewHolderItemView(v);
+
+     switch (v.getId()) {
+     case R.id.container:
+     mEventListener.onItemViewClicked(view, leadId);
+     break;
+     case R.id.iv_leadCall:
+     mEventListener.onItemPhoneClicked(view);
+     break;
+     case R.id.iv_leadMessage:
+     mEventListener.onItemEmailClicked(view);
+     break;
+     //                    case R.id.iv_contactChat:
+     //                        mEventListener.onItemChatClicked(view);
+     //                        break;
+     }
+     }
+     }
+
+     }*/
 }

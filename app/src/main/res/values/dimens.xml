@@ -1,3 +1,4 @@
 <resources>
     <dimen name="lead_menu_seller_item_height">65dp</dimen>
+    <dimen name="lead_swipe_action_button_width">70dp</dimen>
 </resources>

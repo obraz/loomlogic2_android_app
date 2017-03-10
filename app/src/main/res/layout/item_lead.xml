@@ -7,40 +7,31 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#e5e4e4"
         android:orientation="horizontal"
-        android:weightSum="4"
-        tools:visibility="gone">
+        tools:visibility="visible">
 
-        <ImageView
-            android:id="@+id/iv_leadDocumentOpen"
+        <Space
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:background="@android:color/holo_green_light"
-            android:foreground="?attr/selectableItemBackground"
-            android:scaleType="center"
-            android:src="@drawable/ic_email" />
+            android:layout_weight="1" />
 
         <ImageView
-            android:id="@+id/iv_leadDocumentEdit"
-            android:layout_width="0dp"
+            android:id="@+id/iv_leadCall"
+            android:layout_width="@dimen/lead_swipe_action_button_width"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@android:color/holo_orange_light"
+            android:background="#7ED321"
             android:foreground="?attr/selectableItemBackground"
             android:scaleType="center"
-            android:src="@drawable/ic_email" />
+            android:src="@drawable/ic_call" />
 
         <ImageView
-            android:id="@+id/iv_leadDocumentDelete"
-            android:layout_width="0dp"
+            android:id="@+id/iv_leadMessage"
+            android:layout_width="@dimen/lead_swipe_action_button_width"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@android:color/holo_red_light"
+            android:background="#0097EB"
             android:foreground="?attr/selectableItemBackground"
             android:scaleType="center"
-            android:src="@drawable/ic_email" />
+            android:src="@drawable/ic_send_message" />
 
     </LinearLayout>
 
@@ -52,7 +43,7 @@
         android:clickable="true"
         android:foreground="?attr/selectableItemBackground"
         android:orientation="horizontal"
-        tools:visibility="visible">
+        tools:visibility="invisible">
 
         <View
             android:layout_width="match_parent"
