@@ -46,45 +46,9 @@ public class LeadsAdapter extends RecyclerView.Adapter<LeadsAdapter.LeadsHolder>
         void onCallClickListener(LeadItem item);
     }
 
-    public class LeadsHolder extends AbstractSwipeableItemViewHolder {
-        private RelativeLayout mContainer;
-        private ImageView mAvatarIv;
-        private TextView mNameTxt;
-        private TextView mInitialsTxt;
-        private TextView mStatusTxt;
-        private TextView mDeadLineDateTxt;
-        private TextView mNotificationCountTxt;
-        private View mEscrowStatusBgView;
-
-        private View mCallIv;
-        private View mMessageIv;
-
-
-        public LeadsHolder(View v) {
-            super(v);
-            mContainer = (RelativeLayout) v.findViewById(R.id.container);
-            mAvatarIv = (ImageView) v.findViewById(R.id.iv_leadImage);
-            mNameTxt = (TextView) v.findViewById(R.id.tv_leadName);
-            mInitialsTxt = (TextView) v.findViewById(R.id.tv_leadInitials);
-            mStatusTxt = (TextView) v.findViewById(R.id.tv_leadStatus);
-            mDeadLineDateTxt = (TextView) v.findViewById(R.id.tv_leadDate);
-            mNotificationCountTxt = (TextView) v.findViewById(R.id.tv_leadNotificationsCounter);
-            mEscrowStatusBgView = v.findViewById(R.id.leadEscrowStatusBg);
-
-            mCallIv = v.findViewById(R.id.iv_leadCall);
-            mMessageIv = v.findViewById(R.id.iv_leadMessage);
-        }
-
-        @Override
-        public View getSwipeableContainerView() {
-            return mContainer;
-        }
-
-    }
-
     public LeadsAdapter(Context context, OnLeadClickListener eventListener) {
         this.context = context;
-        maxSwipeWidth = context.getResources().getDimension(R.dimen.lead_swipe_action_button_width) * 2 / Utils.getDisplayWidth(context);
+        maxSwipeWidth = context.getResources().getDimension(R.dimen.lead_swipe_action_button_width) * 2;
 
         this.onClickListener = eventListener;
         this.leads = new ArrayList<>();
@@ -137,21 +101,10 @@ public class LeadsAdapter extends RecyclerView.Adapter<LeadsAdapter.LeadsHolder>
             holder.mNotificationCountTxt.setVisibility(View.INVISIBLE);
         }
 
-        float density = holder.itemView.getResources().getDisplayMetrics().density;
-        float pinnedDistance = (density * 140); // 100 dp
-
         holder.setProportionalSwipeAmountModeEnabled(false);
-        holder.setMaxLeftSwipeAmount(-pinnedDistance);
+        holder.setMaxLeftSwipeAmount(-maxSwipeWidth);
         holder.setMaxRightSwipeAmount(0);
-        holder.setSwipeItemHorizontalSlideAmount(lead.isPinned() ? -pinnedDistance : 0);
-
-//        holder.setMaxLeftSwipeAmount(-maxSwipeWidth);
-//        holder.setMaxRightSwipeAmount(0f);
-//
-//       // holder.setSwipeItemHorizontalSlideAmount(lead.isPinned() ? -maxSwipeWidth : 0);
-//        if (!lead.isPinned() ) {
-//            holder.setSwipeItemHorizontalSlideAmount(lead.isPinned() ? -maxSwipeWidth : 0);
-//        }
+        holder.setSwipeItemHorizontalSlideAmount(lead.isPinned() ? -maxSwipeWidth : 0);
     }
 
     private void setAvatar(LeadsHolder holder, LeadItem lead) {
@@ -236,7 +189,7 @@ public class LeadsAdapter extends RecyclerView.Adapter<LeadsAdapter.LeadsHolder>
     private static class ItemSwipeResultAction extends SwipeResultActionMoveToSwipedDirection {
         private LeadsAdapter mAdapter;
         private final int mPosition;
-        // private boolean mSetPinned;
+        private boolean mSetPinned;
 
         ItemSwipeResultAction(LeadsAdapter adapter, int position) {
             mAdapter = adapter;
@@ -251,16 +204,17 @@ public class LeadsAdapter extends RecyclerView.Adapter<LeadsAdapter.LeadsHolder>
             if (!lead.isPinned()) {
                 lead.setPinned(true);
                 mAdapter.notifyItemChanged(mPosition);
-                //   mSetPinned = true;
+                mSetPinned = true;
             }
         }
 
         @Override
         protected void onSlideAnimationEnd() {
             super.onSlideAnimationEnd();
-            //  if (mSetPinned && mAdapter.mEventListener != null) {
-            //      mAdapter.mEventListener.onItemPinned(mPosition);
-            // }
+            if (mSetPinned) {
+                LeadItem lead = mAdapter.leads.get(mPosition);
+                lead.setPinned(false);
+            }
         }
 
         @Override
@@ -298,71 +252,57 @@ public class LeadsAdapter extends RecyclerView.Adapter<LeadsAdapter.LeadsHolder>
         }
     }
 
+    public class LeadsHolder extends AbstractSwipeableItemViewHolder {
+        private RelativeLayout mContainer;
+        private ImageView mAvatarIv;
+        private TextView mNameTxt;
+        private TextView mInitialsTxt;
+        private TextView mStatusTxt;
+        private TextView mDeadLineDateTxt;
+        private TextView mNotificationCountTxt;
+        private View mEscrowStatusBgView;
+
+        private View mCallIv;
+        private View mMessageIv;
+
+
+        public LeadsHolder(View v) {
+            super(v);
+            mContainer = (RelativeLayout) v.findViewById(R.id.container);
+            mAvatarIv = (ImageView) v.findViewById(R.id.iv_leadImage);
+            mNameTxt = (TextView) v.findViewById(R.id.tv_leadName);
+            mInitialsTxt = (TextView) v.findViewById(R.id.tv_leadInitials);
+            mStatusTxt = (TextView) v.findViewById(R.id.tv_leadStatus);
+            mDeadLineDateTxt = (TextView) v.findViewById(R.id.tv_leadDate);
+            mNotificationCountTxt = (TextView) v.findViewById(R.id.tv_leadNotificationsCounter);
+            mEscrowStatusBgView = v.findViewById(R.id.leadEscrowStatusBg);
+
+            mCallIv = v.findViewById(R.id.iv_leadCall);
+            mMessageIv = v.findViewById(R.id.iv_leadMessage);
+        }
+
+        @Override
+        public View getSwipeableContainerView() {
+            return mContainer;
+        }
+
+    }
+
     @Override
     public void onClick(View v) {
-
         if (onClickListener != null) {
+            LeadItem lead = (LeadItem) v.getTag();
             switch (v.getId()) {
                 case R.id.container:
-                    onClickListener.onItemClickListener((LeadItem) v.getTag());
+                    onClickListener.onItemClickListener(lead);
                     break;
                 case R.id.iv_leadCall:
-                    onClickListener.onCallClickListener((LeadItem) v.getTag());
+                    onClickListener.onCallClickListener(lead);
                     break;
                 case R.id.iv_leadMessage:
-                    onClickListener.onMessageClickListener((LeadItem) v.getTag());
+                    onClickListener.onMessageClickListener(lead);
                     break;
             }
         }
     }
-    /**
-
-     public static class ItemOnClickListener implements View.OnClickListener {
-
-     public interface EventListener {
-     void onItemPinned(int position);
-
-     void onItemViewClicked(View v, int leadId);
-
-     void onItemPhoneClicked(View v);
-
-     void onItemChatClicked(View v);
-
-     void onItemEmailClicked(View v);
-     }
-
-     int leadId;
-     EventListener mEventListener;
-
-     public ItemOnClickListener(EventListener mEventListener) {
-     this.mEventListener = mEventListener;
-     this.leadId = 0;
-     }
-
-     public void setLeadId(int leadId) {
-     this.leadId = leadId;
-     }
-
-     @Override public void onClick(View v) {
-     if (mEventListener != null) {
-     View view = RecyclerViewAdapterUtils.getParentViewHolderItemView(v);
-
-     switch (v.getId()) {
-     case R.id.container:
-     mEventListener.onItemViewClicked(view, leadId);
-     break;
-     case R.id.iv_leadCall:
-     mEventListener.onItemPhoneClicked(view);
-     break;
-     case R.id.iv_leadMessage:
-     mEventListener.onItemEmailClicked(view);
-     break;
-     //                    case R.id.iv_contactChat:
-     //                        mEventListener.onItemChatClicked(view);
-     //                        break;
-     }
-     }
-     }
-
-     }*/
 }

@@ -1,8 +1,10 @@
 package com.loomlogic.leads;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -190,15 +192,68 @@ public class LeadsFragment extends BaseHomeFragment implements LeadsAdapter.OnLe
     @Override
     public void onItemClickListener(LeadItem item) {
         getHomeActivity().showErrorSnackBar("onItemClickListener");
+        mAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void onMessageClickListener(LeadItem item) {
-        getHomeActivity().showErrorSnackBar("onMessageClickListener");
+        mAdapter.notifyDataSetChanged();
+        openMessageDialog(item);
     }
 
     @Override
     public void onCallClickListener(LeadItem item) {
-        getHomeActivity().showErrorSnackBar("onCallClickListener");
+        mAdapter.notifyDataSetChanged();
+        openCallDialog(item);
     }
+
+    private void openCallDialog(LeadItem leadItem){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setItems(R.array.lead_call_chooser, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which) {
+                    case 0:
+                        getHomeActivity().showErrorSnackBar("twillio call");
+                        break;
+                    case 1:
+                        getHomeActivity().showErrorSnackBar("call");
+                        break;
+                }
+            }
+
+        });
+        builder.show();
+    }
+
+    private void openMessageDialog(LeadItem leadItem){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setItems(R.array.lead_message_chooser, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which) {
+                    case 0:
+                        getHomeActivity().showErrorSnackBar("note");
+                        break;
+                    case 1:
+                        getHomeActivity().showErrorSnackBar("email");
+                        break;
+                    case 2:
+                        getHomeActivity().showErrorSnackBar("sms");
+                        break;
+                }
+            }
+
+        });
+        builder.show();
+    }
+/*
+
+    private Spannable getPhoneFormattedText(String title, String phone) {
+        String txt = title + "\n" + phone;
+        Spannable sb = new SpannableString(txt);
+        sb.setSpan(new ForegroundColorSpan(ContextCompat.getColor(this, R.color.accent)), 0, title.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        sb.setSpan(new RelativeSizeSpan(0.8f), title.length(), txt.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        return sb;
+    }*/
 }
