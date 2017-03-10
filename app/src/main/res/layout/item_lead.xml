@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="70dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#e5e4e4"
+        android:orientation="horizontal"
+        android:weightSum="4"
+        tools:visibility="gone">
+
+        <ImageView
+            android:id="@+id/iv_leadDocumentOpen"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:background="@android:color/holo_green_light"
+            android:foreground="?attr/selectableItemBackground"
+            android:scaleType="center"
+            android:src="@drawable/ic_email" />
+
+        <ImageView
+            android:id="@+id/iv_leadDocumentEdit"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@android:color/holo_orange_light"
+            android:foreground="?attr/selectableItemBackground"
+            android:scaleType="center"
+            android:src="@drawable/ic_email" />
+
+        <ImageView
+            android:id="@+id/iv_leadDocumentDelete"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@android:color/holo_red_light"
+            android:foreground="?attr/selectableItemBackground"
+            android:scaleType="center"
+            android:src="@drawable/ic_email" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:clickable="true"
+        android:foreground="?attr/selectableItemBackground"
+        android:orientation="horizontal"
+        tools:visibility="visible">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:background="#EDEDED" />
+
+        <View
+            android:id="@+id/leadEscrowStatusBg"
+            android:layout_width="300dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/lead_escrow_status_financing_bg" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <FrameLayout
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp">
+
+                <com.makeramen.roundedimageview.RoundedImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/iv_leadImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerCrop"
+                    app:riv_mutate_background="true"
+                    app:riv_oval="true"
+                    tools:src="#4A4A4A" />
+
+                <TextView
+                    android:id="@+id/tv_leadInitials"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    tools:text="RG" />
+
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_leadName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="marquee"
+                    android:maxLines="1"
+                    android:textColor="#4A4A4A"
+                    android:textSize="16sp"
+                    tools:text="Randall Padilla Randall Padilla Randall Padilla Randall Padilla Randall Padilla " />
+
+                <TextView
+                    android:id="@+id/tv_leadStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_buyer_financing"
+                    android:drawablePadding="5dp"
+                    android:ellipsize="marquee"
+                    android:maxLines="1"
+                    android:textColor="#9B9B9B"
+                    android:textSize="12sp"
+                    tools:text="Appraisal Received" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="10dp"
+                android:gravity="right|center_vertical"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_leadDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#D0011B"
+                    android:textSize="12sp"
+                    tools:text="21 days" />
+
+                <TextView
+                    android:id="@+id/tv_leadNotificationsCounter"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/lead_unread_notification_count_bg"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:textSize="10sp"
+                    tools:text="20" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+</FrameLayout>

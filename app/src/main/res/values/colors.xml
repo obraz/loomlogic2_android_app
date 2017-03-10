@@ -24,4 +24,17 @@
 
     <color name="black">#000000</color>
     <color name="black_transparent_10">#1A000000</color>
+
+    <color name="lead_gender_male_color">#4990E2</color>
+    <color name="lead_gender_female_color">#BD0FE1</color>
+    <color name="lead_gender_none_color">#9B9B9B</color>
+
+    <color name="lead_deadline_upnext_color">#4A4A4A</color>
+    <color name="lead_deadline_today_color">#F6A623</color>
+    <color name="lead_deadline_expired_color">#D0011B</color>
+
+    <color name="lead_escrow_status_financing_bg_color">#FFFEEC</color>
+    <color name="lead_escrow_status_financing_underline_color">#F8E81C</color>
+    <color name="lead_escrow_status_cash_bg_color">#EFFEEC</color>
+    <color name="lead_escrow_status_cash_underline_color">#7ED321</color>
 </resources>
