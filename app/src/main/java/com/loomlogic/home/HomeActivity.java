@@ -78,6 +78,11 @@ public class HomeActivity extends BackStackActivity implements BottomNavigationB
         }
     }
 
+    public BottomNavigationBar gerBottomNavBar() {
+        return bottomNavBar;
+    }
+
+
     public BaseHomeFragment gerCurrentFragment() {
         return (BaseHomeFragment) curFragment;
     }
@@ -105,6 +110,7 @@ public class HomeActivity extends BackStackActivity implements BottomNavigationB
 
         Pair<Integer, Fragment> pair = popFragmentFromBackStack();
         if (pair != null) {
+            gerBottomNavBar().show();
             backTo(pair.first, pair.second);
         } else {
             super.onBackPressed();

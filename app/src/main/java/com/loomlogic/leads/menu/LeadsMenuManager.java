@@ -183,10 +183,12 @@ public class LeadsMenuManager {
 
     public void openDrawer() {
         drawer.openDrawer(GravityCompat.START);
+        activity.gerBottomNavBar().hide();
     }
 
     public boolean closeDrawer() {
         if (isDrawerOpen()) {
+            activity.gerBottomNavBar().show();
             drawer.closeDrawer(GravityCompat.START);
             return true;
         }
