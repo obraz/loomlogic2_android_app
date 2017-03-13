@@ -3,10 +3,15 @@ package com.loomlogic.leads;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +27,7 @@ import com.loomlogic.base.MessageEvent;
 import com.loomlogic.home.BaseHomeFragment;
 import com.loomlogic.leads.menu.LeadMenuItem;
 import com.loomlogic.leads.menu.LeadsMenuManager;
+import com.loomlogic.utils.LeadUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -33,8 +39,10 @@ import java.util.ArrayList;
  * Created by alex on 2/22/17.
  */
 
-public class LeadsFragment extends BaseHomeFragment implements LeadsAdapter.OnLeadClickListener {
+public class LeadsFragment extends BaseHomeFragment implements LeadsAdapter.OnLeadClickListener, SearchView.OnQueryTextListener {
     private LeadsMenuManager leadsMenuManager;
+    private ArrayList<LeadItem> fakeList;
+    private SwipeRefreshLayout layoutSwipeRefresh;
 
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -42,6 +50,8 @@ public class LeadsFragment extends BaseHomeFragment implements LeadsAdapter.OnLe
     private RecyclerView.Adapter mWrappedAdapter;
     private RecyclerViewSwipeManager mRecyclerViewSwipeManager;
     private RecyclerViewTouchActionGuardManager mRecyclerViewTouchActionGuardManager;
+
+    private LeadsAdapter mItemAdapter;
 
     public static LeadsFragment newInstance() {
         LeadsFragment fragment = new LeadsFragment();
@@ -72,6 +82,15 @@ public class LeadsFragment extends BaseHomeFragment implements LeadsAdapter.OnLe
 
         leadsMenuManager = new LeadsMenuManager(getHomeActivity(), mainContent, drawerLayout, navigationViewContainer);
 
+        layoutSwipeRefresh = (SwipeRefreshLayout) view.findViewById(R.id.layoutSwipeRefresh);
+        layoutSwipeRefresh.setColorSchemeColors(ContextCompat.getColor(getContext(), LeadUtils.getCurrentLeadRoleColor()));
+        layoutSwipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                layoutSwipeRefresh.setRefreshing(false);
+            }
+        });
+
         initList();
     }
 
@@ -88,7 +107,7 @@ public class LeadsFragment extends BaseHomeFragment implements LeadsAdapter.OnLe
         mRecyclerViewSwipeManager = new RecyclerViewSwipeManager();
 //int id, int unreadNotificationCount, int deadlineDate, String avatarUrl, String firstName, String lastName,
 // Gender gender, String status, boolean isFinancing, int statusCount
-        ArrayList<LeadItem> fakeList = new ArrayList<>();
+        fakeList = new ArrayList<>();
         fakeList.add(new LeadItem(1, 2, 3, "http://klub.life/wp-content/uploads/2017/03/%D0%91%D0%B0%D0%BD%D0%B5%D1%80-%D0%BA%D0%BB%D1%83%D0%B1-%D0%BB%D0%B0%D0%B9%D1%84-%D0%BD%D0%B0-%D0%B3%D0%BB%D0%B0%D0%B2%D0%BD%D1%83%D1%8E-%D0%94%D0%B5%D0%B5%D0%B2-%D0%A4%D0%BE%D1%82%D0%BE%D1%88%D0%BE%D0%BF-932x460.jpg", "Vasya", "Kaban", LeadItem.Gender.MALE, "escrow status 0", true, 0));
         fakeList.add(new LeadItem(2, 0, -5, "https://www.rbc.ua/static/img/_/v/_vinogorodskiy_650x410.jpg", "Vasya", "Kaban", LeadItem.Gender.MALE, "escrow status 1", true, 1));
         fakeList.add(new LeadItem(3, 100, 0, "", "Vasilina", "Kabaniha", LeadItem.Gender.FEMALE, "escrow status 2", true, 2));
@@ -106,13 +125,14 @@ public class LeadsFragment extends BaseHomeFragment implements LeadsAdapter.OnLe
         fakeList.add(new LeadItem(15, 66, 7, "", "Kakoeto", "Imja", LeadItem.Gender.NONE, "escrow status 4", true, 4));
 
 
-        LeadsAdapter mItemAdapter = new LeadsAdapter(getContext(), this);
+        mItemAdapter = new LeadsAdapter(getContext(), this);
         mItemAdapter.setData(fakeList);
 
         mAdapter = mItemAdapter;
 
         mWrappedAdapter = mRecyclerViewSwipeManager.createWrappedAdapter(mItemAdapter);      // wrap for swiping
 
+        mWrappedAdapter = new LeadsSearchHeaderAdapter(mWrappedAdapter, this);
         final GeneralItemAnimator animator = new SwipeDismissItemAnimator();
 
         // Change animations are enabled by default since support-v7-recyclerview v22.
@@ -246,13 +266,33 @@ public class LeadsFragment extends BaseHomeFragment implements LeadsAdapter.OnLe
         });
         builder.show();
     }
-/*
 
-    private Spannable getPhoneFormattedText(String title, String phone) {
-        String txt = title + "\n" + phone;
-        Spannable sb = new SpannableString(txt);
-        sb.setSpan(new ForegroundColorSpan(ContextCompat.getColor(this, R.color.accent)), 0, title.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        sb.setSpan(new RelativeSizeSpan(0.8f), title.length(), txt.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        return sb;
-    }*/
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        Log.e("onQueryTextSubmit: ", query);
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        Log.e("onQueryTextChange: ", "  " + newText);
+        doSearch(newText);
+        return false;
+    }
+
+    private void doSearch(String newText) {
+        if (TextUtils.isEmpty(newText)) {
+            mItemAdapter.setData(fakeList);
+            return;
+        }
+        ArrayList<LeadItem> foundItemsList = new ArrayList<>();
+
+        for (LeadItem item : fakeList) {
+            if (item.firstName.toLowerCase().contains(newText) || item.lastName.toLowerCase().contains(newText)) {
+                foundItemsList.add(item);
+            }
+        }
+        mItemAdapter.setData(foundItemsList);
+    }
+
 }

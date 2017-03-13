@@ -23,21 +23,40 @@
                 android:id="@+id/ib_leadsMenu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="clip_vertical"
+                android:layout_gravity="center_vertical"
                 android:background="?attr/selectableItemBackground"
                 android:padding="10dp"
-                android:src="@drawable/ic_navigation_leads" />
+                android:src="@drawable/ic_menu" />
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Contract"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+            <ImageButton
+                android:id="@+id/ib_leadsFilter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|right"
+                android:background="?attr/selectableItemBackground"
+                android:padding="10dp"
+                android:src="@drawable/ic_filter" />
         </FrameLayout>
 
-        <android.support.v4.widget.NestedScrollView
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/layoutSwipeRefresh"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
-        </android.support.v4.widget.NestedScrollView>
+        </android.support.v4.widget.SwipeRefreshLayout>
     </LinearLayout>
 
     <android.support.design.widget.NavigationView

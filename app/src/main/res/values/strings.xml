@@ -10,6 +10,7 @@
     <string name="agent">Agent</string>
     <string name="lender">Lender</string>
     <string name="cancel">Cancel</string>
+    <string name="searchHint">Search</string>
 
     <!-- Sign In -->
     <string name="logIn">Log In</string>
