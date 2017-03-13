@@ -61,7 +61,7 @@ public class LeadsMenuManager {
         final LinePageIndicator titleIndicator = (LinePageIndicator) navigationViewContainer.findViewById(R.id.indicator);
         titleIndicator.setFullWidht();
 
-        adapter = new LeadsTypeAdapter(activity.getSupportFragmentManager());
+        adapter = new LeadsTypeAdapter(activity.getBaseContext());
 
         viewPager = (ViewPager) navigationViewContainer.findViewById(R.id.vp_leadsMenu);
         viewPager.setAdapter(adapter);
@@ -191,12 +191,6 @@ public class LeadsMenuManager {
             return true;
         }
         return false;
-    }
-
-    public void stopFragments() {
-        for (int i = 0; i < adapter.getCount(); i++) {
-            adapter.getFragment(viewPager, i).onStop();
-        }
     }
 
 }

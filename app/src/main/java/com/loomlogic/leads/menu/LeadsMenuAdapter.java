@@ -21,11 +21,11 @@ import java.util.ArrayList;
 
 public class LeadsMenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private ArrayList<LeadMenuItem> items;
-    private boolean isSellers;
+    private boolean isBuyer;
 
-    public LeadsMenuAdapter(ArrayList<LeadMenuItem> items, boolean isSellers) {
+    public LeadsMenuAdapter(ArrayList<LeadMenuItem> items, boolean isBuyer) {
         this.items = items;
-        this.isSellers = isSellers;
+        this.isBuyer = isBuyer;
     }
 
     @Override
@@ -42,7 +42,7 @@ public class LeadsMenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         holder.txtName.setCompoundDrawablesWithIntrinsicBounds(item.getDrawableIcon(), null, null, null);
         holder.txtName.setText(item.getName());
         holder.txtCount.setText(String.valueOf(item.getCount()));
-        if (isSellers) {
+        if (!isBuyer) {
             int height = LoomLogicApp.getSharedContext().getResources().getDimensionPixelSize(R.dimen.lead_menu_seller_item_height);
             holder.layoutRoot.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height));
         }

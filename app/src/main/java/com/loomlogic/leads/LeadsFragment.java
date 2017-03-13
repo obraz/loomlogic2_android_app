@@ -33,7 +33,7 @@ import java.util.ArrayList;
  * Created by alex on 2/22/17.
  */
 
-public class LeadsFragment extends BaseHomeFragment implements LeadsAdapter.OnLeadClickListener{
+public class LeadsFragment extends BaseHomeFragment implements LeadsAdapter.OnLeadClickListener {
     private LeadsMenuManager leadsMenuManager;
 
     private RecyclerView mRecyclerView;
@@ -181,7 +181,6 @@ public class LeadsFragment extends BaseHomeFragment implements LeadsAdapter.OnLe
     public void onStop() {
         super.onStop();
         EventBus.getDefault().unregister(this);
-        leadsMenuManager.stopFragments();
     }
 
     @Override
@@ -207,7 +206,7 @@ public class LeadsFragment extends BaseHomeFragment implements LeadsAdapter.OnLe
         openCallDialog(item);
     }
 
-    private void openCallDialog(LeadItem leadItem){
+    private void openCallDialog(LeadItem leadItem) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setItems(R.array.lead_call_chooser, new DialogInterface.OnClickListener() {
             @Override
@@ -226,7 +225,7 @@ public class LeadsFragment extends BaseHomeFragment implements LeadsAdapter.OnLe
         builder.show();
     }
 
-    private void openMessageDialog(LeadItem leadItem){
+    private void openMessageDialog(LeadItem leadItem) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setItems(R.array.lead_message_chooser, new DialogInterface.OnClickListener() {
             @Override
