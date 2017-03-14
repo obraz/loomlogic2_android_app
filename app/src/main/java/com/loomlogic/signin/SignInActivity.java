@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 
+import com.loomlogic.BuildConfig;
 import com.loomlogic.R;
 import com.loomlogic.home.HomeActivity;
 import com.loomlogic.signin.signup.SignUpActivity;
@@ -25,7 +26,8 @@ public class SignInActivity extends BaseSignInActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
         initView();
-        startActivity(new Intent(SignInActivity.this, HomeActivity.class));
+        if (BuildConfig.FLAVOR.equals("loomlogicDebug"))
+            startActivity(new Intent(SignInActivity.this, HomeActivity.class));
     }
 
     private void initView() {

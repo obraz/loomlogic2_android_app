@@ -11,25 +11,30 @@ android {
         versionName "1.0"
         vectorDrawables.useSupportLibrary = true
     }
-    buildTypes {
-
-        android.applicationVariants.all { variant ->
-            if (variant.buildType.name == "loomlogicTest") {
-                variant.outputs.each { output ->
-                    def file = output.outputFile
-                    output.outputFile = new File(file.parent, "loomlogic_debug_" + getDate() + ".apk")
-                }
-            }
-        }
-
+    productFlavors {
         loomlogicTest {
             resValue "string", "AnimSplashDuration", "3000"
             resValue "string", "AnimSplashStartOffset", "1000"
         }
 
-        debug {
+        loomlogicDebug {
             resValue "string", "AnimSplashDuration", "300"
             resValue "string", "AnimSplashStartOffset", "100"
+        }
+    }
+
+    buildTypes {
+
+        applicationVariants.all { variant ->
+            variant.outputs.each { output ->
+                if (variant.productFlavors[0].name.equals("loomlogicTest")) {
+                    variant.outputs.each { output2 ->
+                        def file = output2.outputFile
+                        output2.outputFile = new File(file.parent, "loomlogic_debug_" + getDate() + ".apk")
+                    }
+
+                }
+            }
         }
 
         release {
@@ -40,6 +45,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
 }
 
 def getDate() {
