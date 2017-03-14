@@ -19,7 +19,10 @@ import com.loomlogic.home.HomeActivity;
 import com.loomlogic.leads.LeadRole;
 import com.loomlogic.utils.LeadPreferencesUtils;
 import com.loomlogic.utils.LeadUtils;
+import com.loomlogic.utils.ViewUtils;
 import com.loomlogic.view.LinePageIndicator;
+
+import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
 
 /**
  * Created by alex on 2/28/17.
@@ -140,6 +143,7 @@ public class LeadsMenuManager {
             public void onDrawerClosed(View view) {
                 super.onDrawerClosed(view);
                 activity.supportInvalidateOptionsMenu();
+                activity.gerBottomNavBar().show();
             }
 
             public void onDrawerOpened(View drawerView) {
@@ -182,13 +186,15 @@ public class LeadsMenuManager {
     }
 
     public void openDrawer() {
+        if (KeyboardVisibilityEvent.isKeyboardVisible(activity)){
+            ViewUtils.hideSoftKeyboard(drawer);
+        }
         drawer.openDrawer(GravityCompat.START);
         activity.gerBottomNavBar().hide();
     }
 
     public boolean closeDrawer() {
         if (isDrawerOpen()) {
-            activity.gerBottomNavBar().show();
             drawer.closeDrawer(GravityCompat.START);
             return true;
         }
