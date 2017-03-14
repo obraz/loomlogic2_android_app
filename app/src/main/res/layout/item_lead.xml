@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        tools:visibility="visible">
+        tools:visibility="invisible">
 
         <Space
             android:layout_width="0dp"
@@ -43,7 +43,7 @@
         android:clickable="true"
         android:foreground="?attr/selectableItemBackground"
         android:orientation="horizontal"
-        tools:visibility="invisible">
+        tools:visibility="visible">
 
         <View
             android:layout_width="match_parent"
@@ -140,13 +140,16 @@
 
                 <TextView
                     android:id="@+id/tv_leadNotificationsCounter"
-                    android:layout_width="20dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="20dp"
                     android:background="@drawable/lead_unread_notification_count_bg"
                     android:gravity="center"
+                    android:minWidth="20dp"
+                    android:paddingLeft="6dp"
+                    android:paddingRight="6dp"
                     android:textColor="@color/white"
                     android:textSize="10sp"
-                    tools:text="20" />
+                    tools:text="2" />
 
             </LinearLayout>
         </LinearLayout>

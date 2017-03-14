@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import com.h6ah4i.android.widget.advrecyclerview.headerfooter.AbstractHeaderFooterWrapperAdapter;
 import com.loomlogic.R;
 
+
 /**
  * Created by alex on 3/13/17.
  */
@@ -46,6 +47,7 @@ public class LeadsSearchHeaderAdapter extends AbstractHeaderFooterWrapperAdapter
         HeaderViewHolder vh = new HeaderViewHolder(v);
         vh.searchView.setIconifiedByDefault(false);
         vh.searchView.setOnQueryTextListener(onQueryTextListener);
+        vh.searchView.clearFocus();
         return vh;
     }
 
