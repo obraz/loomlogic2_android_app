@@ -135,23 +135,23 @@ public class LeadsFragment extends BaseHomeFragment implements LeadsAdapter.OnLe
         // swipe manager
         mRecyclerViewSwipeManager = new RecyclerViewSwipeManager();
 //int id, int unreadNotificationCount, int deadlineDate, String avatarUrl, String firstName, String lastName,
-// Gender gender, String status, boolean isFinancing, int statusCount
+// Gender gender, String address, boolean isFinancing, int statusCount
         fakeList = new ArrayList<>();
-        fakeList.add(new LeadItem(1, 2, 3, "http://klub.life/wp-content/uploads/2017/03/%D0%91%D0%B0%D0%BD%D0%B5%D1%80-%D0%BA%D0%BB%D1%83%D0%B1-%D0%BB%D0%B0%D0%B9%D1%84-%D0%BD%D0%B0-%D0%B3%D0%BB%D0%B0%D0%B2%D0%BD%D1%83%D1%8E-%D0%94%D0%B5%D0%B5%D0%B2-%D0%A4%D0%BE%D1%82%D0%BE%D1%88%D0%BE%D0%BF-932x460.jpg", "Vasya", "Kaban", LeadItem.Gender.MALE, "escrow status 0", true, 0));
-        fakeList.add(new LeadItem(2, 0, -5, "https://www.rbc.ua/static/img/_/v/_vinogorodskiy_650x410.jpg", "Vasya", "Kaban", LeadItem.Gender.MALE, "escrow status 1", true, 1));
-        fakeList.add(new LeadItem(3, 100, 0, "", "Vasilina", "Kabaniha", LeadItem.Gender.FEMALE, "escrow status 2", true, 2));
-        fakeList.add(new LeadItem(4, 0, -15, null, "Vasya", "Kaban", LeadItem.Gender.MALE, "escrow status 3", true, 3));
-        fakeList.add(new LeadItem(5, 12, 20, "https://www.rbc.ua/static/img/9/1/9178412a31245a1fa39dda0b0bb6de07_650x410.jpg", "Vasilina", "Kabaniha", LeadItem.Gender.FEMALE, "escrow status 4", true, 4));
-        fakeList.add(new LeadItem(6, 7, 5, null, "Bespoloe", "Sywestvo", LeadItem.Gender.NONE, "escrow status 5", true, 5));
-        fakeList.add(new LeadItem(7, 0, 1, "https://www.rbc.ua/static/img/_/v/_vinogorodskiy_650x410.jpg", "Vasya", "Kaban", LeadItem.Gender.FEMALE, "escrow status 6", true, 6));
-        fakeList.add(new LeadItem(8, 0, -7, null, "Vasya", "Kaban", LeadItem.Gender.MALE, "escrow status 7", true, 7));
-        fakeList.add(new LeadItem(9, 5, 21, "https://www.rbc.ua/static/img/_/v/_vinogorodskiy_650x410.jpg", "Vasya", "Kaban", LeadItem.Gender.FEMALE, "escrow status 0", false, 0));
-        fakeList.add(new LeadItem(10, 15, -22, null, "Vasya", "Kaban", LeadItem.Gender.MALE, "escrow status 1", false, 1));
-        fakeList.add(new LeadItem(11, 789, 1, "", "Ochen'", "Dlinnoe Imjaaaaaaaaaaaaaaaaaaa", LeadItem.Gender.MALE, "escrow status 2", false, 2));
-        fakeList.add(new LeadItem(12, 2, 12, "http://mozuanbotoks.newbloggs.xyz/doc-rus-1.jpeg", "Noname", "", LeadItem.Gender.MALE, "escrow status 2", true, 2));
-        fakeList.add(new LeadItem(13, 1, 3, "http://i1.nuttit.com/nsfw/Fresh_peaches_28188407.jpg", "Prosto", "Siski", LeadItem.Gender.FEMALE, "escrow status 1", true, 1));
-        fakeList.add(new LeadItem(14, 0, -5, null, "Vasya", "Kaban", LeadItem.Gender.MALE, "escrow status 1", false, 1));
-        fakeList.add(new LeadItem(15, 66, 7, "", "Kakoeto", "Imja", LeadItem.Gender.NONE, "escrow status 4", true, 4));
+        fakeList.add(new LeadItem(1, 2, 3, "http://loomlogic.ucoz.net/3.jpg", "Randall", "Padilla", LeadItem.Gender.MALE, "322 Lennie Squares Apt. 344", true, 0));
+        fakeList.add(new LeadItem(2, 0, -5, "http://loomlogic.ucoz.net/1.jpg", "Craig", "Perez", LeadItem.Gender.MALE, "036 Ozella Lights", true, 1));
+        fakeList.add(new LeadItem(3, 100, 0, "http://loomlogic.ucoz.net/6.jpg", "Darrell", "Pierce", LeadItem.Gender.MALE, "960 Xavier Branch Apt. 901", true, 2));
+        fakeList.add(new LeadItem(4, 0, -15, "http://loomlogic.ucoz.net/4.jpg", "Benjamin", "Carlson", LeadItem.Gender.MALE, "9549 Cummings Lane Apt. 681", true, 3));
+        fakeList.add(new LeadItem(5, 12, 20, "http://loomlogic.ucoz.net/5.jpg", "Glenn", "Flowers", LeadItem.Gender.FEMALE, "941 Hyatt Divide Suite 043", true, 4));
+        fakeList.add(new LeadItem(6, 7, 5, "http://loomlogic.ucoz.net/5.jpg", "Tom", "Foster", LeadItem.Gender.FEMALE, "804 Mosciski Station", true, 5));
+        fakeList.add(new LeadItem(7, 0, 1, "", "Jonathan", "Perkins", LeadItem.Gender.MALE, "804 Mosciski Station", true, 6));
+        fakeList.add(new LeadItem(8, 0, -7, "http://loomlogic.ucoz.net/2.jpg", "William", "Miller", LeadItem.Gender.MALE, "536 Feeney Springs", true, 7));
+        fakeList.add(new LeadItem(9, 5, 21, "http://loomlogic.ucoz.net/4.jpg", "Justin", "Keller", LeadItem.Gender.MALE, "631 Berge Coves", false, 0));
+        fakeList.add(new LeadItem(10, 15, -22, "http://loomlogic.ucoz.net/3.jpg", "Steven", "Lucas", LeadItem.Gender.MALE, "9579 Ignatius Centers Suite 537", false, 1));
+        fakeList.add(new LeadItem(11, 789, 1, "", "Steven'", "Lucas", LeadItem.Gender.MALE, "9579 Ignatius Centers Suite 537", false, 2));
+        fakeList.add(new LeadItem(12, 2, 12, "", "Steven", "Lucas", LeadItem.Gender.MALE, "9579 Ignatius Centers Suite 537", true, 2));
+        fakeList.add(new LeadItem(13, 1, 3, "", "Steven", "Lucas", LeadItem.Gender.FEMALE, "9579 Ignatius Centers Suite 537", true, 1));
+        fakeList.add(new LeadItem(14, 0, -5, null, "Steven", "Lucas", LeadItem.Gender.MALE, "9579 Ignatius Centers Suite 537", false, 1));
+        fakeList.add(new LeadItem(15, 66, 7, "", "Steven", "Lucas", LeadItem.Gender.NONE, "9579 Ignatius Centers Suite 537", true, 4));
 
 
         mItemAdapter = new LeadsAdapter(getContext(), this);

@@ -91,7 +91,7 @@ public class LeadsAdapter extends RecyclerView.Adapter<LeadsAdapter.LeadsHolder>
         setDeadline(holder, lead);
         setEscrowStatusBg(holder, lead);
         holder.mNameTxt.setText(String.format("%s %s", lead.firstName, lead.lastName));
-        holder.mStatusTxt.setText(lead.status);
+        holder.mStatusTxt.setText(lead.address);
         holder.mStatusTxt.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(context, lead.isFinancing ? R.drawable.ic_buyer_financing : R.drawable.ic_buyer_cash), null, null, null);
 
         if (lead.unreadNotificationCount > 0) {
