@@ -1,6 +1,7 @@
 package com.loomlogic.leads.details;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.ColorRes;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
@@ -12,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.HorizontalScrollView;
 import android.widget.TextView;
 
 import com.loomlogic.R;
@@ -44,6 +46,15 @@ public class LeadDetailsFragment extends BaseHomeFragment implements TabLayout.O
                 mTabLayout.setLayoutParams(mParams);
             } else {
                 mTabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+                // todo do it only once
+                mTabLayout.fullScroll(HorizontalScrollView.FOCUS_RIGHT);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mTabLayout.fullScroll(HorizontalScrollView.FOCUS_LEFT);
+                    }
+                }, 800);
+
             }
         }
     };
