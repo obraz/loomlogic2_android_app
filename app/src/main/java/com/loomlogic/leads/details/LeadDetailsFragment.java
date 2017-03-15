@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -31,6 +32,7 @@ public class LeadDetailsFragment extends BaseHomeFragment implements TabLayout.O
     }
 
     private TabLayout mTabLayout;
+    private ViewPager viewPager;
 
     Runnable mTabLayout_config = new Runnable() {
         @Override
@@ -55,12 +57,21 @@ public class LeadDetailsFragment extends BaseHomeFragment implements TabLayout.O
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        initViews(view);
         initToolbar(view);
+        initTabLayout(view);
+        initViewPager(view);
 
+        onTabSelected(mTabLayout.getTabAt(0));
     }
 
-    private void initViews(View view) {
+    private void initViewPager(View view) {
+        viewPager = (ViewPager) view.findViewById(R.id.vp_leadDetails);
+        LeadDetailsPagerAdapter adapter = new LeadDetailsPagerAdapter(getHomeActivity().getSupportFragmentManager(), mTabLayout.getTabCount());
+        viewPager.setAdapter(adapter);
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayout));
+    }
+
+    private void initTabLayout(View view) {
         mTabLayout = (TabLayout) view.findViewById(R.id.tab_layout);
         mTabLayout.addTab(mTabLayout.newTab().setCustomView(getViewForTab(R.string.lead_details_tab_details, 0)));
         mTabLayout.addTab(mTabLayout.newTab().setCustomView(getViewForTab(R.string.lead_details_tab_messages, 10)));
@@ -69,8 +80,6 @@ public class LeadDetailsFragment extends BaseHomeFragment implements TabLayout.O
         mTabLayout.addTab(mTabLayout.newTab().setCustomView(getViewForTab(R.string.lead_details_tab_documents, 0)));
         mTabLayout.addOnTabSelectedListener(this);
         mTabLayout.post(mTabLayout_config);
-
-        onTabSelected(mTabLayout.getTabAt(0));
     }
 
     private View getViewForTab(@StringRes int tabName, int notifCount) {
@@ -82,7 +91,7 @@ public class LeadDetailsFragment extends BaseHomeFragment implements TabLayout.O
         if (notifCount > 0) {
             TextView counter = (TextView) customTabView.findViewById(R.id.tv_bageCounter);
             counter.setVisibility(View.VISIBLE);
-            counter.setText("20000");
+            counter.setText("20");
         }
         return customTabView;
     }
@@ -90,6 +99,7 @@ public class LeadDetailsFragment extends BaseHomeFragment implements TabLayout.O
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
         updateTabTextColor(tab, R.color.white);
+        viewPager.setCurrentItem(tab.getPosition());
     }
 
     @Override

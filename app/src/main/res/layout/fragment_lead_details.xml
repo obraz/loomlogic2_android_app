@@ -10,8 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimaryDark"
-        app:titleTextColor="@color/white"
-        app:theme="@style/ThemeToolbar"/>
+        app:theme="@style/ThemeToolbar"
+        app:titleTextColor="@color/white" />
 
     <android.support.design.widget.TabLayout
         android:id="@+id/tab_layout"
@@ -24,5 +24,8 @@
         app:tabIndicatorHeight="4dp"
         app:tabMode="scrollable" />
 
-
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp_leadDetails"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </LinearLayout>
