@@ -26,4 +26,7 @@ public abstract class BaseHomeFragment extends Fragment {
         return false;
     }
 
+    public void showFragment(Fragment fragment){
+        getHomeActivity().showFragment(fragment);
+    }
 }

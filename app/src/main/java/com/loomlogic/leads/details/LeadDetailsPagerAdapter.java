@@ -2,36 +2,43 @@ package com.loomlogic.leads.details;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.FragmentPagerAdapter;
 
 /**
  * Created by alex on 3/15/17.
  */
 
-public class LeadDetailsPagerAdapter extends FragmentStatePagerAdapter {
-    int mNumOfTabs;
+public class LeadDetailsPagerAdapter extends FragmentPagerAdapter {
+    private int mNumOfTabs;
 
-    public LeadDetailsPagerAdapter(FragmentManager fm, int NumOfTabs) {
+    public LeadDetailsPagerAdapter(FragmentManager fm, int numOfTabs) {
         super(fm);
-        this.mNumOfTabs = NumOfTabs;
+        this.mNumOfTabs = numOfTabs;
     }
 
     @Override
     public Fragment getItem(int position) {
+        Fragment fragment;
         switch (position) {
             case 0:
-                return new DefaultLeadDetailsFragment();
+                fragment = new DefaultLeadDetailsFragment();
+                break;
             case 1:
-                return new DefaultLeadDetailsFragment();
+                fragment = new DefaultLeadDetailsFragment();
+                break;
             case 2:
-                return new DefaultLeadDetailsFragment();
+                fragment = new DefaultLeadDetailsFragment();
+                break;
             case 3:
-                return new DefaultLeadDetailsFragment();
+                fragment = new DefaultLeadDetailsFragment();
+                break;
             case 4:
-                return new DefaultLeadDetailsFragment();
+                fragment = new DefaultLeadDetailsFragment();
+                break;
             default:
-                return null;
+                fragment = new DefaultLeadDetailsFragment();
         }
+        return fragment;
     }
 
     @Override

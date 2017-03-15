@@ -77,7 +77,7 @@ public class LeadDetailsFragment extends BaseHomeFragment implements TabLayout.O
 
     private void initViewPager(View view) {
         viewPager = (ViewPager) view.findViewById(R.id.vp_leadDetails);
-        LeadDetailsPagerAdapter adapter = new LeadDetailsPagerAdapter(getHomeActivity().getSupportFragmentManager(), mTabLayout.getTabCount());
+        LeadDetailsPagerAdapter adapter = new LeadDetailsPagerAdapter(getChildFragmentManager(), mTabLayout.getTabCount());
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayout));
     }

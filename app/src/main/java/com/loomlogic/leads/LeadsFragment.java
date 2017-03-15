@@ -240,7 +240,7 @@ public class LeadsFragment extends BaseHomeFragment implements LeadsAdapter.OnLe
     @Override
     public void onItemClickListener(LeadItem item) {
         mAdapter.notifyDataSetChanged();
-        getHomeActivity().showFragment(LeadDetailsFragment.newInstance(item));
+        showFragment(LeadDetailsFragment.newInstance(item));
     }
 
     @Override
