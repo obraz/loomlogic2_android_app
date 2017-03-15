@@ -71,4 +71,11 @@
         <item>@string/lead_message_email</item>
         <item>@string/lead_message_sms</item>
     </array>
+
+    <!-- Leads Details -->
+    <string name="lead_details_tab_details">Details</string>
+    <string name="lead_details_tab_messages">Messages</string>
+    <string name="lead_details_tab_dates">Dates</string>
+    <string name="lead_details_tab_tasks">Tasks</string>
+    <string name="lead_details_tab_documents">Documents</string>
 </resources>

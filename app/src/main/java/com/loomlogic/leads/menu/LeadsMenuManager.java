@@ -166,13 +166,6 @@ public class LeadsMenuManager {
         mDrawerToggle.setHomeAsUpIndicator(drawable);
 
         drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-
-        mainContent.findViewById(R.id.ib_leadsMenu).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                navigateDrawer();
-            }
-        });
     }
 
     public void navigateDrawer() {

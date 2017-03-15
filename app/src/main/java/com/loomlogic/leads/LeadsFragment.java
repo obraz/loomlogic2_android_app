@@ -10,9 +10,11 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -25,6 +27,7 @@ import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
 import com.loomlogic.R;
 import com.loomlogic.base.MessageEvent;
 import com.loomlogic.home.BaseHomeFragment;
+import com.loomlogic.leads.details.LeadDetailsFragment;
 import com.loomlogic.leads.menu.LeadMenuItem;
 import com.loomlogic.leads.menu.LeadsMenuManager;
 import com.loomlogic.utils.LeadUtils;
@@ -39,7 +42,7 @@ import java.util.ArrayList;
  * Created by alex on 2/22/17.
  */
 
-public class LeadsFragment extends BaseHomeFragment implements LeadsAdapter.OnLeadClickListener, SearchView.OnQueryTextListener {
+public class LeadsFragment extends BaseHomeFragment implements LeadsAdapter.OnLeadClickListener, SearchView.OnQueryTextListener, Toolbar.OnMenuItemClickListener {
     private LeadsMenuManager leadsMenuManager;
     private ArrayList<LeadItem> fakeList;
     private SwipeRefreshLayout layoutSwipeRefresh;
@@ -71,9 +74,35 @@ public class LeadsFragment extends BaseHomeFragment implements LeadsAdapter.OnLe
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        initToolbar(view);
         initViews(view);
     }
 
+    private void initToolbar(View view) {
+        Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+        toolbar.setTitle("Contract");
+        toolbar.inflateMenu(R.menu.menu_leads_filter);
+        toolbar.setOnMenuItemClickListener(this);
+        toolbar.setNavigationIcon(R.drawable.ic_menu);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                leadsMenuManager.navigateDrawer();
+            }
+        });
+    }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_filter:
+                getHomeActivity().showErrorSnackBar("filter");
+                break;
+            default:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     private void initViews(View view) {
         LinearLayout mainContent = (LinearLayout) view.findViewById(R.id.ll_leadsMainContent);
@@ -210,8 +239,8 @@ public class LeadsFragment extends BaseHomeFragment implements LeadsAdapter.OnLe
 
     @Override
     public void onItemClickListener(LeadItem item) {
-        getHomeActivity().showErrorSnackBar("onItemClickListener");
         mAdapter.notifyDataSetChanged();
+        getHomeActivity().showFragment(LeadDetailsFragment.newInstance(item));
     }
 
     @Override

@@ -37,4 +37,6 @@
     <color name="lead_escrow_status_financing_underline_color">#F8E81C</color>
     <color name="lead_escrow_status_cash_bg_color">#EFFEEC</color>
     <color name="lead_escrow_status_cash_underline_color">#7ED321</color>
+
+    <color name="lead_detail_tabText_color">#8F8E94</color>
 </resources>

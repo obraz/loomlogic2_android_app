@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
@@ -13,39 +14,13 @@
         android:background="#EFEFF4"
         android:orientation="vertical">
 
-        <FrameLayout
+        <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:background="@color/colorPrimaryDark">
-
-            <ImageButton
-                android:id="@+id/ib_leadsMenu"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:background="?attr/selectableItemBackground"
-                android:padding="10dp"
-                android:src="@drawable/ic_menu" />
-
-            <TextView
-                android:id="@+id/tv_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="Contract"
-                android:textColor="@color/white"
-                android:textSize="16sp" />
-
-            <ImageButton
-                android:id="@+id/ib_leadsFilter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical|right"
-                android:background="?attr/selectableItemBackground"
-                android:padding="10dp"
-                android:src="@drawable/ic_filter" />
-        </FrameLayout>
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimaryDark"
+            app:theme="@style/ThemeToolbar"
+            app:titleTextColor="@color/white" />
 
         <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/layoutSwipeRefresh"
