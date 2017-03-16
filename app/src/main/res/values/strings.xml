@@ -78,4 +78,19 @@
     <string name="lead_details_tab_dates">Dates</string>
     <string name="lead_details_tab_tasks">Tasks</string>
     <string name="lead_details_tab_documents">Documents</string>
+
+    <array name="lead_details_escrow_statuses_financing_list_abbreviation">
+        <item>SD</item>
+        <item>AO</item>
+        <item>SU</item>
+        <item>AR</item>
+        <item>A</item>
+        <item>DT</item>
+        <item>LF</item>
+    </array>
+
+    <array name="lead_details_escrow_statuses_cash_list_abbreviation">
+        <item>IC</item>
+        <item>CR</item>
+    </array>
 </resources>

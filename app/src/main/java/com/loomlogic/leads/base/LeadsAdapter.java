@@ -1,13 +1,11 @@
-package com.loomlogic.leads;
+package com.loomlogic.leads.base;
 
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -18,8 +16,8 @@ import com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultAct
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultActionMoveToSwipedDirection;
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractSwipeableItemViewHolder;
 import com.loomlogic.R;
+import com.loomlogic.leads.details.LeadEscrowStatusUtils;
 import com.loomlogic.utils.Utils;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -87,7 +85,7 @@ public class LeadsAdapter extends RecyclerView.Adapter<LeadsAdapter.LeadsHolder>
         holder.mMessageIv.setTag(lead);
         holder.mMessageIv.setOnClickListener(this);
 
-        setAvatar(holder, lead);
+        holder.mAvatarV.setLeadAvatar(lead);
         setDeadline(holder, lead);
         setEscrowStatusBg(holder, lead);
         holder.mNameTxt.setText(String.format("%s %s", lead.firstName, lead.lastName));
@@ -107,34 +105,6 @@ public class LeadsAdapter extends RecyclerView.Adapter<LeadsAdapter.LeadsHolder>
         holder.setSwipeItemHorizontalSlideAmount(lead.isPinned() ? -maxSwipeWidth : 0);
     }
 
-    private void setAvatar(LeadsHolder holder, LeadItem lead) {
-        if (Utils.isUrlValid(lead.avatarUrl)) {
-            Picasso.with(context)
-                    .load(lead.avatarUrl)
-                    .into(holder.mAvatarIv);
-            holder.mInitialsTxt.setVisibility(View.GONE);
-        } else {
-            holder.mInitialsTxt.setVisibility(View.VISIBLE);
-            holder.mInitialsTxt.setText(String.format("%s%s", !TextUtils.isEmpty(lead.firstName) ? lead.firstName.charAt(0) : "", !TextUtils.isEmpty(lead.lastName) ? lead.lastName.charAt(0) : ""));
-            int color;
-            switch (lead.gender) {
-                case MALE:
-                    color = ContextCompat.getColor(context, R.color.lead_gender_male_color);
-                    break;
-                case FEMALE:
-                    color = ContextCompat.getColor(context, R.color.lead_gender_female_color);
-                    break;
-                case NONE:
-                    color = ContextCompat.getColor(context, R.color.lead_gender_none_color);
-                    break;
-                default:
-                    color = ContextCompat.getColor(context, R.color.lead_gender_none_color);
-            }
-            holder.mAvatarIv.setBackgroundColor(color);
-            holder.mAvatarIv.setImageDrawable(null);
-        }
-    }
-
     private void setDeadline(LeadsHolder holder, LeadItem lead) {
         String deadlineText = String.format("%s days", Math.abs(lead.deadlineDate));
         int deadlineColor = ContextCompat.getColor(context, R.color.lead_deadline_upnext_color);
@@ -149,10 +119,9 @@ public class LeadsAdapter extends RecyclerView.Adapter<LeadsAdapter.LeadsHolder>
     }
 
     private void setEscrowStatusBg(LeadsHolder holder, LeadItem lead) {
-        holder.mEscrowStatusBgView.setBackground(ContextCompat.getDrawable(context, lead.isFinancing ? R.drawable.lead_escrow_status_financing_bg : R.drawable.lead_escrow_status_cash_bg));
+        holder.mEscrowStatusBgView.setBackgroundResource(lead.isFinancing ? R.drawable.lead_escrow_status_financing_bg : R.drawable.lead_escrow_status_cash_bg);
 
-        int maxStatusCount = lead.isFinancing ? 7 : 2;
-        int currentStatusWidth = lead.statusCount * Utils.getDisplayWidth(context) / maxStatusCount;
+        int currentStatusWidth = lead.escrowStatusDoneCount * Utils.getDisplayWidth(context) / LeadEscrowStatusUtils.getMaxEscrowStatusCount(lead.isFinancing);
         holder.mEscrowStatusBgView.setLayoutParams(new RelativeLayout.LayoutParams(currentStatusWidth, RelativeLayout.LayoutParams.MATCH_PARENT));
     }
 
@@ -254,9 +223,8 @@ public class LeadsAdapter extends RecyclerView.Adapter<LeadsAdapter.LeadsHolder>
 
     public class LeadsHolder extends AbstractSwipeableItemViewHolder {
         private RelativeLayout mContainer;
-        private ImageView mAvatarIv;
+        private LeadAvatarView mAvatarV;
         private TextView mNameTxt;
-        private TextView mInitialsTxt;
         private TextView mStatusTxt;
         private TextView mDeadLineDateTxt;
         private TextView mNotificationCountTxt;
@@ -269,10 +237,9 @@ public class LeadsAdapter extends RecyclerView.Adapter<LeadsAdapter.LeadsHolder>
         public LeadsHolder(View v) {
             super(v);
             mContainer = (RelativeLayout) v.findViewById(R.id.container);
-            mAvatarIv = (ImageView) v.findViewById(R.id.iv_leadImage);
+            mAvatarV = (LeadAvatarView) v.findViewById(R.id.view_leadAvatar);
             mNameTxt = (TextView) v.findViewById(R.id.tv_leadName);
-            mInitialsTxt = (TextView) v.findViewById(R.id.tv_leadInitials);
-            mStatusTxt = (TextView) v.findViewById(R.id.tv_leadStatus);
+            mStatusTxt = (TextView) v.findViewById(R.id.tv_leadAddress);
             mDeadLineDateTxt = (TextView) v.findViewById(R.id.tv_leadDate);
             mNotificationCountTxt = (TextView) v.findViewById(R.id.tv_leadNotificationsCounter);
             mEscrowStatusBgView = v.findViewById(R.id.leadEscrowStatusBg);

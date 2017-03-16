@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 import com.loomlogic.R;
 import com.loomlogic.home.HomeActivity;
-import com.loomlogic.leads.LeadRole;
+import com.loomlogic.leads.base.LeadRole;
 import com.loomlogic.utils.LeadPreferencesUtils;
 import com.loomlogic.utils.LeadUtils;
 import com.loomlogic.utils.ViewUtils;

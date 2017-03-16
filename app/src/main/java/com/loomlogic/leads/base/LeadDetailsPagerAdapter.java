@@ -1,8 +1,10 @@
-package com.loomlogic.leads.details;
+package com.loomlogic.leads.base;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+
+import com.loomlogic.leads.details.LeadDetailsFragment;
 
 /**
  * Created by alex on 3/15/17.
@@ -21,7 +23,7 @@ public class LeadDetailsPagerAdapter extends FragmentPagerAdapter {
         Fragment fragment;
         switch (position) {
             case 0:
-                fragment = new DefaultLeadDetailsFragment();
+                fragment = new LeadDetailsFragment();
                 break;
             case 1:
                 fragment = new DefaultLeadDetailsFragment();

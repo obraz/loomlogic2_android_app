@@ -2,7 +2,7 @@ package com.loomlogic.utils;
 
 import android.content.SharedPreferences;
 
-import com.loomlogic.leads.LeadRole;
+import com.loomlogic.leads.base.LeadRole;
 
 /**
  * Created by alex on 3/2/17.

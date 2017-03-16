@@ -1,4 +1,4 @@
-package com.loomlogic.leads;
+package com.loomlogic.leads.base;
 
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;

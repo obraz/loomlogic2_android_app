@@ -1,4 +1,4 @@
-package com.loomlogic.leads;
+package com.loomlogic.leads.base;
 
 import com.loomlogic.base.SwipeData;
 
@@ -16,11 +16,16 @@ public class LeadItem extends SwipeData {
     public Gender gender;
     public String address;
     public boolean isFinancing;
-    public int statusCount;
+    public int escrowStatusDoneCount;
+
+    ///
+    public String phone;
+    public String email;
+    public String source;
 
     public enum Gender {MALE, FEMALE, NONE}
 
-    public LeadItem(int id, int unreadNotificationCount, int deadlineDate, String avatarUrl, String firstName, String lastName, Gender gender, String address, boolean isFinancing, int statusCount) {
+    public LeadItem(int id, int unreadNotificationCount, int deadlineDate, String avatarUrl, String firstName, String lastName, Gender gender, String address, boolean isFinancing, int escrowStatusDoneCount) {
         this.id = id;
         this.unreadNotificationCount = unreadNotificationCount;
         this.deadlineDate = deadlineDate;
@@ -30,6 +35,10 @@ public class LeadItem extends SwipeData {
         this.gender = gender;
         this.address = address;
         this.isFinancing = isFinancing;
-        this.statusCount = statusCount;
+        this.escrowStatusDoneCount = escrowStatusDoneCount;
+
+        this.phone = "+5 (752) 915 25 20";
+        this.email = "consectetud@gmail.com";
+        this.source = "Zillow";
     }
 }

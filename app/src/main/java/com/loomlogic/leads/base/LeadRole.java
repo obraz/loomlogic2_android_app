@@ -1,4 +1,4 @@
-package com.loomlogic.leads;
+package com.loomlogic.leads.base;
 
 /**
  * Created by alex on 3/2/17.

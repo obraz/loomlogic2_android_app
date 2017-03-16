@@ -11,6 +11,8 @@
         android:id="@+id/tv_bageName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         android:textColor="@color/lead_detail_tabText_color"
         tools:text="Messages" />
 
@@ -19,6 +21,7 @@
         android:layout_width="wrap_content"
         android:layout_height="20dp"
         android:layout_marginLeft="2dp"
+        android:layout_marginRight="10dp"
         android:layout_toRightOf="@+id/tv_bageName"
         android:background="@drawable/lead_unread_notification_count_bg"
         android:gravity="center"

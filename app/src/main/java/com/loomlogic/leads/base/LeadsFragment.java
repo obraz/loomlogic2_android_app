@@ -1,4 +1,4 @@
-package com.loomlogic.leads;
+package com.loomlogic.leads.base;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -27,7 +27,6 @@ import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
 import com.loomlogic.R;
 import com.loomlogic.base.MessageEvent;
 import com.loomlogic.home.BaseHomeFragment;
-import com.loomlogic.leads.details.LeadDetailsFragment;
 import com.loomlogic.leads.menu.LeadMenuItem;
 import com.loomlogic.leads.menu.LeadsMenuManager;
 import com.loomlogic.utils.LeadUtils;
@@ -135,7 +134,7 @@ public class LeadsFragment extends BaseHomeFragment implements LeadsAdapter.OnLe
         // swipe manager
         mRecyclerViewSwipeManager = new RecyclerViewSwipeManager();
 //int id, int unreadNotificationCount, int deadlineDate, String avatarUrl, String firstName, String lastName,
-// Gender gender, String address, boolean isFinancing, int statusCount
+// Gender gender, String address, boolean isFinancing, int escrowStatusDoneCount
         fakeList = new ArrayList<>();
         fakeList.add(new LeadItem(1, 2, 3, "http://loomlogic.ucoz.net/3.jpg", "Randall", "Padilla", LeadItem.Gender.MALE, "322 Lennie Squares Apt. 344", true, 0));
         fakeList.add(new LeadItem(2, 0, -5, "http://loomlogic.ucoz.net/1.jpg", "Craig", "Perez", LeadItem.Gender.MALE, "036 Ozella Lights", true, 1));
@@ -240,7 +239,7 @@ public class LeadsFragment extends BaseHomeFragment implements LeadsAdapter.OnLe
     @Override
     public void onItemClickListener(LeadItem item) {
         mAdapter.notifyDataSetChanged();
-        showFragment(LeadDetailsFragment.newInstance(item));
+        showFragment(LeadDetailsMainFragment.newInstance(item));
     }
 
     @Override

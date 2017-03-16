@@ -10,7 +10,7 @@ import android.support.v4.util.Pair;
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.loomlogic.R;
-import com.loomlogic.leads.LeadsFragment;
+import com.loomlogic.leads.base.LeadsFragment;
 import com.loomlogic.multibackstack.BackStackActivity;
 import com.loomlogic.utils.LeadUtils;
 

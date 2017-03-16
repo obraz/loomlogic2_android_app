@@ -1,4 +1,4 @@
-package com.loomlogic.leads.details;
+package com.loomlogic.leads.base;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

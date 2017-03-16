@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:animateLayoutChanges="true"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/ll_leadDetailsEscrowStatusContainer"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/lead_detail_escrow_status_future_bg_color"
+        android:orientation="horizontal"></LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp">
+
+        <View
+            android:id="@+id/leadEscrowStatusBg"
+            android:layout_width="300dp"
+            android:layout_height="match_parent"
+            android:background="@color/lead_escrow_status_financing_bg_color" />
+
+        <com.loomlogic.leads.base.LeadAvatarView
+            android:id="@+id/view_leadAvatar"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp" />
+
+        <LinearLayout
+            android:id="@+id/ll_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_toRightOf="@+id/view_leadAvatar"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_leadName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ellipsize="marquee"
+                android:maxLines="1"
+                android:textColor="#030303"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                tools:text="John Doussing " />
+
+            <ImageButton
+                android:id="@+id/ib_showMore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp"
+                android:background="?attr/selectableItemBackground"
+                android:padding="5dp"
+                android:src="@drawable/ic_arrow_down" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ll_name"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@+id/view_leadAvatar"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_leadAddress"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawableLeft="@drawable/ic_buyer_financing"
+                android:drawablePadding="5dp"
+                android:ellipsize="marquee"
+                android:maxLines="1"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                tools:text="Contract " />
+
+            <TextView
+                android:id="@+id/tv_leadEscrowStatusCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="20dp"
+                android:drawableLeft="@drawable/ic_lead_details_escrow_status"
+                android:drawablePadding="5dp"
+                android:text="2"
+                android:textColor="@color/black"
+                android:textSize="12sp" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#F1F3F6" />
+
+    <LinearLayout
+        android:id="@+id/ll_leadDetailsInfoContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <TextView
+            android:id="@+id/tv_leadDetailsPhone"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:drawableLeft="@drawable/ic_lead_details_phone"
+            android:drawablePadding="12dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="16dp"
+            tools:text="+5 (752) 915 25 20" />
+
+        <TextView
+            android:id="@+id/tv_leadDetailsEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:drawableLeft="@drawable/ic_lead_details_email"
+            android:drawablePadding="12dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="16dp"
+            tools:text="consectetud@gmail.com" />
+
+        <TextView
+            android:id="@+id/tv_leadDetailsAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:drawableLeft="@drawable/ic_lead_details_address"
+            android:drawablePadding="12dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="16dp"
+            tools:text="8737 Oakdale Blvd" />
+
+        <TextView
+            android:id="@+id/tv_leadDetailsSource"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:drawableLeft="@drawable/ic_lead_details_source"
+            android:drawablePadding="12dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="16dp"
+            tools:text="Zillow" />
+    </LinearLayout>
+</LinearLayout>
