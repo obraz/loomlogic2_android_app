@@ -1,4 +1,4 @@
-package com.loomlogic.leads.details;
+package com.loomlogic.leads.details.view;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
@@ -14,6 +14,9 @@ import android.widget.TextView;
 import com.loomlogic.R;
 import com.loomlogic.leads.base.LeadAvatarView;
 import com.loomlogic.leads.base.LeadItem;
+import com.loomlogic.leads.details.LeadEscrowStatusItem;
+import com.loomlogic.leads.details.LeadEscrowStatusState;
+import com.loomlogic.leads.details.LeadEscrowStatusUtils;
 import com.loomlogic.utils.Utils;
 
 import java.util.ArrayList;
@@ -54,14 +57,6 @@ public class LeadDetailsInfoView extends LinearLayout {
 
     private void initViews() {
         inflate(getContext(), R.layout.view_lead_details_info, this);
-
-
-//        avatarImageView = (ImageView) findViewById(R.id.img_notification);
-//        contentTextView = (TextView) findViewById(R.id.notification_content);
-//        eventDateTimeTextView = (TextView) findViewById(R.id.date_time_notification);
-//        notificationTimeTextView = (TextView) findViewById(R.id.notification_time);
-//        viewAndRespondButton = (Button) findViewById(R.id.view_and_respond_button);
-//        divider = (View) findViewById(R.id.divider);
     }
 
     public void setLead(LeadItem lead) {

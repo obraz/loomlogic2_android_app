@@ -96,4 +96,15 @@
 
     <string name="btn_change_status">Change status</string>
     <string name="btn_send">Send</string>
+    <string name="btn_write_note">Write Note</string>
+    <string name="btn_confirm">Confirm</string>
+
+    <string name="lead_details_participants">Participants</string>
+    <string name="lead_details_contract_details">Contract Details</string>
+    <string name="lead_details_transactions">Transactions (%d)</string>
+
+    <string name="lead_participant_role_agent">Agent</string>
+    <string name="lead_participant_role_owner">Owner</string>
+    <string name="lead_participant_role_lender">Lender</string>
+    <string name="lead_participant_role_client">Client</string>
 </resources>

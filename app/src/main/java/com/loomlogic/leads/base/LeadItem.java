@@ -2,6 +2,8 @@ package com.loomlogic.leads.base;
 
 import com.loomlogic.base.SwipeData;
 
+import java.util.ArrayList;
+
 /**
  * Created by alex on 3/10/17.
  */
@@ -22,8 +24,7 @@ public class LeadItem extends SwipeData {
     public String phone;
     public String email;
     public String source;
-
-    public enum Gender {MALE, FEMALE, NONE}
+    public ArrayList<LeadParticipantItem> participantList;
 
     public LeadItem(int id, int unreadNotificationCount, int deadlineDate, String avatarUrl, String firstName, String lastName, Gender gender, String address, boolean isFinancing, int escrowStatusDoneCount) {
         this.id = id;
@@ -40,5 +41,13 @@ public class LeadItem extends SwipeData {
         this.phone = "+5 (752) 915 25 20";
         this.email = "consectetud@gmail.com";
         this.source = "Zillow";
+
+        //avatarUrl, String firstName, String lastName, Gender gender, String phone, String email, String address, LeadParticipantRole role)
+        participantList = new ArrayList<LeadParticipantItem>();
+        participantList.add(new LeadParticipantItem("http://loomlogic.ucoz.net/3.jpg", "Carl", "Snyder", Gender.MALE, "+5 (752) 915 25 20", "consectetud0@gmail.com", "Cherry Creek Mortgage0", LeadParticipantRole.LENDER));
+        participantList.add(new LeadParticipantItem("http://loomlogic.ucoz.net/1.jpg", "Benjamin", "Carlson", Gender.MALE, "+5 (752) 915 25 21", "consectetud1@gmail.com", "Cherry Creek Mortgage1", LeadParticipantRole.AGENT));
+        participantList.add(new LeadParticipantItem("", "William", "Miller", Gender.MALE, "+5 (752) 915 25 22", "consectetud2@gmail.com", "Cherry Creek Mortgage2", LeadParticipantRole.CLIENT));
+        participantList.add(new LeadParticipantItem("http://loomlogic.ucoz.net/4.jpg", "Justin", "Keller", Gender.MALE, "+5 (752) 915 25 23", "consectetud3@gmail.com", "Cherry Creek Mortgage3", LeadParticipantRole.OWNER));
+
     }
 }

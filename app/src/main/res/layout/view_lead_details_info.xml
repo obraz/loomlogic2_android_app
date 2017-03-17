@@ -173,7 +173,8 @@
             android:background="@drawable/selector_blue_border_btn"
             android:text="@string/btn_change_status"
             android:textColor="@color/lead_details_btn_blu_border_text_color"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/btn_send"
@@ -185,6 +186,7 @@
             android:background="@drawable/selector_blue_border_btn"
             android:text="@string/btn_send"
             android:textColor="@color/lead_details_btn_blu_border_text_color"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:textStyle="bold" />
     </LinearLayout>
 </LinearLayout>
