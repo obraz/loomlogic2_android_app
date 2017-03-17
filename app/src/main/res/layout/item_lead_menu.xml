@@ -4,9 +4,9 @@
     android:id="@+id/containter_leadMenuItem"
     android:layout_width="match_parent"
     android:layout_height="70dp"
-    android:background="?attr/selectableItemBackground"
-    android:orientation="horizontal"
-    tools:background="#1F2936">
+    android:background="#1F2936"
+    android:foreground="?attr/selectableItemBackground"
+    android:orientation="horizontal">
 
     <TextView
         android:id="@+id/tv_leadMenuItem_name"
@@ -16,12 +16,12 @@
         android:layout_marginLeft="23dp"
         android:layout_marginRight="15dp"
         android:layout_weight="1"
+        android:drawableLeft="@drawable/ic_lead_new_buyer"
         android:drawablePadding="23dp"
         android:gravity="center_vertical"
         android:textColor="@color/white"
         android:textSize="17sp"
         android:textStyle="bold"
-        android:drawableLeft="@drawable/ic_lead_new_buyer"
         tools:text="dgvurgfurwu" />
 
     <TextView

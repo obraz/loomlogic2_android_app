@@ -21,7 +21,6 @@ import com.loomlogic.utils.LeadPreferencesUtils;
 import com.loomlogic.utils.LeadUtils;
 import com.loomlogic.utils.ViewUtils;
 import com.loomlogic.view.LinePageIndicator;
-import com.loomlogic.view.ViewPagerWrapContent;
 
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
 
@@ -38,7 +37,7 @@ public class LeadsMenuManager {
     private ActionBarDrawerToggle mDrawerToggle;
     private View navigationViewContainer;
     private LeadsTypeAdapter adapter;
-    private ViewPagerWrapContent viewPager;
+    private ViewPager viewPager;
 
     public LeadsMenuManager(HomeActivity activity, LinearLayout mainContent, DrawerLayout drawerLayout, View navigationViewContainer) {
         this.activity = activity;
@@ -67,7 +66,7 @@ public class LeadsMenuManager {
 
         adapter = new LeadsTypeAdapter(activity.getBaseContext());
 
-        viewPager = (ViewPagerWrapContent) navigationViewContainer.findViewById(R.id.vp_leadsMenu);
+        viewPager = (ViewPager) navigationViewContainer.findViewById(R.id.vp_leadsMenu);
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -77,8 +76,6 @@ public class LeadsMenuManager {
 
             @Override
             public void onPageSelected(int position) {
-                viewPager.reMeasureCurrentPage(viewPager.getCurrentItem());
-
                 boolean roleWasChanged = false;
                 switch (position) {
                     case ROLE_BUYER_MENU_POSITION:
@@ -110,13 +107,6 @@ public class LeadsMenuManager {
             @Override
             public void onPageScrollStateChanged(int state) {
 
-            }
-        });
-
-        viewPager.post(new Runnable() {
-            @Override
-            public void run() {
-                viewPager.reMeasureCurrentPage(viewPager.getCurrentItem());
             }
         });
 
