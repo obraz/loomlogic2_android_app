@@ -9,10 +9,12 @@ import android.graphics.drawable.Drawable;
 public class LeadMenuItem {
     private LeadTypes type;
     private int count;
+    private LeadRole role;
 
-    public LeadMenuItem(LeadTypes type, int count) {
+    public LeadMenuItem(LeadTypes type, int count, LeadRole role) {
         this.type = type;
         this.count = count;
+        this.role = role;
     }
 
     public LeadTypes getType() {
@@ -28,6 +30,6 @@ public class LeadMenuItem {
     }
 
     public Drawable getDrawableIcon() {
-        return LeadMenuUtils.getLeadTypeIcon(type);
+        return LeadMenuUtils.getLeadTypeIcon(type, role);
     }
 }

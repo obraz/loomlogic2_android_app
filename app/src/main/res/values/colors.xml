@@ -10,8 +10,11 @@
     <color name="navBarBgColor">#E4E5E6</color>
 
     <color name="colorNavigationDefault">#1A000000</color>
-    <color name="colorMainBuyer">#03A9F4</color>
-    <color name="colorMainSeller">#9012FE</color>
+    <color name="colorMainBuyer">#0098FF</color>
+    <color name="colorMainSeller">#FF6300</color>
+
+    <color name="colorMenuIconsBuyer">#03A9F4</color>
+    <color name="colorMenuIconsSeller">#EF772F</color>
 
     <color name="colorErrorMsg">#F44336</color>
 

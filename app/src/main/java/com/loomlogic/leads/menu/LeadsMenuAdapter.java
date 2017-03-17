@@ -4,11 +4,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.loomlogic.R;
-import com.loomlogic.base.LoomLogicApp;
 import com.loomlogic.base.MessageEvent;
 
 import org.greenrobot.eventbus.EventBus;
@@ -21,11 +19,9 @@ import java.util.ArrayList;
 
 public class LeadsMenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private ArrayList<LeadMenuItem> items;
-    private boolean isBuyer;
 
-    public LeadsMenuAdapter(ArrayList<LeadMenuItem> items, boolean isBuyer) {
+    public LeadsMenuAdapter(ArrayList<LeadMenuItem> items) {
         this.items = items;
-        this.isBuyer = isBuyer;
     }
 
     @Override
@@ -42,10 +38,6 @@ public class LeadsMenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         holder.txtName.setCompoundDrawablesWithIntrinsicBounds(item.getDrawableIcon(), null, null, null);
         holder.txtName.setText(item.getName());
         holder.txtCount.setText(String.valueOf(item.getCount()));
-        if (!isBuyer) {
-            int height = LoomLogicApp.getSharedContext().getResources().getDimensionPixelSize(R.dimen.lead_menu_seller_item_height);
-            holder.layoutRoot.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height));
-        }
 
         holder.layoutRoot.setOnClickListener(new View.OnClickListener() {
             @Override

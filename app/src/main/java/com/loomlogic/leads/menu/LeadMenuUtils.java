@@ -37,28 +37,47 @@ public class LeadMenuUtils {
         }
     }
 
-    public static Drawable getLeadTypeIcon(LeadTypes type) {
+    public static Drawable getLeadTypeIcon(LeadTypes type, LeadRole role) {
+        int drawableRes;
         switch (type) {
             case LEADS:
-                return ContextCompat.getDrawable(LoomLogicApp.getSharedContext(), R.drawable.ic_lead_new);
+                if (role == LeadRole.SELLER){
+                    drawableRes = R.drawable.ic_lead_new_seller;
+                    break;
+                }
+                drawableRes = R.drawable.ic_lead_new_buyer;
+                break;
             case LENDER:
-                return ContextCompat.getDrawable(LoomLogicApp.getSharedContext(), R.drawable.ic_lead_lender);
+                drawableRes = R.drawable.ic_lead_lender;
+                break;
             case SHOPPING:
-                return ContextCompat.getDrawable(LoomLogicApp.getSharedContext(), R.drawable.ic_lead_shopping);
+                drawableRes = R.drawable.ic_lead_shopping;
+                break;
             case CONTRACT:
-                return ContextCompat.getDrawable(LoomLogicApp.getSharedContext(), R.drawable.ic_lead_contract);
+                drawableRes = R.drawable.ic_lead_contract;
+                break;
             case CLOSED:
-                return ContextCompat.getDrawable(LoomLogicApp.getSharedContext(), R.drawable.ic_lead_closed);
+                if (role == LeadRole.SELLER){
+                    drawableRes = R.drawable.ic_lead_closed_seller;
+                    break;
+                }
+                drawableRes = R.drawable.ic_lead_closed_buyer;
+                break;
             case COMING_SOON:
-                return ContextCompat.getDrawable(LoomLogicApp.getSharedContext(), R.drawable.ic_lead_comingsoon);
+                drawableRes = R.drawable.ic_lead_comingsoon;
+                break;
             case ACTIVE:
-                return ContextCompat.getDrawable(LoomLogicApp.getSharedContext(), R.drawable.ic_lead_active);
+                drawableRes = R.drawable.ic_lead_active;
+                break;
             case WITHDRAW:
-                return ContextCompat.getDrawable(LoomLogicApp.getSharedContext(), R.drawable.ic_lead_withdrawn);
+                drawableRes = R.drawable.ic_lead_withdrawn;
+                break;
             case PENDING:
-                return ContextCompat.getDrawable(LoomLogicApp.getSharedContext(), R.drawable.ic_lead_pending);
+                drawableRes = R.drawable.ic_lead_pending;
+                break;
             default:
-                return ContextCompat.getDrawable(LoomLogicApp.getSharedContext(), R.drawable.ic_lead_new);
+                drawableRes = R.drawable.ic_lead_new_buyer;
         }
+        return ContextCompat.getDrawable(LoomLogicApp.getSharedContext(), drawableRes);
     }
 }
