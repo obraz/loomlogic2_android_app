@@ -42,5 +42,16 @@ public class LeadDetailsFragment extends BaseHomeFragment {
     private void initInfoView(View view) {
         LeadDetailsInfoView infoView = (LeadDetailsInfoView) view.findViewById(R.id.view_leadDetailsInfo);
         infoView.setLead(lead);
+        infoView.setButtonsListener(new LeadDetailsInfoView.OnLeadInfoClickListener() {
+            @Override
+            public void onChangeStatusClick() {
+                getHomeActivity().showErrorSnackBar("onChangeStatusClick");
+            }
+
+            @Override
+            public void onSendClick() {
+                getHomeActivity().showErrorSnackBar("onSendClick");
+            }
+        });
     }
 }

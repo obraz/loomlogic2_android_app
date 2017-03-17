@@ -93,4 +93,7 @@
         <item>IC</item>
         <item>CR</item>
     </array>
+
+    <string name="btn_change_status">Change status</string>
+    <string name="btn_send">Send</string>
 </resources>

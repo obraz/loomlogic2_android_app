@@ -23,6 +23,13 @@ import java.util.ArrayList;
  */
 
 public class LeadDetailsInfoView extends LinearLayout {
+
+    public interface OnLeadInfoClickListener {
+        void onChangeStatusClick();
+
+        void onSendClick();
+    }
+
     private LeadItem leadItem;
 
     public LeadDetailsInfoView(Context context) {
@@ -60,6 +67,22 @@ public class LeadDetailsInfoView extends LinearLayout {
     public void setLead(LeadItem lead) {
         this.leadItem = lead;
         updateData();
+    }
+
+    public void setButtonsListener(final OnLeadInfoClickListener callback) {
+        findViewById(R.id.btn_changeStatus).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                callback.onChangeStatusClick();
+            }
+        });
+
+        findViewById(R.id.btn_send).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                callback.onSendClick();
+            }
+        });
     }
 
     private void updateData() {
@@ -138,4 +161,5 @@ public class LeadDetailsInfoView extends LinearLayout {
         TextView infoSourceTv = (TextView) findViewById(R.id.tv_leadDetailsSource);
         infoSourceTv.setText(leadItem.source);
     }
+
 }

@@ -24,6 +24,7 @@
 
     <color name="black">#000000</color>
     <color name="black_transparent_10">#1A000000</color>
+    <color name="black_transparent_50">#80000000</color>
 
     <color name="lead_gender_male_color">#4990E2</color>
     <color name="lead_gender_female_color">#BD0FE1</color>
@@ -45,5 +46,6 @@
     <color name="lead_detail_escrow_status_done_bg_color">#FAF6C9</color>
     <color name="lead_detail_escrow_status_current_bg_color">#F8E81C</color>
     <color name="lead_detail_escrow_status_future_bg_color">#F3F5F7</color>
-
+    <color name="lead_details_btn_blu_border_text_color">#4A4A4A</color>
+    <color name="lead_details_btn_blu_border_color">#03A9F4</color>
 </resources>

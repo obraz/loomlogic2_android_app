@@ -17,7 +17,7 @@
         android:id="@+id/tab_layout"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
-        android:background="@color/colorPrimaryDark"
+        android:background="#313A44"
         android:overScrollMode="never"
         app:tabGravity="fill"
         app:tabIndicatorColor="#00A1FA"
