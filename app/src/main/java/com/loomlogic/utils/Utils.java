@@ -1,9 +1,8 @@
 package com.loomlogic.utils;
 
 import android.content.Context;
-import android.graphics.Point;
+import android.util.DisplayMetrics;
 import android.util.Patterns;
-import android.view.Display;
 import android.view.WindowManager;
 
 /**
@@ -15,11 +14,15 @@ public class Utils {
         return url != null && Patterns.WEB_URL.matcher(url).matches();
     }
 
-    public static int getDisplayWidth(Context context) {
-        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        Display display = wm.getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
-        return size.x;
+    private static DisplayMetrics getDisplayMetrics(Context context) {
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        WindowManager windowmanager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        windowmanager.getDefaultDisplay().getMetrics(displayMetrics);
+        return displayMetrics;
     }
+
+    public static int getDisplayWidth(Context context) {
+        return getDisplayMetrics(context).widthPixels;
+    }
+
 }

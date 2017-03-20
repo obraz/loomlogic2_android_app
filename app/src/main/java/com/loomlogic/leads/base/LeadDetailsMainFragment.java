@@ -14,12 +14,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.HorizontalScrollView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.loomlogic.R;
 import com.loomlogic.home.BaseHomeFragment;
 import com.loomlogic.leads.entity.LeadItem;
+import com.loomlogic.utils.Utils;
 
 /**
  * Created by alex on 3/14/17.
@@ -43,13 +45,18 @@ public class LeadDetailsMainFragment extends BaseHomeFragment implements TabLayo
     Runnable mTabLayout_config = new Runnable() {
         @Override
         public void run() {
-            if (mTabLayout.getWidth() < getHomeActivity().getResources().getDisplayMetrics().widthPixels) {
-                mTabLayout.setTabMode(TabLayout.MODE_FIXED);
-                ViewGroup.LayoutParams mParams = mTabLayout.getLayoutParams();
-                mParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
-                mTabLayout.setLayoutParams(mParams);
+            int widthDiff = Utils.getDisplayWidth(getContext()) - mTabLayout.getWidth();
+            if (widthDiff > 0) {
+                int widthAdd = widthDiff / mTabLayout.getTabCount();
+                for (int i = 0; i < mTabLayout.getTabCount(); i++) {
+                    if (i == mTabLayout.getTabCount() - 1) {
+                        widthAdd = widthAdd + widthDiff % mTabLayout.getTabCount();
+                    }
+                    View tabView = mTabLayout.getTabAt(i).getCustomView();
+                    tabView.setLayoutParams(new LinearLayout.LayoutParams(tabView.getWidth() + widthAdd, LinearLayout.LayoutParams.WRAP_CONTENT));
+                }
+
             } else {
-                mTabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
                 // todo do it only once
                 mTabLayout.fullScroll(HorizontalScrollView.FOCUS_RIGHT);
                 new Handler().postDelayed(new Runnable() {

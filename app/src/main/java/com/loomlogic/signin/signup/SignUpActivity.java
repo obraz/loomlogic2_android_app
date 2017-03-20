@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.loomlogic.R;
 import com.loomlogic.signin.BaseSignInActivity;
-import com.loomlogic.utils.ViewUtils;
+import com.loomlogic.utils.Utils;
 import com.loomlogic.view.LinePageIndicator;
 import com.loomlogic.view.ViewPagerSpeedScroller;
 
@@ -82,7 +82,7 @@ public class SignUpActivity extends BaseSignInActivity implements View.OnClickLi
         final ImageView bgParallaxIv = (ImageView) findViewById(R.id.iv_parallaxBg);
 
         FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) bgParallaxIv.getLayoutParams();
-        layoutParams.width = ViewUtils.getDisplayWidth(this) + 100;
+        layoutParams.width = Utils.getDisplayWidth(this) + 100;
         bgParallaxIv.setLayoutParams(layoutParams);
 
         viewPager = (ViewPager) findViewById(R.id.viewPager);
