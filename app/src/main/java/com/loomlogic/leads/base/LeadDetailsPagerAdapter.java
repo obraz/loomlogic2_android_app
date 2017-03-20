@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.loomlogic.leads.details.LeadDetailsFragment;
+import com.loomlogic.leads.entity.LeadItem;
 
 /**
  * Created by alex on 3/15/17.

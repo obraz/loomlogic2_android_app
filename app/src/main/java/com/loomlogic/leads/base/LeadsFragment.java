@@ -27,6 +27,8 @@ import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
 import com.loomlogic.R;
 import com.loomlogic.base.MessageEvent;
 import com.loomlogic.home.BaseHomeFragment;
+import com.loomlogic.leads.entity.Gender;
+import com.loomlogic.leads.entity.LeadItem;
 import com.loomlogic.leads.menu.LeadMenuItem;
 import com.loomlogic.leads.menu.LeadsMenuManager;
 import com.loomlogic.utils.LeadUtils;

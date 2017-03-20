@@ -9,8 +9,10 @@ import android.view.ViewGroup;
 import com.google.gson.Gson;
 import com.loomlogic.R;
 import com.loomlogic.home.BaseHomeFragment;
-import com.loomlogic.leads.base.LeadItem;
-import com.loomlogic.leads.base.LeadParticipantItem;
+import com.loomlogic.leads.details.view.LeadDetailsContractView;
+import com.loomlogic.leads.details.view.LeadDetailsTransactionView;
+import com.loomlogic.leads.entity.LeadItem;
+import com.loomlogic.leads.entity.LeadParticipantItem;
 import com.loomlogic.leads.details.view.LeadDetailsInfoView;
 import com.loomlogic.leads.details.view.LeadDetailsParticipantsView;
 
@@ -47,6 +49,8 @@ public class LeadDetailsFragment extends BaseHomeFragment {
         super.onViewCreated(view, savedInstanceState);
         initInfoView(view);
         initParticipantsView(view);
+        initContractView(view);
+        initTransactionsView(view);
     }
 
     private void initInfoView(View view) {
@@ -80,5 +84,15 @@ public class LeadDetailsFragment extends BaseHomeFragment {
             }
 
         });
+    }
+
+    private void initContractView(View view) {
+        LeadDetailsContractView contractView = (LeadDetailsContractView) view.findViewById(R.id.view_leadDetailsContract);
+        contractView.setContract(lead.leadContract);
+    }
+
+    private void initTransactionsView(View view) {
+        LeadDetailsTransactionView transactionView = (LeadDetailsTransactionView) view.findViewById(R.id.view_leadDetailsTransaction);
+        transactionView.setTransactions(lead.transactionList);
     }
 }

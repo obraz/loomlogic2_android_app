@@ -10,8 +10,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.loomlogic.R;
-import com.loomlogic.leads.base.LeadParticipantItem;
-import com.loomlogic.leads.base.LeadParticipantRole;
+import com.loomlogic.leads.entity.LeadParticipantItem;
+import com.loomlogic.leads.entity.LeadParticipantRole;
 
 import java.util.ArrayList;
 

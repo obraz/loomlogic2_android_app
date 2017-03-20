@@ -51,4 +51,8 @@
     <color name="lead_detail_escrow_status_future_bg_color">#F3F5F7</color>
     <color name="lead_details_btn_blu_border_text_color">#4A4A4A</color>
     <color name="lead_details_btn_blu_border_color">#03A9F4</color>
+
+    <color name="lead_details_blue_text_color">#02A0E7</color>
+    <color name="lead_details_grey_text_color">#8F8E94</color>
+
 </resources>

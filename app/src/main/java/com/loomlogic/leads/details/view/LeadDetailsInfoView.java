@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.loomlogic.R;
 import com.loomlogic.leads.base.LeadAvatarView;
-import com.loomlogic.leads.base.LeadItem;
+import com.loomlogic.leads.entity.LeadItem;
 import com.loomlogic.leads.details.LeadEscrowStatusItem;
 import com.loomlogic.leads.details.LeadEscrowStatusState;
 import com.loomlogic.leads.details.LeadEscrowStatusUtils;

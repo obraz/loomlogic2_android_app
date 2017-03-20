@@ -9,11 +9,19 @@ import android.view.animation.DecelerateInterpolator;
  */
 
 public class AnimationUtils {
-    public static void expand(View v) {
+    public static void expand(final View v) {
         v.setVisibility(View.VISIBLE);
-        int targetHeight = getViewFullHeight(v);
-        int duration = (int) (targetHeight / v.getContext().getResources().getDisplayMetrics().density);
-        animateViewVisibility(v, 0, targetHeight, duration);
+        v.post(new Runnable() {
+            @Override
+            public void run() {
+                v.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+
+                int targetHeight = v.getMeasuredHeight();
+                int duration = (int) (targetHeight / v.getContext().getResources().getDisplayMetrics().density);
+
+                animateViewVisibility(v, 0, targetHeight, duration);
+            }
+        });
     }
 
     public static void collapse(View v) {
@@ -36,13 +44,6 @@ public class AnimationUtils {
         });
 
         valueAnimator.start();
-    }
-
-    private static int getViewFullHeight(View view) {
-        int widthSpec = View.MeasureSpec.makeMeasureSpec(view.getWidth(), View.MeasureSpec.EXACTLY);
-        int heightSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
-        view.measure(widthSpec, heightSpec);
-        return view.getMeasuredHeight();
     }
 }
 

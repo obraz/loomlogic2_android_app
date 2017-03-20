@@ -1,4 +1,4 @@
-package com.loomlogic.leads.base;
+package com.loomlogic.leads.entity;
 
 import android.support.annotation.StringRes;
 

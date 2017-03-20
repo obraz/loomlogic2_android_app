@@ -17,6 +17,7 @@ import com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultAct
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractSwipeableItemViewHolder;
 import com.loomlogic.R;
 import com.loomlogic.leads.details.LeadEscrowStatusUtils;
+import com.loomlogic.leads.entity.LeadItem;
 import com.loomlogic.utils.Utils;
 
 import java.util.ArrayList;

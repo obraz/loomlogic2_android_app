@@ -23,6 +23,19 @@
             android:id="@+id/view_leadDetailsParticipants"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            tools:visibility="gone" />
+
+        <com.loomlogic.leads.details.view.LeadDetailsContractView
+            android:id="@+id/view_leadDetailsContract"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp" />
+
+        <com.loomlogic.leads.details.view.LeadDetailsTransactionView
+            android:id="@+id/view_leadDetailsTransaction"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="15dp" />
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>

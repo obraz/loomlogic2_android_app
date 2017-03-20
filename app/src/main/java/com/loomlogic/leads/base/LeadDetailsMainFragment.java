@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.loomlogic.R;
 import com.loomlogic.home.BaseHomeFragment;
+import com.loomlogic.leads.entity.LeadItem;
 
 /**
  * Created by alex on 3/14/17.

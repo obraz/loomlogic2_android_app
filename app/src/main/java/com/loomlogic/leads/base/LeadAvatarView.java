@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.loomlogic.R;
+import com.loomlogic.leads.entity.LeadItem;
 import com.loomlogic.utils.Utils;
 import com.squareup.picasso.Picasso;
 

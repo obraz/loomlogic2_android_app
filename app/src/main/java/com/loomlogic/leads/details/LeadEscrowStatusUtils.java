@@ -2,7 +2,7 @@ package com.loomlogic.leads.details;
 
 import com.loomlogic.R;
 import com.loomlogic.base.LoomLogicApp;
-import com.loomlogic.leads.base.LeadItem;
+import com.loomlogic.leads.entity.LeadItem;
 
 import java.util.ArrayList;
 

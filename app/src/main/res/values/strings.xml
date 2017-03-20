@@ -107,4 +107,11 @@
     <string name="lead_participant_role_owner">Owner</string>
     <string name="lead_participant_role_lender">Lender</string>
     <string name="lead_participant_role_client">Client</string>
+
+    <string name="lead_contract_address">Address</string>
+    <string name="lead_contract_purchase">Purchase</string>
+    <string name="lead_contract_commissions">Commissions</string>
+    <string name="lead_contract_gross">Gross</string>
+
+    <string name="lead_transaction_address">Address</string>
 </resources>
