@@ -21,11 +21,15 @@ import com.loomlogic.utils.Utils;
 
 import java.util.ArrayList;
 
+import static com.loomlogic.utils.AnimationUtils.collapse;
+import static com.loomlogic.utils.AnimationUtils.expand;
+
 /**
  * Created by alex on 3/16/17.
  */
 
 public class LeadDetailsInfoView extends LinearLayout {
+    private boolean isVisible = false;
 
     public interface OnLeadInfoClickListener {
         void onChangeStatusClick();
@@ -117,6 +121,7 @@ public class LeadDetailsInfoView extends LinearLayout {
         escrowStatusBgView.setLayoutParams(new RelativeLayout.LayoutParams(currentStatusWidth, RelativeLayout.LayoutParams.MATCH_PARENT));
     }
 
+
     private void setLeadInfo() {
         LeadAvatarView avatarV = (LeadAvatarView) findViewById(R.id.view_leadAvatar);
         avatarV.setLeadAvatar(leadItem);
@@ -134,13 +139,14 @@ public class LeadDetailsInfoView extends LinearLayout {
         showMoreBtn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (infoLayout.getVisibility() == View.VISIBLE) {
-                    infoLayout.setVisibility(View.GONE);
+                if (isVisible) {
                     showMoreBtn.setRotation(0);
+                    collapse(infoLayout);
                 } else {
-                    infoLayout.setVisibility(View.VISIBLE);
                     showMoreBtn.setRotation(180);
+                    expand(infoLayout);
                 }
+                isVisible = !isVisible;
             }
         });
 
@@ -156,5 +162,4 @@ public class LeadDetailsInfoView extends LinearLayout {
         TextView infoSourceTv = (TextView) findViewById(R.id.tv_leadDetailsSource);
         infoSourceTv.setText(leadItem.source);
     }
-
 }

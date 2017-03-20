@@ -15,6 +15,9 @@ import com.loomlogic.leads.base.LeadParticipantRole;
 
 import java.util.ArrayList;
 
+import static com.loomlogic.utils.AnimationUtils.collapse;
+import static com.loomlogic.utils.AnimationUtils.expand;
+
 /**
  * Created by alex on 3/16/17.
  */
@@ -25,6 +28,7 @@ public class LeadDetailsParticipantsView extends LinearLayout {
     private TextView participantNameTv, participantRoleTv, participantPhoneTv, participantAddressTv, participantEmailTv;
     private LinearLayout infoLayout;
     private ImageButton showMoreBtn;
+    private boolean isVisible = false;
 
     public interface OnLeadParticipantsClickListener {
         void onWriteNoteClick(LeadParticipantItem participant);
@@ -108,7 +112,7 @@ public class LeadDetailsParticipantsView extends LinearLayout {
                     currentParticipantView = participantAvatarView;
 
                     setParticipantInfo(participantItem);
-                    if (infoLayout.getVisibility() == View.GONE) {
+                    if (!isVisible) {
                         showMoreBtn.performClick();
                     }
                 }
@@ -129,13 +133,14 @@ public class LeadDetailsParticipantsView extends LinearLayout {
         showMoreBtn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (infoLayout.getVisibility() == View.VISIBLE) {
-                    infoLayout.setVisibility(View.GONE);
+                if (isVisible) {
                     showMoreBtn.setRotation(0);
+                    collapse(infoLayout);
                 } else {
-                    infoLayout.setVisibility(View.VISIBLE);
                     showMoreBtn.setRotation(180);
+                    expand(infoLayout);
                 }
+                isVisible = !isVisible;
             }
         });
     }
