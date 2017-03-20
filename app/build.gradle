@@ -70,4 +70,5 @@ dependencies {
     compile('com.h6ah4i.android.widget.advrecyclerview:advrecyclerview:0.10.4@aar') {
         transitive = true
     }
+    compile 'com.google.code.gson:gson:2.8.0'
 }

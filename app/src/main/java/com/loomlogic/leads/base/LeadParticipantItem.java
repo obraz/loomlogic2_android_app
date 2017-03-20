@@ -24,4 +24,8 @@ public class LeadParticipantItem {
         this.address = address;
         this.role = role;
     }
+
+    public String getFullFormattedName() {
+        return String.format("%s %s", firstName, lastName);
+    }
 }

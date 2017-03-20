@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.HorizontalScrollView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.loomlogic.R;
 import com.loomlogic.home.BaseHomeFragment;
 
@@ -24,14 +25,17 @@ import com.loomlogic.home.BaseHomeFragment;
  */
 
 public class LeadDetailsMainFragment extends BaseHomeFragment implements TabLayout.OnTabSelectedListener, Toolbar.OnMenuItemClickListener {
+    public static final String KEY_LEAD_ITEM = "KEY_LEAD_ITEM";
+
     public static LeadDetailsMainFragment newInstance(LeadItem item) {
         LeadDetailsMainFragment fragment = new LeadDetailsMainFragment();
         Bundle args = new Bundle();
-        // args.putString(ARG_ITEM, item);
+        args.putString(KEY_LEAD_ITEM, new Gson().toJson(item));
         fragment.setArguments(args);
         return fragment;
     }
 
+    private LeadItem leadItem;
     private TabLayout mTabLayout;
     private ViewPager viewPager;
 
@@ -67,6 +71,8 @@ public class LeadDetailsMainFragment extends BaseHomeFragment implements TabLayo
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        leadItem = new Gson().fromJson(getArguments().getString(KEY_LEAD_ITEM), LeadItem.class);
+
         initToolbar(view);
         initTabLayout(view);
         initViewPager(view);
@@ -76,7 +82,7 @@ public class LeadDetailsMainFragment extends BaseHomeFragment implements TabLayo
 
     private void initViewPager(View view) {
         viewPager = (ViewPager) view.findViewById(R.id.vp_leadDetails);
-        LeadDetailsPagerAdapter adapter = new LeadDetailsPagerAdapter(getChildFragmentManager(), mTabLayout.getTabCount());
+        LeadDetailsPagerAdapter adapter = new LeadDetailsPagerAdapter(getChildFragmentManager(), leadItem, mTabLayout.getTabCount());
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayout));
     }
@@ -84,7 +90,7 @@ public class LeadDetailsMainFragment extends BaseHomeFragment implements TabLayo
     private void initTabLayout(View view) {
         mTabLayout = (TabLayout) view.findViewById(R.id.tab_layout);
         mTabLayout.addTab(mTabLayout.newTab().setCustomView(getViewForTab(R.string.lead_details_tab_details, 0)));
-        mTabLayout.addTab(mTabLayout.newTab().setCustomView(getViewForTab(R.string.lead_details_tab_messages, 10)));
+        mTabLayout.addTab(mTabLayout.newTab().setCustomView(getViewForTab(R.string.lead_details_tab_messages, leadItem.unreadNotificationCount)));
         mTabLayout.addTab(mTabLayout.newTab().setCustomView(getViewForTab(R.string.lead_details_tab_tasks, 0)));
         mTabLayout.addTab(mTabLayout.newTab().setCustomView(getViewForTab(R.string.lead_details_tab_documents, 0)));
         mTabLayout.addOnTabSelectedListener(this);
@@ -100,7 +106,7 @@ public class LeadDetailsMainFragment extends BaseHomeFragment implements TabLayo
         if (notifCount > 0) {
             TextView counter = (TextView) customTabView.findViewById(R.id.tv_bageCounter);
             counter.setVisibility(View.VISIBLE);
-            counter.setText("20");
+            counter.setText(String.valueOf(notifCount));
 
             name.setPadding(name.getPaddingLeft(), name.getPaddingTop(), 0, name.getPaddingBottom());
         }
@@ -131,7 +137,7 @@ public class LeadDetailsMainFragment extends BaseHomeFragment implements TabLayo
 
     private void initToolbar(View view) {
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
-        toolbar.setTitle("John Doussing");
+        toolbar.setTitle(String.format(leadItem.getFullFormattedName()));
         toolbar.inflateMenu(R.menu.menu_lead_details);
         toolbar.setOnMenuItemClickListener(this);
         toolbar.setNavigationIcon(R.drawable.ic_back);

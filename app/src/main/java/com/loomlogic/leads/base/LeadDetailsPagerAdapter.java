@@ -11,10 +11,12 @@ import com.loomlogic.leads.details.LeadDetailsFragment;
  */
 
 public class LeadDetailsPagerAdapter extends FragmentPagerAdapter {
+    private LeadItem mLeadItem;
     private int mNumOfTabs;
 
-    public LeadDetailsPagerAdapter(FragmentManager fm, int numOfTabs) {
+    public LeadDetailsPagerAdapter(FragmentManager fm, LeadItem leadItem, int numOfTabs) {
         super(fm);
+        this.mLeadItem = leadItem;
         this.mNumOfTabs = numOfTabs;
     }
 
@@ -23,7 +25,7 @@ public class LeadDetailsPagerAdapter extends FragmentPagerAdapter {
         Fragment fragment;
         switch (position) {
             case 0:
-                fragment = new LeadDetailsFragment();
+                fragment = LeadDetailsFragment.newInstance(mLeadItem);
                 break;
             case 1:
                 fragment = new DefaultLeadDetailsFragment();

@@ -50,4 +50,8 @@ public class LeadItem extends SwipeData {
         participantList.add(new LeadParticipantItem("http://loomlogic.ucoz.net/4.jpg", "Justin", "Keller", Gender.MALE, "+5 (752) 915 25 23", "consectetud3@gmail.com", "Cherry Creek Mortgage3", LeadParticipantRole.OWNER));
 
     }
+
+    public String getFullFormattedName() {
+        return String.format("%s %s", firstName, lastName);
+    }
 }

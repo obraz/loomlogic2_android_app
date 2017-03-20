@@ -146,7 +146,7 @@ public class LeadDetailsParticipantsView extends LinearLayout {
     }
 
     private void setParticipantInfo(LeadParticipantItem participantItem) {
-        participantNameTv.setText(String.format("%s %s", participantItem.firstName, participantItem.lastName));
+        participantNameTv.setText(participantItem.getFullFormattedName());
         participantRoleTv.setText(LeadParticipantRole.toString(participantItem.role));
         participantPhoneTv.setText(participantItem.phone);
         participantAddressTv.setText(participantItem.address);

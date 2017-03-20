@@ -127,7 +127,7 @@ public class LeadDetailsInfoView extends LinearLayout {
         avatarV.setLeadAvatar(leadItem);
 
         TextView nameTv = (TextView) findViewById(R.id.tv_leadName);
-        nameTv.setText(String.format("%s %s", leadItem.firstName, leadItem.lastName));
+        nameTv.setText(leadItem.getFullFormattedName());
 
         TextView addressTv = (TextView) findViewById(R.id.tv_leadAddress);
         addressTv.setText(leadItem.address);
