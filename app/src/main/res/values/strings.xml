@@ -102,6 +102,7 @@
     <string name="lead_details_participants">Participants</string>
     <string name="lead_details_contract_details">Contract Details</string>
     <string name="lead_details_transactions">Transactions (%d)</string>
+    <string name="lead_details_dates">Dates</string>
 
     <string name="lead_participant_role_agent">Agent</string>
     <string name="lead_participant_role_owner">Owner</string>

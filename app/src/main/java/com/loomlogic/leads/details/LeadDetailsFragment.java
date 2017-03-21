@@ -10,11 +10,12 @@ import com.google.gson.Gson;
 import com.loomlogic.R;
 import com.loomlogic.home.BaseHomeFragment;
 import com.loomlogic.leads.details.view.LeadDetailsContractView;
+import com.loomlogic.leads.details.view.LeadDetailsDatesView;
+import com.loomlogic.leads.details.view.LeadDetailsInfoView;
+import com.loomlogic.leads.details.view.LeadDetailsParticipantsView;
 import com.loomlogic.leads.details.view.LeadDetailsTransactionView;
 import com.loomlogic.leads.entity.LeadItem;
 import com.loomlogic.leads.entity.LeadParticipantItem;
-import com.loomlogic.leads.details.view.LeadDetailsInfoView;
-import com.loomlogic.leads.details.view.LeadDetailsParticipantsView;
 
 import static com.loomlogic.leads.base.LeadDetailsMainFragment.KEY_LEAD_ITEM;
 
@@ -51,6 +52,7 @@ public class LeadDetailsFragment extends BaseHomeFragment {
         initParticipantsView(view);
         initContractView(view);
         initTransactionsView(view);
+        initDatesView(view);
     }
 
     private void initInfoView(View view) {
@@ -94,5 +96,9 @@ public class LeadDetailsFragment extends BaseHomeFragment {
     private void initTransactionsView(View view) {
         LeadDetailsTransactionView transactionView = (LeadDetailsTransactionView) view.findViewById(R.id.view_leadDetailsTransaction);
         transactionView.setTransactions(lead.transactionList);
+    }
+
+    private void initDatesView(View view) {
+        LeadDetailsDatesView datesView = (LeadDetailsDatesView) view.findViewById(R.id.view_leadDetailsDates);
     }
 }

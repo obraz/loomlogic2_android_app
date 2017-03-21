@@ -37,5 +37,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp" />
+
+        <com.loomlogic.leads.details.view.LeadDetailsDatesView
+            android:id="@+id/view_leadDetailsDates"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp" />
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>
