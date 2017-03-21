@@ -44,6 +44,8 @@ import java.util.ArrayList;
  */
 
 public class LeadsFragment extends BaseHomeFragment implements LeadsAdapter.OnLeadClickListener, SearchView.OnQueryTextListener, Toolbar.OnMenuItemClickListener {
+    private final static String KEY_SEARCH = "KEY_SEARCH";
+
     private LeadsMenuManager leadsMenuManager;
     private ArrayList<LeadItem> fakeList;
     private SwipeRefreshLayout layoutSwipeRefresh;
@@ -56,6 +58,7 @@ public class LeadsFragment extends BaseHomeFragment implements LeadsAdapter.OnLe
     private RecyclerViewTouchActionGuardManager mRecyclerViewTouchActionGuardManager;
 
     private LeadsAdapter mItemAdapter;
+    private String searchedText;
 
     public static LeadsFragment newInstance() {
         LeadsFragment fragment = new LeadsFragment();
@@ -77,6 +80,28 @@ public class LeadsFragment extends BaseHomeFragment implements LeadsAdapter.OnLe
         super.onViewCreated(view, savedInstanceState);
         initToolbar(view);
         initViews(view);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (searchedText != null) {
+            outState.putString(KEY_SEARCH, searchedText);
+        }
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable final Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        if (savedInstanceState != null && savedInstanceState.containsKey(KEY_SEARCH)) {
+            mRecyclerView.post(new Runnable() {
+                @Override
+                public void run() {
+                    ((LeadsSearchHeaderAdapter) mWrappedAdapter).setQuery(savedInstanceState.getString(KEY_SEARCH));
+                }
+            });
+
+        }
     }
 
     private void initToolbar(View view) {
@@ -313,16 +338,25 @@ public class LeadsFragment extends BaseHomeFragment implements LeadsAdapter.OnLe
     private void doSearch(String newText) {
         if (TextUtils.isEmpty(newText)) {
             mItemAdapter.setData(fakeList);
+            searchedText = null;
+            ((LeadsSearchHeaderAdapter) mWrappedAdapter).setQuery(null);
             return;
         }
-        ArrayList<LeadItem> foundItemsList = new ArrayList<>();
+        final ArrayList<LeadItem> foundItemsList = new ArrayList<>();
 
         for (LeadItem item : fakeList) {
-            if (item.firstName.toLowerCase().contains(newText) || item.lastName.toLowerCase().contains(newText)) {
+            if (item.firstName.toLowerCase().contains(newText.toLowerCase()) || item.lastName.toLowerCase().contains(newText.toLowerCase())) {
                 foundItemsList.add(item);
             }
         }
-        mItemAdapter.setData(foundItemsList);
+
+        mRecyclerView.post(new Runnable() {
+            @Override
+            public void run() {
+                mItemAdapter.setData(foundItemsList);
+            }
+        });
+        searchedText = newText;
     }
 
 }
