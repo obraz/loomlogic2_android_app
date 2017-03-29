@@ -18,6 +18,8 @@
 
     <color name="colorErrorMsg">#F44336</color>
 
+    <color name="main_bg_color">#F3F5F7</color>
+
     <color name="white">#FFFFFF</color>
     <color name="white_transparent_10">#1AFFFFFF</color>
     <color name="white_transparent_20">#33FFFFFF</color>
@@ -43,7 +45,6 @@
     <color name="lead_escrow_status_cash_underline_color">#7ED321</color>
 
     <color name="lead_detail_tabText_color">#8F8E94</color>
-    <color name="lead_details_main_bg_color">#F3F5F7</color>
     <color name="lead_detail_escrow_status_done_text_color">#9B9B9B</color>
     <color name="lead_detail_escrow_status_current_text_color">#4A4A4A</color>
     <color name="lead_detail_escrow_status_done_bg_color">#FAF6C9</color>
@@ -55,4 +56,6 @@
     <color name="lead_details_blue_text_color">#02A0E7</color>
     <color name="lead_details_grey_text_color">#8F8E94</color>
 
+    <color name="lead_create_new_black_text_color">#28323C</color>
+    <color name="lead_create_new_grey_text_color">#8F8E94</color>
 </resources>

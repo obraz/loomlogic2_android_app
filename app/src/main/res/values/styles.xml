@@ -15,7 +15,7 @@
     </style>
 
     <style name="SignInEditText">
-        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">55dp</item>
         <item name="android:background">@drawable/bg_edittext</item>
         <item name="android:drawablePadding">15dp</item>
@@ -26,6 +26,23 @@
         <item name="android:textSize">18sp</item>
     </style>
 
+    <style name="CreateLeadEditText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:background">@color/white</item>
+        <item name="android:paddingRight">15dp</item>
+        <item name="android:paddingLeft">20dp</item>
+        <item name="android:textColor">@color/lead_create_new_black_text_color</item>
+        <item name="android:textColorHint">@color/lead_create_new_grey_text_color</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="CreateLeadDivider">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">#D0D9E1</item>
+    </style>
+
     <style name="ThemeToolbar" parent="Theme.AppCompat.Light">
 
         <!-- navigation icon color -->
@@ -33,6 +50,8 @@
 
         <!-- color of the menu overflow icon -->
         <item name="android:textColorSecondary">@color/white</item>
+
+        <item name="android:actionMenuTextColor">@color/white</item>
     </style>
 
 </resources>

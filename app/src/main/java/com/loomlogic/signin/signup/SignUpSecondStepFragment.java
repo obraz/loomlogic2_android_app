@@ -1,7 +1,5 @@
 package com.loomlogic.signin.signup;
 
-import android.animation.ArgbEvaluator;
-import android.animation.ValueAnimator;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -21,6 +19,7 @@ import static com.loomlogic.R.id.et_signUp_phone;
 import static com.loomlogic.R.id.rb_signUp_agent;
 import static com.loomlogic.R.id.rb_signUp_lender;
 import static com.loomlogic.R.id.rg_signUp_role;
+import static com.loomlogic.utils.ViewUtils.changeRadioBtnTextColor;
 
 /**
  * Created by alex on 2/15/17.
@@ -82,17 +81,5 @@ public class SignUpSecondStepFragment extends ActivityResultFixFragment {
         });
     }
 
-    private void changeRadioBtnTextColor(final RadioButton radio, int colorFrom, int colorTo) {
-        ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
-        colorAnimation.setDuration(250);
-        colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
 
-            @Override
-            public void onAnimationUpdate(ValueAnimator animator) {
-                radio.setTextColor((int) animator.getAnimatedValue());
-            }
-
-        });
-        colorAnimation.start();
-    }
 }

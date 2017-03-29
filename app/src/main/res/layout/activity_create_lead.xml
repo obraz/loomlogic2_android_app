@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/main_bg_color">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.makeramen.roundedimageview.RoundedImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="20dp"
+                android:adjustViewBounds="true"
+                android:background="#A0A9B1"
+                android:scaleType="centerCrop"
+                android:src="@drawable/create_lead_placeholder"
+                app:riv_mutate_background="true"
+                app:riv_oval="true"
+                tools:visibility="gone" />
+
+            <EditText
+                android:id="@+id/et_createLead_name"
+                style="@style/CreateLeadEditText"
+                android:hint="@string/create_new_lead_hint_name"
+                android:inputType="textPersonName" />
+
+            <View style="@style/CreateLeadDivider" />
+
+            <EditText
+                android:id="@+id/et_createLead_additionalName"
+                style="@style/CreateLeadEditText"
+                android:hint="@string/create_new_lead_hint_additionalName"
+                android:inputType="textPersonName" />
+
+            <View style="@style/CreateLeadDivider" />
+
+            <EditText
+                android:id="@+id/et_createLead_phone"
+                style="@style/CreateLeadEditText"
+                android:hint="@string/create_new_lead_hint_phone"
+                android:inputType="phone" />
+
+            <View style="@style/CreateLeadDivider" />
+
+            <EditText
+                android:id="@+id/et_createLead_email"
+                style="@style/CreateLeadEditText"
+                android:hint="@string/create_new_lead_hint_email"
+                android:inputType="textEmailAddress" />
+
+            <View style="@style/CreateLeadDivider" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/white">
+
+                <TextView
+                    android:id="@+id/tv_createLead_sourceHint"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:text="@string/create_new_lead_hint_source"
+                    android:textColor="@color/lead_create_new_grey_text_color" />
+
+                <View
+                    style="@style/CreateLeadDivider"
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_toRightOf="@+id/tv_createLead_sourceHint" />
+
+                <TextView
+                    android:id="@+id/tv_createLead_source"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_toRightOf="@+id/tv_createLead_sourceHint"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:ellipsize="marquee"
+                    android:gravity="center_vertical"
+                    android:maxLines="1"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="35dp"
+                    android:text="@string/create_new_lead_hint_selectSource"
+                    android:textColor="@color/lead_create_new_grey_text_color" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:rotation="270"
+                    android:src="@drawable/ic_arrow_down" />
+            </RelativeLayout>
+
+            <View style="@style/CreateLeadDivider" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/white"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+                    <RadioButton
+                        android:id="@+id/rb_createLead_buyer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:button="@drawable/radio_btn"
+                        android:checked="true"
+                        android:paddingLeft="10dp"
+                        android:text="@string/buyer"
+                        android:textColor="@color/lead_create_new_black_text_color"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+                    <RadioButton
+                        android:id="@+id/rb_createLead_seller"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:button="@drawable/radio_btn"
+                        android:checked="false"
+                        android:paddingLeft="10dp"
+                        android:text="@string/seller"
+                        android:textColor="@color/lead_create_new_grey_text_color"
+                        android:textSize="14sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                style="@style/CreateLeadDivider"
+                android:layout_marginBottom="15dp" />
+
+            <LinearLayout
+                android:id="@+id/ll_createLead_addressContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingBottom="15dp"
+                android:visibility="gone">
+
+                <EditText
+                    android:id="@+id/et_createLead_address"
+                    style="@style/CreateLeadEditText"
+                    android:hint="@string/create_new_lead_hint_address"
+                    android:inputType="textCapWords" />
+
+                <View style="@style/CreateLeadDivider" />
+
+                <EditText
+                    android:id="@+id/et_createLead_unit"
+                    style="@style/CreateLeadEditText"
+                    android:hint="@string/create_new_lead_hint_unit"
+                    android:inputType="text" />
+
+                <View style="@style/CreateLeadDivider" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@color/white">
+
+                    <TextView
+                        android:id="@+id/tv_createLead_stateHint"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:text="@string/create_new_lead_hint_state"
+                        android:textColor="@color/lead_create_new_grey_text_color" />
+
+                    <View
+                        style="@style/CreateLeadDivider"
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:layout_toRightOf="@+id/tv_createLead_stateHint" />
+
+                    <TextView
+                        android:id="@+id/tv_createLead_state"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_toRightOf="@+id/tv_createLead_stateHint"
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:ellipsize="marquee"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="35dp"
+                        android:text="@string/create_new_lead_hint_selectState"
+                        android:textColor="@color/lead_create_new_grey_text_color" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="15dp"
+                        android:rotation="270"
+                        android:src="@drawable/ic_arrow_down" />
+                </RelativeLayout>
+
+                <View style="@style/CreateLeadDivider" />
+
+                <EditText
+                    android:id="@+id/et_createLead_city"
+                    style="@style/CreateLeadEditText"
+                    android:hint="@string/create_new_lead_hint_city"
+                    android:inputType="textCapWords" />
+
+                <View style="@style/CreateLeadDivider" />
+
+                <EditText
+                    android:id="@+id/et_createLead_zip"
+                    style="@style/CreateLeadEditText"
+                    android:hint="@string/create_new_lead_hint_zip"
+                    android:inputType="number" />
+
+                <View style="@style/CreateLeadDivider" />
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/et_createLead_note"
+                style="@style/CreateLeadEditText"
+                android:layout_height="wrap_content"
+                android:hint="@string/create_new_lead_hint_note"
+                android:inputType="textMultiLine"
+                android:minHeight="50dp"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp" />
+
+            <View style="@style/CreateLeadDivider" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:paddingRight="20dp">
+
+                <Switch
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:checked="true"
+                    android:paddingLeft="20dp"
+                    android:text="@string/create_new_lead_enableDripCompaigns"
+                    android:textColor="@color/lead_create_new_grey_text_color"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <View
+                style="@style/CreateLeadDivider"
+                android:layout_marginBottom="30dp" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

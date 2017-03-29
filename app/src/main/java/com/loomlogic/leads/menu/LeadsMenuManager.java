@@ -1,5 +1,6 @@
 package com.loomlogic.leads.menu;
 
+import android.content.DialogInterface;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -10,12 +11,14 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.loomlogic.R;
 import com.loomlogic.home.HomeActivity;
+import com.loomlogic.leads.create.CreateLeadActivity;
 import com.loomlogic.leads.entity.LeadRole;
 import com.loomlogic.utils.LeadPreferencesUtils;
 import com.loomlogic.utils.LeadUtils;
@@ -53,8 +56,7 @@ public class LeadsMenuManager {
         newLeadFAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                closeDrawer();
-                activity.showErrorSnackBar("new lead click");
+                openCreateLeadDialog();
             }
         });
 
@@ -179,7 +181,7 @@ public class LeadsMenuManager {
     }
 
     public void openDrawer() {
-        if (KeyboardVisibilityEvent.isKeyboardVisible(activity)){
+        if (KeyboardVisibilityEvent.isKeyboardVisible(activity)) {
             ViewUtils.hideSoftKeyboard(drawer);
         }
         drawer.openDrawer(GravityCompat.START);
@@ -194,4 +196,16 @@ public class LeadsMenuManager {
         return false;
     }
 
+    private void openCreateLeadDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setItems(R.array.lead_create_new_chooser, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //closeDrawer();
+                activity.startActivity(CreateLeadActivity.getCreateLeadActivityIntent(activity, which == 0));
+            }
+
+        });
+        builder.show();
+    }
 }

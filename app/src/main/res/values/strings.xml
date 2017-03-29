@@ -11,6 +11,9 @@
     <string name="lender">Lender</string>
     <string name="cancel">Cancel</string>
     <string name="searchHint">Search</string>
+    <string name="ok">Ok</string>
+    <string name="buyer">Buyer</string>
+    <string name="seller">Seller</string>
 
     <!-- Sign In -->
     <string name="logIn">Log In</string>
@@ -53,6 +56,13 @@
     <string name="leadMenuItem_Active">Active</string>
     <string name="leadMenuItem_Withdraw">Withdraw</string>
     <string name="leadMenuItem_Pending">Pending</string>
+    <string name="create_new_lead_fromContact">From Contact</string>
+    <string name="create_new_lead">Create New</string>
+
+    <array name="lead_create_new_chooser">
+        <item>@string/create_new_lead_fromContact</item>
+        <item>@string/create_new_lead</item>
+    </array>
 
     <!-- Leads List -->
     <string name="lead_call_twillio"><font color="blue">Twillio Call</font></string>
@@ -115,4 +125,25 @@
     <string name="lead_contract_gross">Gross</string>
 
     <string name="lead_transaction_address">Address</string>
+
+    <!-- Leads Create New -->
+    <string name="create_new_lead_title">Add Contact</string>
+    <string name="create_new_lead_hint_name">Name</string>
+    <string name="create_new_lead_hint_additionalName">Additional Name</string>
+    <string name="create_new_lead_hint_phone">Phone</string>
+    <string name="create_new_lead_hint_email">Email</string>
+    <string name="create_new_lead_hint_source">Source</string>
+    <string name="create_new_lead_hint_selectSource">Select source</string>
+    <string name="create_new_lead_hint_address">Address</string>
+    <string name="create_new_lead_hint_unit">Unit #</string>
+    <string name="create_new_lead_hint_state">State</string>
+    <string name="create_new_lead_hint_selectState">Select state</string>
+    <string name="create_new_lead_hint_city">City</string>
+    <string name="create_new_lead_hint_zip">Zip Code</string>
+    <string name="create_new_lead_hint_note">Note</string>
+    <string name="create_new_lead_enableDripCompaigns">Enable Drip Compaigns</string>
+    <string name="create_new_lead_source_error">Source can\'t be blank</string>
+    <!--<string name="create_new_lead_hint_"></string>-->
+    <!--<string name="create_new_lead_hint_"></string>-->
+
 </resources>
