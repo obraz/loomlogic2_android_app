@@ -58,6 +58,7 @@
                 android:id="@+id/et_createLead_email"
                 style="@style/CreateLeadEditText"
                 android:hint="@string/create_new_lead_hint_email"
+                android:imeOptions="actionDone"
                 android:inputType="textEmailAddress" />
 
             <View style="@style/CreateLeadDivider" />

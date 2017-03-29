@@ -3,7 +3,7 @@
     package="com.loomlogic">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_CONTACTS" />
+
     <application
         android:name=".base.LoomLogicApp"
         android:icon="@mipmap/ic_launcher"
@@ -48,6 +48,17 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="sensorPortrait"></activity>
 
+        <activity
+            android:name=".leads.create.SourceListActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="sensorPortrait"
+            android:windowSoftInputMode="adjustPan"></activity>
+
+        <activity
+            android:name=".leads.create.StateListActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="sensorPortrait"
+            android:windowSoftInputMode="adjustPan"></activity>
     </application>
 
 </manifest>

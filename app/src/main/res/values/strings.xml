@@ -14,6 +14,7 @@
     <string name="ok">Ok</string>
     <string name="buyer">Buyer</string>
     <string name="seller">Seller</string>
+    <string name="no_results">No Results</string>
 
     <!-- Sign In -->
     <string name="logIn">Log In</string>
@@ -143,7 +144,14 @@
     <string name="create_new_lead_hint_note">Note</string>
     <string name="create_new_lead_enableDripCompaigns">Enable Drip Compaigns</string>
     <string name="create_new_lead_source_error">Source can\'t be blank</string>
-    <!--<string name="create_new_lead_hint_"></string>-->
-    <!--<string name="create_new_lead_hint_"></string>-->
-
+    <string name="create_new_lead_source_title">Source</string>
+    <string name="create_new_lead_state_title">State</string>
+    <string name="create_new_lead_source_add_new_title">Add New Source</string>
+    <string name="create_new_lead_state_add_new_hint">Input Source Name</string>
+    <string name="create_new_lead_dialog_title">Add New Leads</string>
+    <array name="create_new_lead_dialog_chooser">
+        <item>Create</item>
+        <item>Send to Agent</item>
+        <item>Send to Team</item>
+    </array>
 </resources>
