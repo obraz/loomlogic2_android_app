@@ -50,7 +50,8 @@
                 android:id="@+id/et_createLead_phone"
                 style="@style/CreateLeadEditText"
                 android:hint="@string/create_new_lead_hint_phone"
-                android:inputType="phone" />
+                android:inputType="phone"
+                android:maxLength="14" />
 
             <View style="@style/CreateLeadDivider" />
 

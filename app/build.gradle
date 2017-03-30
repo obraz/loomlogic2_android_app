@@ -53,7 +53,7 @@ def getDate() {
 }
 
 ext {
-    supportLibVersion = '25.2.0'
+    supportLibVersion = '25.3.0'
 }
 
 dependencies {
