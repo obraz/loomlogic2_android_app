@@ -6,17 +6,17 @@ import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.loomlogic.R;
 import com.loomlogic.leads.base.LeadAvatarView;
-import com.loomlogic.leads.entity.LeadItem;
 import com.loomlogic.leads.details.LeadEscrowStatusItem;
 import com.loomlogic.leads.details.LeadEscrowStatusState;
 import com.loomlogic.leads.details.LeadEscrowStatusUtils;
+import com.loomlogic.leads.entity.LeadItem;
 import com.loomlogic.utils.Utils;
 
 import java.util.ArrayList;
@@ -135,15 +135,15 @@ public class LeadDetailsInfoView extends LinearLayout {
 
         final LinearLayout infoLayout = (LinearLayout) findViewById(R.id.ll_leadDetailsInfoContainer);
 
-        final ImageButton showMoreBtn = (ImageButton) findViewById(R.id.ib_showMore);
-        showMoreBtn.setOnClickListener(new OnClickListener() {
+        final ImageView showMoreIcon = (ImageView) findViewById(R.id.iv_showMore);
+        findViewById(R.id.rl_headerContainer).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (isVisible) {
-                    showMoreBtn.setRotation(0);
+                    showMoreIcon.setRotation(0);
                     collapse(infoLayout);
                 } else {
-                    showMoreBtn.setRotation(180);
+                    showMoreIcon.setRotation(180);
                     expand(infoLayout);
                 }
                 isVisible = !isVisible;

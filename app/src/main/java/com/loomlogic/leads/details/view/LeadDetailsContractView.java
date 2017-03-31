@@ -4,7 +4,7 @@ import android.content.Context;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -53,15 +53,15 @@ public class LeadDetailsContractView extends LinearLayout {
     private void setShowMoreBtn() {
         final LinearLayout infoLayout = (LinearLayout) findViewById(R.id.ll_leadDetailsContractContainer);
 
-        final ImageButton showMoreBtn = (ImageButton) findViewById(R.id.ib_showMore);
-        showMoreBtn.setOnClickListener(new OnClickListener() {
+        final ImageView showMoreIcon = (ImageView) findViewById(R.id.iv_showMore);
+        findViewById(R.id.ll_headerContainer).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (isVisible) {
-                    showMoreBtn.setRotation(0);
+                    showMoreIcon.setRotation(0);
                     collapse(infoLayout);
                 } else {
-                    showMoreBtn.setRotation(180);
+                    showMoreIcon.setRotation(180);
                     expand(infoLayout);
                 }
                 isVisible = !isVisible;

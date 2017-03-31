@@ -7,8 +7,10 @@
     android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/ll_headerContainer"
         android:layout_width="match_parent"
         android:layout_height="60dp"
+        android:background="?attr/selectableItemBackground"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
@@ -22,13 +24,11 @@
             android:textSize="16sp"
             android:textStyle="bold" />
 
-        <ImageButton
-            android:id="@+id/ib_showMore"
+        <ImageView
+            android:id="@+id/iv_showMore"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="15dp"
-            android:background="?attr/selectableItemBackground"
-            android:padding="5dp"
+            android:layout_marginRight="20dp"
             android:src="@drawable/ic_arrow_down" />
     </LinearLayout>
 

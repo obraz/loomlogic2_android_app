@@ -5,7 +5,7 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.GridLayout;
-import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -27,7 +27,8 @@ public class LeadDetailsParticipantsView extends LinearLayout {
     private LeadParticipantItem currentParticipant;
     private TextView participantNameTv, participantRoleTv, participantPhoneTv, participantAddressTv, participantEmailTv;
     private LinearLayout infoLayout;
-    private ImageButton showMoreBtn;
+    private LinearLayout headerLayout;
+    private ImageView showMoreIcon;
     private boolean isVisible = false;
 
     public interface OnLeadParticipantsClickListener {
@@ -67,7 +68,9 @@ public class LeadDetailsParticipantsView extends LinearLayout {
         participantEmailTv = (TextView) findViewById(R.id.tv_leadParticipantEmail);
 
         infoLayout = (LinearLayout) findViewById(R.id.ll_leadDetailsParticipantsContainer);
-        showMoreBtn = (ImageButton) findViewById(R.id.ib_showMore);
+        headerLayout = (LinearLayout) findViewById(R.id.ll_headerContainer);
+
+        showMoreIcon = (ImageView) findViewById(R.id.iv_showMore);
     }
 
     public void setParticipants(ArrayList<LeadParticipantItem> participantsList) {
@@ -93,7 +96,7 @@ public class LeadDetailsParticipantsView extends LinearLayout {
 
     private void updateData() {
         setParticipants();
-        setShowMoreBtn();
+        setHeaderClickListener();
     }
 
 
@@ -113,7 +116,7 @@ public class LeadDetailsParticipantsView extends LinearLayout {
 
                     setParticipantInfo(participantItem);
                     if (!isVisible) {
-                        showMoreBtn.performClick();
+                        headerLayout.performClick();
                     }
                 }
             });
@@ -129,15 +132,15 @@ public class LeadDetailsParticipantsView extends LinearLayout {
 
     }
 
-    private void setShowMoreBtn() {
-        showMoreBtn.setOnClickListener(new OnClickListener() {
+    private void setHeaderClickListener() {
+        headerLayout.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (isVisible) {
-                    showMoreBtn.setRotation(0);
+                    showMoreIcon.setRotation(0);
                     collapse(infoLayout);
                 } else {
-                    showMoreBtn.setRotation(180);
+                    showMoreIcon.setRotation(180);
                     expand(infoLayout);
                 }
                 isVisible = !isVisible;

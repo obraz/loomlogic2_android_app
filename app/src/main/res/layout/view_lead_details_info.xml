@@ -14,8 +14,10 @@
         android:orientation="horizontal"></LinearLayout>
 
     <RelativeLayout
+        android:id="@+id/rl_headerContainer"
         android:layout_width="match_parent"
-        android:layout_height="80dp">
+        android:layout_height="80dp"
+        android:background="?attr/selectableItemBackground">
 
         <View
             android:id="@+id/leadEscrowStatusBg"
@@ -52,13 +54,11 @@
                 android:textStyle="bold"
                 tools:text="John Doussing " />
 
-            <ImageButton
-                android:id="@+id/ib_showMore"
+            <ImageView
+                android:id="@+id/iv_showMore"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="15dp"
-                android:background="?attr/selectableItemBackground"
-                android:padding="5dp"
+                android:layout_marginRight="20dp"
                 android:src="@drawable/ic_arrow_down" />
         </LinearLayout>
 
