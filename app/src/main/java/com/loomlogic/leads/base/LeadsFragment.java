@@ -318,7 +318,8 @@ public class LeadsFragment extends BaseHomeFragment implements LeadsAdapter.OnLe
         final ArrayList<LeadItem> foundItemsList = new ArrayList<>();
 
         for (LeadItem item : fakeList) {
-            if (item.firstName.toLowerCase().contains(newText.toLowerCase()) || item.lastName.toLowerCase().contains(newText.toLowerCase())) {
+            String fullName = item.firstName.toLowerCase() + " " + item.lastName.toLowerCase();
+            if (fullName.contains(newText.toLowerCase()) || fullName.contains(newText.toLowerCase())) {
                 foundItemsList.add(item);
             }
         }
