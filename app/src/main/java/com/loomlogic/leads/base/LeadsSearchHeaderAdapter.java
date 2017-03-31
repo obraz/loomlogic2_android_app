@@ -2,7 +2,6 @@ package com.loomlogic.leads.base;
 
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +16,6 @@ import com.loomlogic.R;
 
 public class LeadsSearchHeaderAdapter extends AbstractHeaderFooterWrapperAdapter<LeadsSearchHeaderAdapter.HeaderViewHolder, LeadsSearchHeaderAdapter.HeaderViewHolder> {
     private SearchView.OnQueryTextListener onQueryTextListener;
-    private String query;
 
     static class HeaderViewHolder extends RecyclerView.ViewHolder {
         private SearchView searchView;
@@ -31,11 +29,6 @@ public class LeadsSearchHeaderAdapter extends AbstractHeaderFooterWrapperAdapter
     public LeadsSearchHeaderAdapter(RecyclerView.Adapter adapter, SearchView.OnQueryTextListener onQueryTextListener) {
         setAdapter(adapter);
         this.onQueryTextListener = onQueryTextListener;
-    }
-
-    public void setQuery(String text) {
-        this.query = text;
-        notifyDataSetChanged();
     }
 
     @Override
@@ -70,10 +63,6 @@ public class LeadsSearchHeaderAdapter extends AbstractHeaderFooterWrapperAdapter
 
     @Override
     public void onBindHeaderItemViewHolder(HeaderViewHolder vh, int localPosition) {
-        Log.e( "onCreateHeaderIte ",""+query);
-        if (query != null) {
-            vh.searchView.setQuery(query, false);
-        }
     }
 
     @Override
