@@ -145,7 +145,7 @@ public class LeadsMenuManager {
             public void onDrawerClosed(View view) {
                 super.onDrawerClosed(view);
                 activity.supportInvalidateOptionsMenu();
-                activity.gerBottomNavBar().show();
+                activity.getBottomNavBar().show();
             }
 
             public void onDrawerOpened(View drawerView) {
@@ -185,7 +185,7 @@ public class LeadsMenuManager {
             ViewUtils.hideSoftKeyboard(drawer);
         }
         drawer.openDrawer(GravityCompat.START);
-        activity.gerBottomNavBar().hide();
+        activity.getBottomNavBar().hide();
     }
 
     public boolean closeDrawer() {
