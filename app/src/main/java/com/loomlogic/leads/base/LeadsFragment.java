@@ -12,7 +12,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -299,13 +298,11 @@ public class LeadsFragment extends BaseHomeFragment implements LeadsAdapter.OnLe
 
     @Override
     public boolean onQueryTextSubmit(String query) {
-        Log.e("onQueryTextSubmit: ", query);
         return false;
     }
 
     @Override
     public boolean onQueryTextChange(String newText) {
-        Log.e("onQueryTextChange: ", "  " + newText);
         doSearch(newText);
         return false;
     }
