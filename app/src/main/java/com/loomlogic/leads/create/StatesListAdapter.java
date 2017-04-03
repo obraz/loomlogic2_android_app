@@ -34,7 +34,7 @@ public class StatesListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View view = inflater.inflate(R.layout.tem_state, parent, false);
+        View view = inflater.inflate(R.layout.item_state, parent, false);
         return new ViewHolderStatesList(view);
     }
 

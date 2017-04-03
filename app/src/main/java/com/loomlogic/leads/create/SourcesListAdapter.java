@@ -35,7 +35,7 @@ public class SourcesListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View view = inflater.inflate(R.layout.tem_lead_source, parent, false);
+        View view = inflater.inflate(R.layout.item_lead_source, parent, false);
         return new ViewHolderSourcesList(view);
     }
 
