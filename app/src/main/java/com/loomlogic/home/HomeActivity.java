@@ -49,11 +49,11 @@ public class HomeActivity extends BackStackActivity implements BottomNavigationB
     public void refreshNavBar() {
         bottomNavBar.clearAll();
         bottomNavBar
-                .addItem(new BottomNavigationItem(R.drawable.ic_navigation_notifications, R.string.notifications))
-                .addItem(new BottomNavigationItem(R.drawable.ic_navigation_search, R.string.search))
-                .addItem(new BottomNavigationItem(R.drawable.ic_navigation_leads, R.string.leads))
-                .addItem(new BottomNavigationItem(R.drawable.ic_navigation_tasks, R.string.tasks))
-                .addItem(new BottomNavigationItem(R.drawable.ic_navigation_profile, R.string.profile))
+                .addItem(new BottomNavigationItem(R.drawable.ic_navigation_notifications, ""))
+                .addItem(new BottomNavigationItem(R.drawable.ic_navigation_search, ""))
+                .addItem(new BottomNavigationItem(R.drawable.ic_navigation_leads, ""))
+                .addItem(new BottomNavigationItem(R.drawable.ic_navigation_tasks, ""))
+                .addItem(new BottomNavigationItem(R.drawable.ic_navigation_profile, ""))
                 .setActiveColor(R.color.navBarBgColor)
                 .setBarBackgroundColor(LeadUtils.getCurrentLeadRoleColor())
                 .setFirstSelectedPosition(curTabId)

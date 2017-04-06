@@ -75,6 +75,8 @@
     <string name="lead_message_sms">SMS</string>
     <string name="lead_message_email">Email</string>
     <string name="lead_message_note">Note</string>
+    <string name="lead_menu">Menu</string>
+    <string name="lead_filter">Filter</string>
 
     <!-- Leads Details -->
     <string name="lead_details_tab_details">Details</string>

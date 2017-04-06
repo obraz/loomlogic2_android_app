@@ -7,8 +7,8 @@
     android:layout_height="match_parent"
     tools:openDrawer="start">
 
-    <LinearLayout
-        android:id="@+id/ll_leadsMainContent"
+    <RelativeLayout
+        android:id="@+id/view_leadsMainContent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#EFEFF4"
@@ -19,19 +19,86 @@
         <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/layoutSwipeRefresh"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/toolbar">
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </android.support.v4.widget.SwipeRefreshLayout>
-    </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/view_leadControlBtnContainer"
+            android:layout_width="200dp"
+            android:layout_height="40dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="65dp"
+            android:background="@drawable/bg_leads_control_buttons"
+            android:elevation="6dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/view_leadMenuBtn"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="?selectableItemBackground"
+                android:clickable="true"
+                android:drawableLeft="@drawable/ic_lead_burger_menu"
+                android:drawablePadding="5dp"
+                android:gravity="center"
+                android:paddingLeft="20dp"
+                android:text="@string/lead_menu"
+                android:textAllCaps="true"
+                android:textColor="#2B2B30"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center_vertical"
+                android:background="#EAEAEA" />
+
+            <TextView
+                android:id="@+id/view_leadFilterBtn"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="?selectableItemBackground"
+                android:clickable="true"
+                android:drawablePadding="5dp"
+                android:drawableRight="@drawable/ic_lead_filter"
+                android:gravity="center"
+                android:paddingRight="20dp"
+                android:text="@string/lead_filter"
+                android:textAllCaps="true"
+                android:textColor="#2B2B30"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <View
+            android:id="@+id/view_leadFilter"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_alignTop="@+id/view_leadControlBtnContainer"
+            android:layout_marginLeft="-13dp"
+            android:layout_marginTop="-2dp"
+            android:layout_toRightOf="@+id/view_leadControlBtnContainer"
+            android:background="@drawable/circle"
+            android:backgroundTint="#03A9F4"
+            android:elevation="6dp" />
+
+    </RelativeLayout>
 
     <android.support.design.widget.NavigationView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="start">
+        android:layout_gravity="start"
+        tools:visibility="gone">
 
         <include
             android:id="@+id/leadMenuLayout"

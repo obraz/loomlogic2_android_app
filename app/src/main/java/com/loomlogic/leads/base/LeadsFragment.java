@@ -14,7 +14,6 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
 import com.h6ah4i.android.widget.advrecyclerview.animator.GeneralItemAnimator;
 import com.h6ah4i.android.widget.advrecyclerview.animator.SwipeDismissItemAnimator;
@@ -103,7 +102,7 @@ public class LeadsFragment extends BaseHomeFragment implements LeadsAdapter.OnLe
     }
 
     private void initViews(View view) {
-        LinearLayout mainContent = (LinearLayout) view.findViewById(R.id.ll_leadsMainContent);
+        View mainContent = view.findViewById(R.id.view_leadsMainContent);
         DrawerLayout drawerLayout = (DrawerLayout) view.findViewById(R.id.drawer_layout);
         View navigationViewContainer = view.findViewById(R.id.leadMenuLayout);
 
@@ -119,6 +118,8 @@ public class LeadsFragment extends BaseHomeFragment implements LeadsAdapter.OnLe
         });
 
         initList();
+
+        view.findViewById(R.id.view_leadFilter).bringToFront();
     }
 
     private void initList() {

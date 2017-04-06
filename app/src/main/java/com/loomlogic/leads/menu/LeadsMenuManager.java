@@ -14,7 +14,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -38,14 +37,14 @@ public class LeadsMenuManager {
     private static final int ROLE_BUYER_MENU_POSITION = 0;
     private static final int ROLE_BUYER_SELLER_POSITION = 1;
     private HomeActivity activity;
-    private LinearLayout mainContent;
+    private View mainContent;
     private DrawerLayout drawer;
     private ActionBarDrawerToggle mDrawerToggle;
     private View navigationViewContainer;
     private LeadsTypeAdapter adapter;
     private ViewPager viewPager;
 
-    public LeadsMenuManager(HomeActivity activity, LinearLayout mainContent, DrawerLayout drawerLayout, View navigationViewContainer) {
+    public LeadsMenuManager(HomeActivity activity, View mainContent, DrawerLayout drawerLayout, View navigationViewContainer) {
         this.activity = activity;
         this.mainContent = mainContent;
         this.drawer = drawerLayout;
