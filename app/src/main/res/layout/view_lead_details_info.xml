@@ -20,7 +20,7 @@
         android:background="?attr/selectableItemBackground">
 
         <View
-            android:id="@+id/leadEscrowStatusBg"
+            android:id="@+id/leadContainerBg"
             android:layout_width="300dp"
             android:layout_height="match_parent"
             android:background="@color/lead_escrow_status_financing_bg_color" />

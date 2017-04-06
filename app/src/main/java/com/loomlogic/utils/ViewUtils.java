@@ -77,4 +77,40 @@ public class ViewUtils {
         });
         colorAnimation.start();
     }
+
+    public static int getColorFromGradient(int[] colors, float[] positions, float position) {
+
+        if (colors.length == 0 || colors.length != positions.length) {
+            throw new IllegalArgumentException();
+        }
+
+        if (colors.length == 1) {
+            return colors[0];
+        }
+
+        if (position <= positions[0]) {
+            return colors[0];
+        }
+
+        if (position >= positions[positions.length - 1]) {
+            return colors[positions.length - 1];
+        }
+
+        for (int i = 1; i < positions.length; ++i) {
+            if (position <= positions[i]) {
+                float t = (position - positions[i - 1]) / (positions[i] - positions[i - 1]);
+                return lerpColor(colors[i - 1], colors[i], t);
+            }
+        }
+        return Color.WHITE;
+    }
+
+    public static int lerpColor(int colorA, int colorB, float t) {
+        int alpha = (int) Math.floor(Color.alpha(colorA) * (1 - t) + Color.alpha(colorB) * t);
+        int red = (int) Math.floor(Color.red(colorA) * (1 - t) + Color.red(colorB) * t);
+        int green = (int) Math.floor(Color.green(colorA) * (1 - t) + Color.green(colorB) * t);
+        int blue = (int) Math.floor(Color.blue(colorA) * (1 - t) + Color.blue(colorB) * t);
+
+        return Color.argb(alpha, red, green, blue);
+    }
 }

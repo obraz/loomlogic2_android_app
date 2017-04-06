@@ -53,7 +53,7 @@ def getDate() {
 }
 
 ext {
-    supportLibVersion = '25.3.0'
+    supportLibVersion = '25.3.1'
 }
 
 dependencies {
@@ -67,8 +67,10 @@ dependencies {
     compile 'com.ashokvarma.android:bottom-navigation-bar:1.4.1'
     compile 'com.makeramen:roundedimageview:2.3.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
-    compile('com.h6ah4i.android.widget.advrecyclerview:advrecyclerview:0.10.4@aar') {
+    compile('com.h6ah4i.android.widget.advrecyclerview:advrecyclerview:0.10.5@aar') {
         transitive = true
     }
     compile 'com.google.code.gson:gson:2.8.0'
+    compile 'com.daimajia.easing:library:2.0@aar'
+    compile 'com.daimajia.androidanimations:library:2.2@aar'
 }

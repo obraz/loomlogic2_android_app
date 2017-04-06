@@ -43,6 +43,7 @@
     <color name="lead_escrow_status_financing_underline_color">#F8E81C</color>
     <color name="lead_escrow_status_cash_bg_color">#EFFEEC</color>
     <color name="lead_escrow_status_cash_underline_color">#7ED321</color>
+    <color name="lead_btn_container_bg_color">#F5F7FA</color>
 
     <color name="lead_detail_tabText_color">#8F8E94</color>
     <color name="lead_detail_escrow_status_done_text_color">#9B9B9B</color>
@@ -58,4 +59,12 @@
 
     <color name="lead_create_new_black_text_color">#28323C</color>
     <color name="lead_create_new_grey_text_color">#8F8E94</color>
+
+    <color name="lead_call_btn_bg_color">#7ED321</color>
+    <color name="lead_call_system_btn_bg_color">#83CF15</color>
+    <color name="lead_call_twillio_btn_bg_color">#F12E45</color>
+    <color name="lead_msg_btn_bg_color">#0097EB</color>
+    <color name="lead_msg_sms_btn_bg_color">#F5A623</color>
+    <color name="lead_msg_email_btn_bg_color">#DD0000</color>
+    <color name="lead_msg_note_btn_bg_color">#0097EB</color>
 </resources>

@@ -2,13 +2,17 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="70dp">
+    android:layout_height="76dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/lead_btn_container_bg_color"
+        android:gravity="center_vertical"
         android:orientation="horizontal"
-        tools:visibility="invisible">
+        android:paddingLeft="@dimen/lead_swipe_action_button_padding"
+        android:paddingRight="@dimen/lead_swipe_action_button_padding"
+        tools:visibility="visible">
 
         <Space
             android:layout_width="0dp"
@@ -17,21 +21,129 @@
 
         <ImageView
             android:id="@+id/iv_leadCall"
-            android:layout_width="@dimen/lead_swipe_action_button_width"
-            android:layout_height="match_parent"
-            android:background="#7ED321"
-            android:foreground="?attr/selectableItemBackground"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/circle"
+            android:clickable="true"
             android:scaleType="center"
             android:src="@drawable/ic_call" />
 
         <ImageView
             android:id="@+id/iv_leadMessage"
-            android:layout_width="@dimen/lead_swipe_action_button_width"
-            android:layout_height="match_parent"
-            android:background="#0097EB"
-            android:foreground="?attr/selectableItemBackground"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/circle"
+            android:clickable="true"
             android:scaleType="center"
             android:src="@drawable/ic_send_message" />
+
+        <LinearLayout
+            android:id="@+id/view_leadMsg_note"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/circle"
+            android:backgroundTint="@color/lead_msg_note_btn_bg_color"
+            android:clickable="true"
+            android:gravity="center"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableTop="@drawable/ic_lead_msg_note"
+                android:text="@string/lead_message_note"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/view_leadMsg_email"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/circle"
+            android:backgroundTint="@color/lead_msg_email_btn_bg_color"
+            android:clickable="true"
+            android:gravity="center"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableTop="@drawable/ic_lead_msg_email"
+                android:text="@string/lead_message_email"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/view_leadMsg_sms"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/circle"
+            android:backgroundTint="@color/lead_msg_sms_btn_bg_color"
+            android:clickable="true"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableTop="@drawable/ic_lead_msg_sms"
+                android:text="@string/lead_message_sms"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/view_leadCall_system"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/circle"
+            android:backgroundTint="@color/lead_call_system_btn_bg_color"
+            android:clickable="true"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableTop="@drawable/ic_call"
+                android:text="@string/lead_call_system"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/view_leadCall_twillio"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/circle"
+            android:backgroundTint="@color/lead_call_twillio_btn_bg_color"
+            android:clickable="true"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableTop="@drawable/ic_call"
+                android:text="@string/lead_call_twillio"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+        </LinearLayout>
 
     </LinearLayout>
 
@@ -43,7 +155,7 @@
         android:clickable="true"
         android:foreground="?attr/selectableItemBackground"
         android:orientation="horizontal"
-        tools:visibility="visible">
+        tools:visibility="invisible">
 
         <View
             android:layout_width="match_parent"
@@ -52,10 +164,11 @@
             android:background="#EDEDED" />
 
         <View
-            android:id="@+id/leadEscrowStatusBg"
-            android:layout_width="300dp"
+            android:id="@+id/leadContainerBg"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/lead_escrow_status_financing_bg" />
+            android:background="@color/white"
+            android:visibility="visible" />
 
         <LinearLayout
             android:layout_width="match_parent"

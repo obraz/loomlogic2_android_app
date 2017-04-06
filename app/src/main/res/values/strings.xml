@@ -66,22 +66,12 @@
     </array>
 
     <!-- Leads List -->
-    <string name="lead_call_twillio"><font color="blue">Twillio Call</font></string>
-    <string name="lead_call_system"><font color="blue">System Call</font></string>
-    <string name="lead_message_note"><font color="blue">Note</font></string>
-    <string name="lead_message_email"><font color="blue">Email</font></string>
-    <string name="lead_message_sms"><font color="blue">SMS</font></string>
+    <string name="lead_call_twillio">Twillio</string>
+    <string name="lead_call_system">Phone</string>
 
-    <array name="lead_call_chooser">
-        <item>@string/lead_call_twillio</item>
-        <item>@string/lead_call_system</item>
-    </array>
-
-    <array name="lead_message_chooser">
-        <item>@string/lead_message_note</item>
-        <item>@string/lead_message_email</item>
-        <item>@string/lead_message_sms</item>
-    </array>
+    <string name="lead_message_sms">SMS</string>
+    <string name="lead_message_email">Email</string>
+    <string name="lead_message_note">Note</string>
 
     <!-- Leads Details -->
     <string name="lead_details_tab_details">Details</string>

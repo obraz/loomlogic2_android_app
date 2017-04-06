@@ -1,12 +1,10 @@
 package com.loomlogic.leads.base;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -244,56 +242,33 @@ public class LeadsFragment extends BaseHomeFragment implements LeadsAdapter.OnLe
     }
 
     @Override
-    public void onMessageClickListener(LeadItem item) {
+    public void onMessageEmailClickListener(LeadItem item) {
         mAdapter.notifyDataSetChanged();
-        openMessageDialog(item);
+        getHomeActivity().showErrorSnackBar("email");
     }
 
     @Override
-    public void onCallClickListener(LeadItem item) {
+    public void onMessageNoteClickListener(LeadItem item) {
         mAdapter.notifyDataSetChanged();
-        openCallDialog(item);
+        getHomeActivity().showErrorSnackBar("note");
     }
 
-    private void openCallDialog(LeadItem leadItem) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setItems(R.array.lead_call_chooser, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                switch (which) {
-                    case 0:
-                        getHomeActivity().showErrorSnackBar("twillio call");
-                        break;
-                    case 1:
-                        getHomeActivity().showErrorSnackBar("call");
-                        break;
-                }
-            }
-
-        });
-        builder.show();
+    @Override
+    public void onMessageSMSClickListener(LeadItem item) {
+        mAdapter.notifyDataSetChanged();
+        getHomeActivity().showErrorSnackBar("SMS");
     }
 
-    private void openMessageDialog(LeadItem leadItem) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setItems(R.array.lead_message_chooser, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                switch (which) {
-                    case 0:
-                        getHomeActivity().showErrorSnackBar("note");
-                        break;
-                    case 1:
-                        getHomeActivity().showErrorSnackBar("email");
-                        break;
-                    case 2:
-                        getHomeActivity().showErrorSnackBar("sms");
-                        break;
-                }
-            }
+    @Override
+    public void onCallSystemClickListener(LeadItem item) {
+        mAdapter.notifyDataSetChanged();
+        getHomeActivity().showErrorSnackBar("call");
+    }
 
-        });
-        builder.show();
+    @Override
+    public void onCallTwillioClickListener(LeadItem item) {
+        mAdapter.notifyDataSetChanged();
+        getHomeActivity().showErrorSnackBar("twillio call");
     }
 
     @Override

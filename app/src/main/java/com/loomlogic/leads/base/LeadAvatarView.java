@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.loomlogic.R;
 import com.loomlogic.leads.entity.LeadItem;
 import com.loomlogic.utils.Utils;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 /**
@@ -48,34 +49,52 @@ public class LeadAvatarView extends FrameLayout {
         inflate(getContext(), R.layout.view_lead_avatar, this);
     }
 
-    public void setLeadAvatar(LeadItem lead) {
+    public void setLeadAvatar(final LeadItem lead) {
         ImageView avatarIV = (ImageView) findViewById(R.id.iv_leadAvatar);
-        TextView initialsTV = (TextView) findViewById(R.id.tv_leadInitials);
+        final TextView initialsTV = (TextView) findViewById(R.id.tv_leadInitials);
 
         if (Utils.isUrlValid(lead.avatarUrl)) {
             Picasso.with(getContext())
                     .load(lead.avatarUrl)
-                    .into(avatarIV);
-            initialsTV.setVisibility(View.GONE);
+                    .into(avatarIV, new Callback() {
+                        @Override
+                        public void onSuccess() {
+                            initialsTV.setVisibility(View.GONE);
+                        }
+
+                        @Override
+                        public void onError() {
+                            setLeadDefaultAvatar(lead);
+                        }
+                    });
+
         } else {
-            initialsTV.setVisibility(View.VISIBLE);
-            initialsTV.setText(String.format("%s%s", !TextUtils.isEmpty(lead.firstName) ? lead.firstName.charAt(0) : "", !TextUtils.isEmpty(lead.lastName) ? lead.lastName.charAt(0) : ""));
-            int color;
-            switch (lead.gender) {
-                case MALE:
-                    color = ContextCompat.getColor(getContext(), R.color.lead_gender_male_color);
-                    break;
-                case FEMALE:
-                    color = ContextCompat.getColor(getContext(), R.color.lead_gender_female_color);
-                    break;
-                case NONE:
-                    color = ContextCompat.getColor(getContext(), R.color.lead_gender_none_color);
-                    break;
-                default:
-                    color = ContextCompat.getColor(getContext(), R.color.lead_gender_none_color);
-            }
-            avatarIV.setBackgroundColor(color);
-            avatarIV.setImageDrawable(null);
+            setLeadDefaultAvatar(lead);
         }
+    }
+
+    public void setLeadDefaultAvatar(LeadItem lead) {
+        ImageView avatarIV = (ImageView) findViewById(R.id.iv_leadAvatar);
+        TextView initialsTV = (TextView) findViewById(R.id.tv_leadInitials);
+
+        initialsTV.setVisibility(View.VISIBLE);
+        initialsTV.setText(String.format("%s%s", !TextUtils.isEmpty(lead.firstName) ? lead.firstName.charAt(0) : "", !TextUtils.isEmpty(lead.lastName) ? lead.lastName.charAt(0) : ""));
+        int color;
+        switch (lead.gender) {
+            case MALE:
+                color = ContextCompat.getColor(getContext(), R.color.lead_gender_male_color);
+                break;
+            case FEMALE:
+                color = ContextCompat.getColor(getContext(), R.color.lead_gender_female_color);
+                break;
+            case NONE:
+                color = ContextCompat.getColor(getContext(), R.color.lead_gender_none_color);
+                break;
+            default:
+                color = ContextCompat.getColor(getContext(), R.color.lead_gender_none_color);
+        }
+        avatarIV.setBackgroundColor(color);
+        avatarIV.setImageDrawable(null);
+
     }
 }
