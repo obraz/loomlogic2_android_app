@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.loomlogic.R;
+import com.loomlogic.leads.details.LeadEscrowStatusUtils;
 import com.loomlogic.leads.entity.LeadItem;
 import com.loomlogic.utils.Utils;
 import com.squareup.picasso.Callback;
@@ -50,6 +51,7 @@ public class LeadAvatarView extends FrameLayout {
     }
 
     public void setLeadAvatar(final LeadItem lead) {
+        setEscrowStatus(lead);
         ImageView avatarIV = (ImageView) findViewById(R.id.iv_leadAvatar);
         final TextView initialsTV = (TextView) findViewById(R.id.tv_leadInitials);
 
@@ -73,7 +75,7 @@ public class LeadAvatarView extends FrameLayout {
         }
     }
 
-    public void setLeadDefaultAvatar(LeadItem lead) {
+    private void setLeadDefaultAvatar(LeadItem lead) {
         ImageView avatarIV = (ImageView) findViewById(R.id.iv_leadAvatar);
         TextView initialsTV = (TextView) findViewById(R.id.tv_leadInitials);
 
@@ -95,6 +97,13 @@ public class LeadAvatarView extends FrameLayout {
         }
         avatarIV.setBackgroundColor(color);
         avatarIV.setImageDrawable(null);
+    }
 
+    private void setEscrowStatus(LeadItem lead) {
+        LeadEscrowStatusView escrowStatusView = (LeadEscrowStatusView) findViewById(R.id.pr_leadEscrowStatus);
+        escrowStatusView.setStrokeWidth(getResources().getDimension(R.dimen.lead_escrow_progress_width));
+        escrowStatusView.setColor(ContextCompat.getColor(getContext(), LeadEscrowStatusUtils.getEscrowStatusProgressColor(lead)));
+        escrowStatusView.setMax(LeadEscrowStatusUtils.getMaxEscrowStatusCount(lead));
+        escrowStatusView.setProgress(lead.escrowStatusDoneCount);
     }
 }

@@ -51,7 +51,7 @@
             android:backgroundTint="@color/lead_msg_note_btn_bg_color"
             android:clickable="true"
             android:gravity="center"
-            android:visibility="gone">
+            android:visibility="visible">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -139,7 +139,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableTop="@drawable/ic_call"
+                android:drawableTop="@drawable/ic_lead_call_twillio"
                 android:text="@string/lead_call_twillio"
                 android:textColor="@color/white"
                 android:textSize="12sp" />
@@ -158,12 +158,6 @@
         tools:visibility="invisible">
 
         <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_alignParentBottom="true"
-            android:background="#EDEDED" />
-
-        <View
             android:id="@+id/leadContainerBg"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -172,15 +166,15 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <com.loomlogic.leads.base.LeadAvatarView
                 android:id="@+id/view_leadAvatar"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp" />
 
@@ -195,10 +189,11 @@
                     android:id="@+id/tv_leadName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="2dp"
                     android:ellipsize="marquee"
                     android:maxLines="1"
-                    android:textColor="#4A4A4A"
-                    android:textSize="16sp"
+                    android:textColor="#2B2E30"
+                    android:textSize="17sp"
                     tools:text="Randall Padilla Randall Padilla Randall Padilla Randall Padilla Randall Padilla " />
 
                 <TextView
@@ -209,17 +204,17 @@
                     android:drawablePadding="5dp"
                     android:ellipsize="marquee"
                     android:maxLines="1"
-                    android:textColor="#9B9B9B"
-                    android:textSize="12sp"
+                    android:textColor="#798591"
+                    android:textSize="13sp"
                     tools:text="Appraisal Received" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginRight="11dp"
                 android:gravity="right|center_vertical"
                 android:orientation="vertical">
 
@@ -227,8 +222,9 @@
                     android:id="@+id/tv_leadDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#D0011B"
-                    android:textSize="12sp"
+                    android:layout_marginBottom="5dp"
+                    android:textColor="#F72741"
+                    android:textSize="13sp"
                     tools:text="21 days" />
 
                 <TextView
@@ -241,7 +237,7 @@
                     android:paddingLeft="6dp"
                     android:paddingRight="6dp"
                     android:textColor="@color/white"
-                    android:textSize="10sp"
+                    android:textSize="12sp"
                     tools:text="2" />
 
             </LinearLayout>

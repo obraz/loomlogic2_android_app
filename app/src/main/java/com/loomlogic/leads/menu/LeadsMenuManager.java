@@ -69,7 +69,7 @@ public class LeadsMenuManager {
 
         final LinePageIndicator titleIndicator = (LinePageIndicator) navigationViewContainer.findViewById(R.id.indicator);
         titleIndicator.setFullWidht();
-        titleIndicator.setUnselectedColor(ContextCompat.getColor(activity, R.color.colorPrimaryDark));
+        titleIndicator.setUnselectedColor(ContextCompat.getColor(activity, R.color.lead_menu_title_bg_color));
 
         adapter = new LeadsTypeAdapter(activity.getBaseContext());
 

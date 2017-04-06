@@ -5,6 +5,7 @@ import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.ColorRes;
 import android.support.v4.content.ContextCompat;
@@ -188,14 +189,17 @@ public class LeadsAdapter extends RecyclerView.Adapter<LeadsAdapter.LeadsHolder>
     }
 
     private void setDeadline(LeadsHolder holder, LeadItem lead) {
+        int typeStyle = Typeface.NORMAL;
         String deadlineText = String.format("%s days", Math.abs(lead.deadlineDate));
         int deadlineColor = ContextCompat.getColor(context, R.color.lead_deadline_upnext_color);
         if (lead.deadlineDate < 0) {
+            typeStyle = Typeface.BOLD;
             deadlineColor = ContextCompat.getColor(context, R.color.lead_deadline_expired_color);
         } else if (lead.deadlineDate < 2) {
             deadlineText = "Due today";
             deadlineColor = ContextCompat.getColor(context, R.color.lead_deadline_today_color);
         }
+        holder.mDeadLineDateTxt.setTypeface(null, typeStyle);
         holder.mDeadLineDateTxt.setTextColor(deadlineColor);
         holder.mDeadLineDateTxt.setText(deadlineText);
     }

@@ -117,7 +117,7 @@ public class LeadDetailsInfoView extends LinearLayout {
         View escrowStatusBgView = findViewById(R.id.leadContainerBg);
         escrowStatusBgView.setBackgroundResource(leadItem.isFinancing ? R.color.lead_escrow_status_financing_bg_color : R.color.lead_escrow_status_cash_bg_color);
 
-        int currentStatusWidth = leadItem.escrowStatusDoneCount * Utils.getDisplayWidth(getContext()) / LeadEscrowStatusUtils.getMaxEscrowStatusCount(leadItem.isFinancing);
+        int currentStatusWidth = leadItem.escrowStatusDoneCount * Utils.getDisplayWidth(getContext()) / LeadEscrowStatusUtils.getMaxEscrowStatusCount(leadItem);
         escrowStatusBgView.setLayoutParams(new RelativeLayout.LayoutParams(currentStatusWidth, RelativeLayout.LayoutParams.MATCH_PARENT));
     }
 

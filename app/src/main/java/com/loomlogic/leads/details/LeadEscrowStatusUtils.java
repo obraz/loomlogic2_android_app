@@ -1,5 +1,7 @@
 package com.loomlogic.leads.details;
 
+import android.support.annotation.ColorRes;
+
 import com.loomlogic.R;
 import com.loomlogic.base.LoomLogicApp;
 import com.loomlogic.leads.entity.LeadItem;
@@ -35,7 +37,12 @@ public class LeadEscrowStatusUtils {
         return list;
     }
 
-    public static int getMaxEscrowStatusCount(boolean isFinancing) {
-        return isFinancing ? 7 : 2;
+    @ColorRes
+    public static int getEscrowStatusProgressColor(LeadItem lead) {
+        return lead.isFinancing ? R.color.lead_escrow_status_financing_progress_color : R.color.lead_escrow_status_cash_progress_color;
+    }
+
+    public static int getMaxEscrowStatusCount(LeadItem lead) {
+        return lead.isFinancing ? 7 : 2;
     }
 }
