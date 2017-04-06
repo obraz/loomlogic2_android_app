@@ -4,8 +4,7 @@
     android:id="@+id/containter_leadMenuItem"
     android:layout_width="match_parent"
     android:layout_height="70dp"
-    android:background="#1F2936"
-    android:foreground="?attr/selectableItemBackground"
+    android:background="?attr/selectableItemBackground"
     android:orientation="horizontal">
 
     <TextView
@@ -16,7 +15,7 @@
         android:layout_marginLeft="23dp"
         android:layout_marginRight="15dp"
         android:layout_weight="1"
-        android:drawableLeft="@drawable/ic_lead_new_buyer"
+        android:drawableLeft="@drawable/ic_lead_lender"
         android:drawablePadding="23dp"
         android:gravity="center_vertical"
         android:textColor="@color/white"

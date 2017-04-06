@@ -13,7 +13,9 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.loomlogic.R;
@@ -23,6 +25,7 @@ import com.loomlogic.leads.entity.LeadRole;
 import com.loomlogic.utils.LeadPreferencesUtils;
 import com.loomlogic.utils.LeadUtils;
 import com.loomlogic.utils.ViewUtils;
+import com.loomlogic.view.EventListeningSpinner;
 import com.loomlogic.view.LinePageIndicator;
 
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
@@ -52,6 +55,7 @@ public class LeadsMenuManager {
     }
 
     private void initViews() {
+        initLeadFilterSpinner();
         final FloatingActionButton newLeadFAB = (FloatingActionButton) navigationViewContainer.findViewById(R.id.fab_leadNew);
         newLeadFAB.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,6 +69,7 @@ public class LeadsMenuManager {
 
         final LinePageIndicator titleIndicator = (LinePageIndicator) navigationViewContainer.findViewById(R.id.indicator);
         titleIndicator.setFullWidht();
+        titleIndicator.setUnselectedColor(ContextCompat.getColor(activity, R.color.colorPrimaryDark));
 
         adapter = new LeadsTypeAdapter(activity.getBaseContext());
 
@@ -85,16 +90,16 @@ public class LeadsMenuManager {
                             roleWasChanged = true;
                         }
                         LeadPreferencesUtils.setCurrentLeadRole(LeadRole.BUYER);
-                        buyersTv.setTextColor(Color.WHITE);
-                        sellersTv.setTextColor(ContextCompat.getColor(activity, R.color.white_transparent_50));
+                        buyersTv.setTextColor(ContextCompat.getColor(activity, R.color.lead_menu_title_active));
+                        sellersTv.setTextColor(ContextCompat.getColor(activity, R.color.lead_menu_title_notactive));
                         break;
                     case ROLE_BUYER_SELLER_POSITION:
                         if (LeadPreferencesUtils.getCurrentLeadRole() == LeadRole.BUYER) {
                             roleWasChanged = true;
                         }
                         LeadPreferencesUtils.setCurrentLeadRole(LeadRole.SELLER);
-                        buyersTv.setTextColor(ContextCompat.getColor(activity, R.color.white_transparent_50));
-                        sellersTv.setTextColor(Color.WHITE);
+                        buyersTv.setTextColor(ContextCompat.getColor(activity, R.color.lead_menu_title_notactive));
+                        sellersTv.setTextColor(ContextCompat.getColor(activity, R.color.lead_menu_title_active));
                         break;
                 }
 
@@ -136,6 +141,29 @@ public class LeadsMenuManager {
                         viewPager.setCurrentItem(ROLE_BUYER_SELLER_POSITION);
                         break;
                 }
+            }
+        });
+    }
+
+    private void initLeadFilterSpinner() {
+        final View spinnerContainer = navigationViewContainer.findViewById(R.id.fl_leadFilterContainer);
+        final ImageView spinnerArrow = (ImageView) navigationViewContainer.findViewById(R.id.iv_leadFilterArrow);
+
+        EventListeningSpinner leadFilterSp = (EventListeningSpinner) navigationViewContainer.findViewById(R.id.sp_leadFilter);
+        leadFilterSp.setAdapter(new LeadMenuFilterAdapter());
+        leadFilterSp.setSpinnerEventsListener(new EventListeningSpinner.OnSpinnerEventsListener() {
+            @Override
+            public void onSpinnerOpened(Spinner spinner) {
+                spinnerContainer.setBackgroundResource(R.drawable.bg_lead_filter_spinner_opened);
+                spinnerArrow.setRotation(90);
+                spinnerArrow.setColorFilter(Color.WHITE);
+            }
+
+            @Override
+            public void onSpinnerClosed(Spinner spinner) {
+                spinnerContainer.setBackgroundResource(R.drawable.bg_lead_filter_spinner_closed);
+                spinnerArrow.setRotation(270);
+                spinnerArrow.setColorFilter(ContextCompat.getColor(activity, R.color.lead_menu_spinner_arrow_closed_color));
             }
         });
     }

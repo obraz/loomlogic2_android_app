@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#1B2530"
+    android:background="#152A3E"
     android:orientation="vertical">
 
     <LinearLayout
@@ -21,7 +21,7 @@
             android:gravity="center"
             android:text="@string/buyers"
             android:textAllCaps="true"
-            android:textColor="@color/white"
+            android:textColor="@color/lead_menu_title_active"
             android:textSize="17sp" />
 
         <TextView
@@ -33,7 +33,7 @@
             android:gravity="center"
             android:text="@string/sellers"
             android:textAllCaps="true"
-            android:textColor="@color/white_transparent_50"
+            android:textColor="@color/lead_menu_title_notactive"
             android:textSize="17sp" />
     </LinearLayout>
 
@@ -52,12 +52,46 @@
         android:layout_height="0dp"
         android:layout_weight="1" />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab_leadNew"
-        android:layout_width="55dp"
-        android:layout_height="55dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_margin="10dp"
-        android:src="@drawable/ic_lead_addnew"
-        app:backgroundTint="@color/colorMainBuyer" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:orientation="horizontal">
+
+        <FrameLayout
+            android:id="@+id/fl_leadFilterContainer"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_lead_filter_spinner_closed">
+
+            <com.loomlogic.view.EventListeningSpinner
+                android:id="@+id/sp_leadFilter"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="?selectableItemBackground"
+                android:dropDownVerticalOffset="5dp"
+                android:overlapAnchor="false"
+                android:popupBackground="@drawable/bg_lead_filter" />
+
+            <ImageView
+                android:id="@+id/iv_leadFilterArrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|right"
+                android:layout_marginRight="18dp"
+                android:rotation="270"
+                android:src="@drawable/ic_lead_menu_filter_arrow" />
+        </FrameLayout>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_leadNew"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="15dp"
+            android:src="@drawable/ic_lead_addnew"
+            app:backgroundTint="@color/colorMainBuyer" />
+    </LinearLayout>
 </LinearLayout>

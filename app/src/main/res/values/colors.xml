@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#242D38</color>
+    <color name="colorPrimaryDark">#122436</color>
     <color name="colorAccent">#FF4081</color>
 
     <color name="transparent">#00000000</color>
@@ -14,7 +14,7 @@
     <color name="colorMainSeller">#FF6300</color>
 
     <color name="colorMenuIconsBuyer">#03A9F4</color>
-    <color name="colorMenuIconsSeller">#EF772F</color>
+    <color name="colorMenuIconsSeller">#FF6300</color>
 
     <color name="colorErrorMsg">#F44336</color>
 
@@ -34,6 +34,10 @@
     <color name="lead_gender_male_color">#4990E2</color>
     <color name="lead_gender_female_color">#BD0FE1</color>
     <color name="lead_gender_none_color">#9B9B9B</color>
+
+    <color name="lead_menu_title_active">#FFFFFF</color>
+    <color name="lead_menu_title_notactive">#91A1B1</color>
+    <color name="lead_menu_spinner_arrow_closed_color">#335371</color>
 
     <color name="lead_deadline_upnext_color">#4A4A4A</color>
     <color name="lead_deadline_today_color">#F6A623</color>

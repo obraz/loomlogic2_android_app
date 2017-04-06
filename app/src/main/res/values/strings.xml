@@ -65,6 +65,9 @@
         <item>@string/create_new_lead</item>
     </array>
 
+    <string name="lead_menu_filter_my">My Leads</string>
+    <string name="lead_menu_filter_team">Team Leads</string>
+
     <!-- Leads List -->
     <string name="lead_call_twillio">Twillio</string>
     <string name="lead_call_system">Phone</string>
