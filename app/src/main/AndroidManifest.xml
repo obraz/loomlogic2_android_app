@@ -59,6 +59,12 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="adjustPan"></activity>
+        <activity
+            android:name=".leads.base.LeadsFilterActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="sensorPortrait"
+            android:theme="@style/AppLighterTheme"
+            android:windowSoftInputMode="adjustPan"></activity>
     </application>
 
 </manifest>

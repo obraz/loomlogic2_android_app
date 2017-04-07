@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_bg_color"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar_light" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="20dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="15dp"
+                android:text="@string/leads_filter_header_filter"
+                android:textColor="#798591"
+                android:textSize="15sp" />
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white">
+
+                <RadioButton
+                    android:id="@+id/rb_leadsFilterAll"
+                    style="@style/LeadsFilterRadioButton"
+                    android:checked="true"
+                    android:text="@string/leads_filter_all" />
+
+                <View style="@style/LeadsFilterDivider" />
+
+                <RadioButton
+                    android:id="@+id/rb_leadsFilterFinancing"
+                    style="@style/LeadsFilterRadioButton"
+                    android:text="@string/leads_filter_financing" />
+
+                <View style="@style/LeadsFilterDivider" />
+
+                <RadioButton
+                    android:id="@+id/rb_leadsFilterCash"
+                    style="@style/LeadsFilterRadioButton"
+                    android:text="@string/leads_filter_cash" />
+
+                <View style="@style/LeadsFilterDivider" />
+            </RadioGroup>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="15dp"
+                android:text="@string/leads_filter_header_sort"
+                android:textColor="#798591"
+                android:textSize="15sp" />
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white">
+
+                <RadioButton
+                    android:id="@+id/rb_leadsSortAZ"
+                    style="@style/LeadsFilterRadioButton"
+                    android:checked="true"
+                    android:text="@string/leads_sort_nameAZ" />
+
+                <View style="@style/LeadsFilterDivider" />
+
+                <RadioButton
+                    android:id="@+id/rb_leadsSortZA"
+                    style="@style/LeadsFilterRadioButton"
+                    android:text="@string/leads_sort_nameZA" />
+
+                <View style="@style/LeadsFilterDivider" />
+
+                <RadioButton
+                    android:id="@+id/rb_leadsSortEscrowAsc"
+                    style="@style/LeadsFilterRadioButton"
+                    android:text="@string/leads_sort_escrowAsc" />
+
+                <View style="@style/LeadsFilterDivider" />
+
+                <RadioButton
+                    android:id="@+id/rb_leadsSortEscrowDesc"
+                    style="@style/LeadsFilterRadioButton"
+                    android:text="@string/leads_sort_escrowDesc" />
+
+                <View style="@style/LeadsFilterDivider" />
+
+                <RadioButton
+                    android:id="@+id/rb_leadsSortDate"
+                    style="@style/LeadsFilterRadioButton"
+                    android:text="@string/leads_sort_date" />
+
+                <View style="@style/LeadsFilterDivider" />
+            </RadioGroup>
+        </LinearLayout>
+    </ScrollView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#DFE2E6" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:background="@drawable/selector_blue_btn"
+        tools:text="@string/leads_filter_show_results" />
+</LinearLayout>

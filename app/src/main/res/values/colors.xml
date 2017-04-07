@@ -4,6 +4,8 @@
     <color name="colorPrimaryDark">#1D3852</color>
     <color name="colorAccent">#FF4081</color>
 
+    <color name="colorPrimaryLightDark">#214263</color>
+
     <color name="transparent">#00000000</color>
     <color name="blueBtn">#03A9F4</color>
     <color name="continueBtn">#0398DC</color>

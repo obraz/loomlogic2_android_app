@@ -119,11 +119,17 @@ public class LeadsFragment extends BaseHomeFragment implements LeadsAdapter.OnLe
 
         initList();
 
-
         view.findViewById(R.id.view_leadMenuBtn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 leadsMenuManager.navigateDrawer();
+            }
+        });
+
+        view.findViewById(R.id.view_leadFilterBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getHomeActivity().startActivity(LeadsFilterActivity.getLeadsFilterActivityIntent(getContext()));
             }
         });
     }

@@ -2,9 +2,11 @@
 <ripple xmlns:android="http://schemas.android.com/apk/res/android"
     android:color="@color/black_transparent_10">
     <item>
-        <shape>
+        <shape android:shape="rectangle">
             <corners android:radius="50dp" />
-            <solid android:color="@color/blueBtn" />
+            <gradient
+                android:endColor="#0EBDFF"
+                android:startColor="#03A9F4" />
         </shape>
     </item>
 </ripple>

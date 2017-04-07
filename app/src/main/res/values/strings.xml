@@ -15,6 +15,7 @@
     <string name="buyer">Buyer</string>
     <string name="seller">Seller</string>
     <string name="no_results">No Results</string>
+    <string name="reset">Reset</string>
 
     <!-- Sign In -->
     <string name="logIn">Log In</string>
@@ -77,6 +78,19 @@
     <string name="lead_message_note">Note</string>
     <string name="lead_menu">Menu</string>
     <string name="lead_filter">Filter</string>
+
+    <!-- Leads Filter -->
+    <string name="leads_filter_header_filter">Filter</string>
+    <string name="leads_filter_header_sort">Sort</string>
+    <string name="leads_filter_all">All</string>
+    <string name="leads_filter_financing">Financing</string>
+    <string name="leads_filter_cash">Cash Buyer</string>
+    <string name="leads_sort_nameAZ">Name (A-Z)</string>
+    <string name="leads_sort_nameZA">Name (Z-A)</string>
+    <string name="leads_sort_escrowAsc">Escrow (asc)</string>
+    <string name="leads_sort_escrowDesc">Escrow (desc)</string>
+    <string name="leads_sort_date">Date (newest first)</string>
+    <string name="leads_filter_show_results">Show Results (%d)</string>
 
     <!-- Leads Details -->
     <string name="lead_details_tab_details">Details</string>
