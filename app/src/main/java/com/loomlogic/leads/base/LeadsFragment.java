@@ -78,15 +78,15 @@ public class LeadsFragment extends BaseHomeFragment implements LeadsAdapter.OnLe
     private void initToolbar(View view) {
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         toolbar.setTitle("Contract");
-        toolbar.inflateMenu(R.menu.menu_leads_filter);
-        toolbar.setOnMenuItemClickListener(this);
-        toolbar.setNavigationIcon(R.drawable.ic_menu);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                leadsMenuManager.navigateDrawer();
-            }
-        });
+//        toolbar.inflateMenu(R.menu.menu_leads_filter);
+//        toolbar.setOnMenuItemClickListener(this);
+//        toolbar.setNavigationIcon(R.drawable.ic_menu);
+//        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                leadsMenuManager.navigateDrawer();
+//            }
+//        });
     }
 
     @Override
@@ -119,7 +119,13 @@ public class LeadsFragment extends BaseHomeFragment implements LeadsAdapter.OnLe
 
         initList();
 
-        view.findViewById(R.id.view_leadFilter).bringToFront();
+
+        view.findViewById(R.id.view_leadMenuBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                leadsMenuManager.navigateDrawer();
+            }
+        });
     }
 
     private void initList() {
