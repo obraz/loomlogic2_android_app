@@ -1,11 +1,13 @@
 package com.loomlogic.leads.base;
 
+import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.ColorRes;
 import android.support.v4.content.ContextCompat;
@@ -25,13 +27,13 @@ import com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultAct
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractSwipeableItemViewHolder;
 import com.loomlogic.R;
 import com.loomlogic.leads.entity.LeadItem;
-import com.loomlogic.utils.ViewUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.loomlogic.R.color.lead_call_btn_bg_color;
 import static com.loomlogic.R.color.lead_msg_btn_bg_color;
+import static com.loomlogic.utils.ViewUtils.animViewBgColor;
 
 /**
  * Created by Alexandr on 11/19/15.
@@ -43,14 +45,15 @@ public class LeadsAdapter extends RecyclerView.Adapter<LeadsAdapter.LeadsHolder>
 
     private List<LeadItem> leads;
     private Context context;
+    private float widthButton;
     private float maxSwipeWidthCurrent;
     private float maxSwipeWidth2Buttons;
     private float maxSwipeWidth3Buttons;
-    private int[] colors;
+    private static int colorSwipeBg;
 
-    private static final int BACKGROUND_COLOR_FRACTION_COUNT = 20;
-    private float[] positions = {1, BACKGROUND_COLOR_FRACTION_COUNT};
+    private static final int BACKGROUND_COLOR_ANIMATION_TIME = 500;
 
+    private boolean onMessageClick;
     private OnLeadClickListener onClickListener;
 
     interface OnLeadClickListener {
@@ -70,8 +73,9 @@ public class LeadsAdapter extends RecyclerView.Adapter<LeadsAdapter.LeadsHolder>
     public LeadsAdapter(Context context, OnLeadClickListener eventListener) {
         this.context = context;
         float paddings = context.getResources().getDimension(R.dimen.lead_swipe_action_button_padding) * 2;
-        maxSwipeWidth2Buttons = context.getResources().getDimension(R.dimen.lead_swipe_action_button_width) * 2 + paddings;
-        maxSwipeWidth3Buttons = context.getResources().getDimension(R.dimen.lead_swipe_action_button_width) * 3 + paddings;
+        widthButton = context.getResources().getDimension(R.dimen.lead_swipe_action_button_width);
+        maxSwipeWidth2Buttons = widthButton * 2 + paddings;
+        maxSwipeWidth3Buttons = widthButton * 3 + paddings;
         maxSwipeWidthCurrent = maxSwipeWidth2Buttons;
 
         this.onClickListener = eventListener;
@@ -81,9 +85,7 @@ public class LeadsAdapter extends RecyclerView.Adapter<LeadsAdapter.LeadsHolder>
         // have to implement the getItemId() method appropriately.
         setHasStableIds(true);
 
-        int colorFrom = Color.WHITE;
-        int colorTo = ContextCompat.getColor(context, R.color.lead_btn_container_bg_color);
-        colors = new int[]{colorFrom, colorTo};
+        colorSwipeBg = ContextCompat.getColor(context, R.color.lead_btn_container_bg_color);
     }
 
     public void setData(List<LeadItem> leads) {
@@ -119,14 +121,15 @@ public class LeadsAdapter extends RecyclerView.Adapter<LeadsAdapter.LeadsHolder>
                 holder.mMessageIv.setVisibility(View.GONE);
                 holder.mCallIv.setVisibility(View.GONE);
 
-                animateShowLeadConnectBtn(holder.mCallSystemIv);
-                animateShowLeadConnectBtn(holder.mCallTwillioIv);
+                animateShowLeadConnectBtn(holder.mCallTwillioIv, 1);
+                animateShowLeadConnectBtn(holder.mCallSystemIv, 2);
             }
         });
 
         holder.mMessageIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                onMessageClick = true;
                 lead.setPinned(true);
                 maxSwipeWidthCurrent = maxSwipeWidth3Buttons;
                 notifyItemChanged(position);
@@ -134,9 +137,9 @@ public class LeadsAdapter extends RecyclerView.Adapter<LeadsAdapter.LeadsHolder>
                 holder.mMessageIv.setVisibility(View.GONE);
                 holder.mCallIv.setVisibility(View.GONE);
 
-                holder.mMessageNoteIv.setVisibility(View.VISIBLE);
-                holder.mMessageSmsIv.setVisibility(View.VISIBLE);
-                holder.mMessageEmailIv.setVisibility(View.VISIBLE);
+                animateShowLeadConnectBtn(holder.mMessageSmsIv, 1);
+                animateShowLeadConnectBtn(holder.mMessageEmailIv, 2);
+                animateShowLeadConnectBtn(holder.mMessageNoteIv, 3);
             }
         });
 
@@ -154,6 +157,10 @@ public class LeadsAdapter extends RecyclerView.Adapter<LeadsAdapter.LeadsHolder>
             holder.mNotificationCountTxt.setVisibility(View.VISIBLE);
         } else {
             holder.mNotificationCountTxt.setVisibility(View.INVISIBLE);
+        }
+
+        if (!lead.isPinned() && ((ColorDrawable) holder.mContainerBgView.getBackground()).getColor() == colorSwipeBg) {
+            animViewBgColor(holder.mContainerBgView, colorSwipeBg, Color.WHITE, BACKGROUND_COLOR_ANIMATION_TIME);
         }
 
         holder.setProportionalSwipeAmountModeEnabled(false);
@@ -176,15 +183,37 @@ public class LeadsAdapter extends RecyclerView.Adapter<LeadsAdapter.LeadsHolder>
         view.setBackground(msgBg);
     }
 
-    private void animateShowLeadConnectBtn(View view) {
+    private void animateShowLeadConnectBtn(View view, int btnCountFromRight) {
         view.setVisibility(View.VISIBLE);
 
         AnimatorSet as = new AnimatorSet();
         as.playTogether(
                 ObjectAnimator.ofFloat(view, "scaleX", 0.5f, 1),
                 ObjectAnimator.ofFloat(view, "scaleY", 0.5f, 1),
+                ObjectAnimator.ofFloat(view, "translationX", -widthButton * btnCountFromRight),
                 ObjectAnimator.ofFloat(view, "alpha", 0.5f, 1));
-        as.setDuration(300);
+        as.setDuration(500);
+        as.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                onMessageClick = false;
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
         as.start();
     }
 
@@ -222,12 +251,12 @@ public class LeadsAdapter extends RecyclerView.Adapter<LeadsAdapter.LeadsHolder>
     public SwipeResultAction onSwipeItem(LeadsHolder holder, int position, int result) {
         switch (result) {
             case Swipeable.RESULT_SWIPED_LEFT:
-                return new ItemSwipeResultAction(this, position);
+                return new ItemSwipeResultAction(this, holder, position);
             case Swipeable.RESULT_SWIPED_RIGHT:
             case Swipeable.RESULT_CANCELED:
             default:
                 if (position != RecyclerView.NO_POSITION) {
-                    return new SwipeResultActionDefault();
+                    return new ItemUnpinSwipeResultAction(holder);
                 } else {
                     return null;
                 }
@@ -236,10 +265,12 @@ public class LeadsAdapter extends RecyclerView.Adapter<LeadsAdapter.LeadsHolder>
 
     private static class ItemSwipeResultAction extends SwipeResultActionMoveToSwipedDirection {
         private LeadsAdapter mAdapter;
+        private LeadsHolder mHolder;
         private final int mPosition;
 
-        ItemSwipeResultAction(LeadsAdapter adapter, int position) {
+        ItemSwipeResultAction(LeadsAdapter adapter, LeadsHolder holder, int position) {
             mAdapter = adapter;
+            mHolder = holder;
             mPosition = position;
         }
 
@@ -251,6 +282,7 @@ public class LeadsAdapter extends RecyclerView.Adapter<LeadsAdapter.LeadsHolder>
             if (!lead.isPinned()) {
                 lead.setPinned(true);
                 mAdapter.notifyItemChanged(mPosition);
+                animViewBgColor(mHolder.mContainerBgView, Color.WHITE, colorSwipeBg, BACKGROUND_COLOR_ANIMATION_TIME);
             }
         }
 
@@ -258,6 +290,20 @@ public class LeadsAdapter extends RecyclerView.Adapter<LeadsAdapter.LeadsHolder>
         protected void onCleanUp() {
             super.onCleanUp();
             mAdapter = null;
+        }
+    }
+
+    private static class ItemUnpinSwipeResultAction extends SwipeResultActionDefault {
+        private LeadsHolder mHolder;
+
+        ItemUnpinSwipeResultAction(LeadsHolder holder) {
+            mHolder = holder;
+        }
+
+        @Override
+        protected void onPerformAction() {
+            super.onPerformAction();
+            animViewBgColor(mHolder.mContainerBgView, colorSwipeBg, Color.WHITE, BACKGROUND_COLOR_ANIMATION_TIME);
         }
     }
 
@@ -304,20 +350,13 @@ public class LeadsAdapter extends RecyclerView.Adapter<LeadsAdapter.LeadsHolder>
 
         @Override
         public void onSlideAmountUpdated(float horizontalAmount, float verticalAmount, boolean isSwiping) {
-            updateContainerBg(horizontalAmount);
-            updateBtnScale(horizontalAmount, isSwiping);
+            updateBtnScale(horizontalAmount);
         }
 
-        private void updateContainerBg(float horizontalAmount) {
-            float colorFraction = maxSwipeWidthCurrent / BACKGROUND_COLOR_FRACTION_COUNT;
-            int colorIdx = (int) (Math.abs(horizontalAmount) / colorFraction);
-            int color = ViewUtils.getColorFromGradient(colors, positions, colorIdx);
-            mContainerBgView.setBackgroundColor(color);
-        }
-
-        private void updateBtnScale(float horizontalAmount, boolean isSwiping) {
+        private void updateBtnScale(float horizontalAmount) {
+            float scaleFactor = 1;
             if (Math.abs(horizontalAmount) > 0 && Math.abs(horizontalAmount) < maxSwipeWidthCurrent) {
-                float scaleFactor = Math.abs(horizontalAmount) / maxSwipeWidthCurrent;
+                scaleFactor = Math.abs(horizontalAmount) / maxSwipeWidthCurrent;
                 if (scaleFactor < 0.3) {
                     maxSwipeWidthCurrent = maxSwipeWidth2Buttons;
 
@@ -330,21 +369,24 @@ public class LeadsAdapter extends RecyclerView.Adapter<LeadsAdapter.LeadsHolder>
                     mMessageSmsIv.setVisibility(View.GONE);
                     mMessageEmailIv.setVisibility(View.GONE);
                 }
-                scaleView(mCallIv, scaleFactor);
-                scaleView(mCallSystemIv, scaleFactor);
-                scaleView(mCallTwillioIv, scaleFactor);
-                scaleView(mMessageIv, scaleFactor);
 
-                scaleView(mMessageNoteIv, scaleFactor);
-                scaleView(mMessageSmsIv, scaleFactor);
-                scaleView(mMessageEmailIv, scaleFactor);
+                scaleView(mCallIv, scaleFactor, 2);
+                scaleView(mCallTwillioIv, scaleFactor, 1);
+                scaleView(mCallSystemIv, scaleFactor, 2);
+                scaleView(mMessageIv, scaleFactor, 1);
+                if (!onMessageClick) {
+                    scaleView(mMessageSmsIv, scaleFactor, 1);
+                    scaleView(mMessageEmailIv, scaleFactor, 2);
+                    scaleView(mMessageNoteIv, scaleFactor, 3);
+                }
             }
         }
 
-        private void scaleView(View view, float scaleFactor) {
+        private void scaleView(View view, float scaleFactor, int btnCountFromRight) {
             if (view.getVisibility() == View.VISIBLE) {
                 ViewCompat.setScaleX(view, scaleFactor);
                 ViewCompat.setScaleY(view, scaleFactor);
+                ViewCompat.setTranslationX(view, -scaleFactor * widthButton * btnCountFromRight);
                 ViewCompat.setAlpha(view, scaleFactor);
             }
         }

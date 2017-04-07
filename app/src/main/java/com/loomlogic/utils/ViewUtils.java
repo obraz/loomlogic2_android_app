@@ -113,4 +113,18 @@ public class ViewUtils {
 
         return Color.argb(alpha, red, green, blue);
     }
+
+    public static void animViewBgColor(final View view, int colorFrom, int colorTo, int time) {
+        ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
+        colorAnimation.setDuration(time);
+        colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+
+            @Override
+            public void onAnimationUpdate(ValueAnimator animator) {
+                view.setBackgroundColor((int) animator.getAnimatedValue());
+            }
+
+        });
+        colorAnimation.start();
+    }
 }

@@ -10,8 +10,6 @@
         android:background="@color/lead_btn_container_bg_color"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingLeft="@dimen/lead_swipe_action_button_padding"
-        android:paddingRight="@dimen/lead_swipe_action_button_padding"
         tools:visibility="visible">
 
         <Space
@@ -24,7 +22,7 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
+            android:layout_marginRight="-65dp"
             android:background="@drawable/circle"
             android:clickable="true"
             android:scaleType="center"
@@ -35,7 +33,7 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
+            android:layout_marginRight="-62dp"
             android:background="@drawable/circle"
             android:clickable="true"
             android:scaleType="center"
@@ -46,12 +44,12 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
+            android:layout_marginRight="-67dp"
             android:background="@drawable/circle"
             android:backgroundTint="@color/lead_msg_note_btn_bg_color"
             android:clickable="true"
             android:gravity="center"
-            android:visibility="visible">
+            android:visibility="invisible">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -67,12 +65,12 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
+            android:layout_marginRight="-65dp"
             android:background="@drawable/circle"
             android:backgroundTint="@color/lead_msg_email_btn_bg_color"
             android:clickable="true"
             android:gravity="center"
-            android:visibility="gone">
+            android:visibility="invisible">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -88,13 +86,13 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
+            android:layout_marginRight="-62dp"
             android:background="@drawable/circle"
             android:backgroundTint="@color/lead_msg_sms_btn_bg_color"
             android:clickable="true"
             android:gravity="center"
             android:orientation="vertical"
-            android:visibility="gone">
+            android:visibility="invisible">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -110,11 +108,12 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
+            android:layout_marginRight="-65dp"
             android:background="@drawable/circle"
             android:backgroundTint="@color/lead_call_system_btn_bg_color"
             android:clickable="true"
-            android:gravity="center">
+            android:gravity="center"
+            android:visibility="invisible">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -130,11 +129,12 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
+            android:layout_marginRight="-60dp"
             android:background="@drawable/circle"
             android:backgroundTint="@color/lead_call_twillio_btn_bg_color"
             android:clickable="true"
-            android:gravity="center">
+            android:gravity="center"
+            android:visibility="invisible">
 
             <TextView
                 android:layout_width="wrap_content"
