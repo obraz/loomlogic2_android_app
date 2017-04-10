@@ -142,7 +142,6 @@ public class LeadDetailsMainFragment extends BaseHomeFragment implements TabLayo
         name.setTextColor(ContextCompat.getColor(getContext(), color));
     }
 
-
     private void initToolbar(View view) {
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         toolbar.setTitle(String.format(leadItem.getFullFormattedName()));

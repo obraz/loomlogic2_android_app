@@ -15,7 +15,6 @@ import com.loomlogic.leads.details.view.LeadDetailsInfoView;
 import com.loomlogic.leads.details.view.LeadDetailsParticipantsView;
 import com.loomlogic.leads.details.view.LeadDetailsTransactionView;
 import com.loomlogic.leads.entity.LeadItem;
-import com.loomlogic.leads.entity.LeadParticipantItem;
 
 import static com.loomlogic.leads.base.LeadDetailsMainFragment.KEY_LEAD_ITEM;
 
@@ -75,10 +74,6 @@ public class LeadDetailsFragment extends BaseHomeFragment {
         LeadDetailsParticipantsView participantsView = (LeadDetailsParticipantsView) view.findViewById(R.id.view_leadDetailsParticipants);
         participantsView.setParticipants(lead.participantList);
         participantsView.setButtonsListener(new LeadDetailsParticipantsView.OnLeadParticipantsClickListener() {
-            @Override
-            public void onWriteNoteClick(LeadParticipantItem participant) {
-                getHomeActivity().showErrorSnackBar(participant.firstName + " - onWriteNoteClick");
-            }
 
             @Override
             public void onAddParticipantClick() {

@@ -9,11 +9,13 @@ public class LeadContractItem {
     public String commissions;
     public String gross;
     public String address;
+    public String houseImageUrl;
 
-    public LeadContractItem(String purchase, String commissions, String gross, String address) {
+    public LeadContractItem(String purchase, String commissions, String gross, String address, String houseImageUrl) {
         this.purchase = purchase;
         this.commissions = commissions;
         this.gross = gross;
         this.address = address;
+        this.houseImageUrl = houseImageUrl;
     }
 }

@@ -13,6 +13,6 @@
         android:textAllCaps="true"
         android:textColor="@color/lead_detail_escrow_status_done_text_color"
         android:textSize="12sp"
-        tools:background="@drawable/lead_details_escrow_status_current_bg"
+        tools:background="@drawable/lead_details_escrow_status_cash_current_bg"
         tools:text="AR" />
 </FrameLayout>

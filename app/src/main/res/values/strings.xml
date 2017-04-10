@@ -110,13 +110,12 @@
     </array>
 
     <array name="lead_details_escrow_statuses_cash_list_abbreviation">
-        <item>IC</item>
-        <item>CR</item>
+        <item>SD</item>
+        <item>AR</item>
     </array>
 
     <string name="btn_change_status">Change status</string>
     <string name="btn_send">Send</string>
-    <string name="btn_write_note">Write Note</string>
     <string name="btn_confirm">Confirm</string>
 
     <string name="lead_details_participants">Participants</string>

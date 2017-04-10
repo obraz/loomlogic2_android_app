@@ -4,14 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
-    android:orientation="vertical">
+    android:orientation="vertical" >
 
     <LinearLayout
         android:id="@+id/ll_leadDetailsEscrowStatusContainer"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:background="@color/lead_detail_escrow_status_future_bg_color"
-        android:orientation="horizontal"></LinearLayout>
+        android:orientation="horizontal" ></LinearLayout>
 
     <RelativeLayout
         android:id="@+id/rl_headerContainer"
@@ -19,18 +19,12 @@
         android:layout_height="80dp"
         android:background="?attr/selectableItemBackground">
 
-        <View
-            android:id="@+id/leadContainerBg"
-            android:layout_width="300dp"
-            android:layout_height="match_parent"
-            android:background="@color/lead_escrow_status_financing_bg_color" />
-
         <com.loomlogic.leads.base.LeadAvatarView
             android:id="@+id/view_leadAvatar"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_marginBottom="10dp"
-            android:layout_marginLeft="15dp"
+            android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="10dp" />
 
@@ -49,8 +43,8 @@
                 android:layout_weight="1"
                 android:ellipsize="marquee"
                 android:maxLines="1"
-                android:textColor="#030303"
-                android:textSize="16sp"
+                android:textColor="#2B2E30"
+                android:textSize="17sp"
                 android:textStyle="bold"
                 tools:text="John Doussing " />
 
@@ -58,7 +52,7 @@
                 android:id="@+id/iv_showMore"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="20dp"
+                android:layout_marginRight="15dp"
                 android:src="@drawable/ic_arrow_down" />
         </LinearLayout>
 
@@ -66,7 +60,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/ll_name"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="7dp"
             android:layout_toRightOf="@+id/view_leadAvatar"
             android:orientation="horizontal">
 
@@ -79,7 +73,7 @@
                 android:drawablePadding="5dp"
                 android:ellipsize="marquee"
                 android:maxLines="1"
-                android:textColor="@color/black"
+                android:textColor="#2C2E30"
                 android:textSize="12sp"
                 tools:text="Contract " />
 
@@ -92,7 +86,7 @@
                 android:drawableLeft="@drawable/ic_lead_details_escrow_status"
                 android:drawablePadding="5dp"
                 android:text="2"
-                android:textColor="@color/black"
+                android:textColor="#2C2E30"
                 android:textSize="12sp" />
         </LinearLayout>
     </RelativeLayout>
@@ -100,7 +94,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#F1F3F6" />
+        android:background="#EBEEF2" />
 
     <LinearLayout
         android:id="@+id/ll_leadDetailsInfoContainer"
@@ -112,48 +106,95 @@
 
         <TextView
             android:id="@+id/tv_leadDetailsPhone"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="45dp"
+            android:background="?selectableItemBackground"
+            android:clickable="true"
             android:drawableLeft="@drawable/ic_lead_details_phone"
-            android:drawablePadding="12dp"
+            android:drawablePadding="10dp"
             android:gravity="center_vertical"
             android:paddingLeft="16dp"
+            android:textColor="#798591"
+            android:textSize="15sp"
             tools:text="+5 (752) 915 25 20" />
 
         <TextView
             android:id="@+id/tv_leadDetailsEmail"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="45dp"
+            android:background="?selectableItemBackground"
+            android:clickable="true"
             android:drawableLeft="@drawable/ic_lead_details_email"
-            android:drawablePadding="12dp"
+            android:drawablePadding="10dp"
             android:gravity="center_vertical"
             android:paddingLeft="16dp"
+            android:textColor="#798591"
+            android:textSize="15sp"
             tools:text="consectetud@gmail.com" />
 
         <TextView
             android:id="@+id/tv_leadDetailsAddress"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="45dp"
+            android:background="?selectableItemBackground"
+            android:clickable="true"
             android:drawableLeft="@drawable/ic_lead_details_address"
-            android:drawablePadding="12dp"
+            android:drawablePadding="10dp"
             android:gravity="center_vertical"
             android:paddingLeft="16dp"
+            android:textColor="#798591"
+            android:textSize="15sp"
             tools:text="8737 Oakdale Blvd" />
 
         <TextView
             android:id="@+id/tv_leadDetailsSource"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="45dp"
             android:drawableLeft="@drawable/ic_lead_details_source"
-            android:drawablePadding="12dp"
+            android:drawablePadding="10dp"
             android:gravity="center_vertical"
             android:paddingLeft="16dp"
+            android:textColor="#798591"
+            android:textSize="15sp"
             tools:text="Zillow" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="17dp"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal"
+            android:paddingLeft="5dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/ic_lead_detail_fb" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/ic_lead_detail_twitter" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/ic_lead_detail_ln" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/ic_lead_detail_instagram" />
+        </LinearLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="#F1F3F6" />
+            android:background="#EBEEF2" />
     </LinearLayout>
 
     <LinearLayout
@@ -166,26 +207,25 @@
             android:id="@+id/btn_changeStatus"
             android:layout_width="0dp"
             android:layout_height="45dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
             android:layout_weight="2"
-            android:background="@drawable/selector_blue_border_btn"
+            android:background="@drawable/selector_blue_btn"
             android:text="@string/btn_change_status"
-            android:textColor="@color/lead_details_btn_blu_border_text_color"
-            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:textSize="15sp"
             android:textStyle="bold" />
 
         <Button
             android:id="@+id/btn_send"
             android:layout_width="0dp"
             android:layout_height="45dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginRight="15dp"
             android:layout_weight="1"
-            android:background="@drawable/selector_blue_border_btn"
+            android:background="@drawable/selector_blue_btn"
             android:text="@string/btn_send"
-            android:textColor="@color/lead_details_btn_blu_border_text_color"
-            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:textSize="15sp"
             android:textStyle="bold" />
     </LinearLayout>
 </LinearLayout>

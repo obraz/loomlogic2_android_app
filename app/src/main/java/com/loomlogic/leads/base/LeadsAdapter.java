@@ -192,7 +192,7 @@ public class LeadsAdapter extends RecyclerView.Adapter<LeadsAdapter.LeadsHolder>
                 ObjectAnimator.ofFloat(view, "scaleY", 0.5f, 1),
                 ObjectAnimator.ofFloat(view, "translationX", -widthButton * btnCountFromRight),
                 ObjectAnimator.ofFloat(view, "alpha", 0.5f, 1));
-        as.setDuration(500);
+        as.setDuration(300);
         as.addListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animation) {

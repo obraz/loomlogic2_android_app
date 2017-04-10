@@ -25,14 +25,13 @@ import static com.loomlogic.utils.AnimationUtils.expand;
 public class LeadDetailsParticipantsView extends LinearLayout {
     private LeadDetailsParticipantItemView currentParticipantView;
     private LeadParticipantItem currentParticipant;
-    private TextView participantNameTv, participantRoleTv, participantPhoneTv, participantAddressTv, participantEmailTv;
+    private TextView participantNameTv, participantRoleTv, participantPhoneTv, participantCompanyTv, participantEmailTv;
     private LinearLayout infoLayout;
     private LinearLayout headerLayout;
     private ImageView showMoreIcon;
     private boolean isVisible = false;
 
     public interface OnLeadParticipantsClickListener {
-        void onWriteNoteClick(LeadParticipantItem participant);
 
         void onAddParticipantClick();
     }
@@ -64,7 +63,7 @@ public class LeadDetailsParticipantsView extends LinearLayout {
         participantNameTv = (TextView) findViewById(R.id.tv_leadParticipantName);
         participantRoleTv = (TextView) findViewById(R.id.tv_leadParticipantRole);
         participantPhoneTv = (TextView) findViewById(R.id.tv_leadParticipantPhone);
-        participantAddressTv = (TextView) findViewById(R.id.tv_leadParticipantAddress);
+        participantCompanyTv = (TextView) findViewById(R.id.tv_leadParticipantCompanyName);
         participantEmailTv = (TextView) findViewById(R.id.tv_leadParticipantEmail);
 
         infoLayout = (LinearLayout) findViewById(R.id.ll_leadDetailsParticipantsContainer);
@@ -83,13 +82,6 @@ public class LeadDetailsParticipantsView extends LinearLayout {
             @Override
             public void onClick(View v) {
                 callback.onAddParticipantClick();
-            }
-        });
-
-        findViewById(R.id.btn_writeNote).setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                callback.onWriteNoteClick(currentParticipant);
             }
         });
     }
@@ -152,7 +144,7 @@ public class LeadDetailsParticipantsView extends LinearLayout {
         participantNameTv.setText(participantItem.getFullFormattedName());
         participantRoleTv.setText(LeadParticipantRole.toString(participantItem.role));
         participantPhoneTv.setText(participantItem.phone);
-        participantAddressTv.setText(participantItem.address);
+        participantCompanyTv.setText(participantItem.company);
         participantEmailTv.setText(participantItem.email);
     }
 

@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import com.loomlogic.R;
 import com.loomlogic.leads.entity.LeadContractItem;
+import com.loomlogic.utils.Utils;
+import com.squareup.picasso.Picasso;
 
 import static com.loomlogic.utils.AnimationUtils.collapse;
 import static com.loomlogic.utils.AnimationUtils.expand;
@@ -81,6 +83,17 @@ public class LeadDetailsContractView extends LinearLayout {
 
         TextView contractGrossTv = (TextView) findViewById(R.id.tv_leadDetailsContractGross);
         contractGrossTv.setText(contract.gross);
+
+        setHousePhoto(contract);
     }
 
+    private void setHousePhoto(LeadContractItem contract) {
+        if (Utils.isUrlValid(contract.houseImageUrl)) {
+            ImageView houseIV = (ImageView) findViewById(R.id.iv_leadDetailsContractHouse);
+            Picasso.with(getContext())
+                    .load(contract.houseImageUrl)
+                    .placeholder(R.drawable.lead_cotract_house_placeholder)
+                    .into(houseIV);
+        }
+    }
 }

@@ -11,17 +11,17 @@ public class LeadParticipantItem {
     public Gender gender;
     public String phone;
     public String email;
-    public String address;
+    public String company;
     public LeadParticipantRole role;
 
-    public LeadParticipantItem(String avatarUrl, String firstName, String lastName, Gender gender, String phone, String email, String address, LeadParticipantRole role) {
+    public LeadParticipantItem(String avatarUrl, String firstName, String lastName, Gender gender, String phone, String email, String company, LeadParticipantRole role) {
         this.avatarUrl = avatarUrl;
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;
         this.phone = phone;
         this.email = email;
-        this.address = address;
+        this.company = company;
         this.role = role;
     }
 

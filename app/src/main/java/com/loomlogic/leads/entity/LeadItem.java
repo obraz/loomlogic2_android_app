@@ -55,7 +55,7 @@ public class LeadItem extends SwipeData {
         participantList.add(new LeadParticipantItem("http://loomlogic.ucoz.net/4.jpg", "Justin", "Keller", Gender.MALE, "+5 (752) 915 25 23", "consectetud3@gmail.com", "Cherry Creek Mortgage3", LeadParticipantRole.OWNER));
 
 
-        leadContract = new LeadContractItem("$ 450, 000", "3.0%","$ 450, 000","7266 Red Water Ct");
+        leadContract = new LeadContractItem("$ 450, 000", "3.0%","$ 450, 000","7266 Red Water Ct","");
 
         transactionList = new ArrayList<>();
         transactionList.add(new LeadTransactionItem("7266 Red Water Ct"));

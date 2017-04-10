@@ -4,5 +4,7 @@
     <size
         android:width="30dp"
         android:height="30dp" />
-    <solid android:color="@color/lead_detail_escrow_status_current_bg_color" />
+    <stroke
+        android:width="2dp"
+        android:color="@color/lead_detail_escrow_status_cash_current_bg_color" />
 </shape>

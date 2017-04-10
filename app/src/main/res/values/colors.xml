@@ -46,17 +46,18 @@
     <color name="lead_deadline_today_color">#FFA50F</color>
     <color name="lead_deadline_expired_color">#F72741</color>
 
-    <color name="lead_escrow_status_financing_bg_color">#FFFEEC</color>
     <color name="lead_escrow_status_financing_progress_color">#FFD600</color>
     <color name="lead_escrow_status_cash_bg_color">#EFFEEC</color>
     <color name="lead_escrow_status_cash_progress_color">#7ED321</color>
     <color name="lead_btn_container_bg_color">#F5F7FA</color>
 
-    <color name="lead_detail_tabText_color">#8F8E94</color>
-    <color name="lead_detail_escrow_status_done_text_color">#9B9B9B</color>
-    <color name="lead_detail_escrow_status_current_text_color">#4A4A4A</color>
-    <color name="lead_detail_escrow_status_done_bg_color">#FAF6C9</color>
-    <color name="lead_detail_escrow_status_current_bg_color">#F8E81C</color>
+    <color name="lead_detail_tabText_color">#91A1B1</color>
+    <color name="lead_detail_escrow_status_done_text_color">#798591</color>
+    <color name="lead_detail_escrow_status_current_text_color">#2C2E30</color>
+    <color name="lead_detail_escrow_status_financing_done_bg_color">#FFF7CC</color>
+    <color name="lead_detail_escrow_status_financing_current_bg_color">#FFD600</color>
+    <color name="lead_detail_escrow_status_cash_done_bg_color">#D6F8BB</color>
+    <color name="lead_detail_escrow_status_cash_current_bg_color">#78D72B</color>
     <color name="lead_detail_escrow_status_future_bg_color">#F3F5F7</color>
     <color name="lead_details_btn_blu_border_text_color">#4A4A4A</color>
     <color name="lead_details_btn_blu_border_color">#03A9F4</color>

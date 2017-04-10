@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.loomlogic.R;
@@ -17,7 +16,6 @@ import com.loomlogic.leads.details.LeadEscrowStatusItem;
 import com.loomlogic.leads.details.LeadEscrowStatusState;
 import com.loomlogic.leads.details.LeadEscrowStatusUtils;
 import com.loomlogic.leads.entity.LeadItem;
-import com.loomlogic.utils.Utils;
 
 import java.util.ArrayList;
 
@@ -86,7 +84,6 @@ public class LeadDetailsInfoView extends LinearLayout {
 
     private void updateData() {
         setLeadEscrowStatus();
-        setLeadEscrowStatusBg();
         setLeadInfo();
     }
 
@@ -102,9 +99,9 @@ public class LeadDetailsInfoView extends LinearLayout {
             escrowStatus.setText(item.getAbbreviation());
 
             if (item.getState() == LeadEscrowStatusState.DONE) {
-                escrowStatusView.setBackgroundResource(R.color.lead_detail_escrow_status_done_bg_color);
+                escrowStatusView.setBackgroundResource(leadItem.isFinancing ? R.color.lead_detail_escrow_status_financing_done_bg_color : R.color.lead_detail_escrow_status_cash_done_bg_color);
             } else if (item.getState() == LeadEscrowStatusState.CURRENT) {
-                escrowStatus.setBackgroundResource(R.drawable.lead_details_escrow_status_current_bg);
+                escrowStatus.setBackgroundResource(leadItem.isFinancing ? R.drawable.lead_details_escrow_status_financing_current_bg : R.drawable.lead_details_escrow_status_cash_current_bg);
                 escrowStatus.setTextColor(ContextCompat.getColor(getContext(), R.color.lead_detail_escrow_status_current_text_color));
             }
             escrowStatusView.setLayoutParams(param);
@@ -112,15 +109,6 @@ public class LeadDetailsInfoView extends LinearLayout {
             leadDetailsEscrowStatusContainer.addView(escrowStatusView);
         }
     }
-
-    private void setLeadEscrowStatusBg() {
-        View escrowStatusBgView = findViewById(R.id.leadContainerBg);
-        escrowStatusBgView.setBackgroundResource(leadItem.isFinancing ? R.color.lead_escrow_status_financing_bg_color : R.color.lead_escrow_status_cash_bg_color);
-
-        int currentStatusWidth = leadItem.escrowStatusDoneCount * Utils.getDisplayWidth(getContext()) / LeadEscrowStatusUtils.getMaxEscrowStatusCount(leadItem);
-        escrowStatusBgView.setLayoutParams(new RelativeLayout.LayoutParams(currentStatusWidth, RelativeLayout.LayoutParams.MATCH_PARENT));
-    }
-
 
     private void setLeadInfo() {
         LeadAvatarView avatarV = (LeadAvatarView) findViewById(R.id.view_leadAvatar);

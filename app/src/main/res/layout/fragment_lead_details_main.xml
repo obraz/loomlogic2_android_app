@@ -11,10 +11,10 @@
         android:id="@+id/tab_layout"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
-        android:background="#313A44"
+        android:background="#234463"
         android:overScrollMode="never"
         app:tabGravity="fill"
-        app:tabIndicatorColor="#00A1FA"
+        app:tabIndicatorColor="#03A9F4"
         app:tabIndicatorHeight="4dp"
         app:tabMode="scrollable" />
 

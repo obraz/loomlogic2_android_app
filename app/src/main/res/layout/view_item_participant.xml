@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/fl_avatarContainer"
-    android:layout_width="41dp"
-    android:layout_height="41dp"
+    android:layout_width="43dp"
+    android:layout_height="43dp"
     android:layout_marginLeft="10dp"
     android:clickable="true">
 
@@ -33,5 +33,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/lead_participant_selected_bg"
-        android:visibility="gone" />
+        android:visibility="gone"
+        tools:visibility="visible"/>
 </FrameLayout>

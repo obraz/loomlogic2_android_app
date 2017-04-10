@@ -20,42 +20,45 @@
             android:layout_marginLeft="15dp"
             android:layout_weight="1"
             android:text="@string/lead_details_contract_details"
-            android:textColor="@color/black"
-            android:textSize="16sp"
+            android:textColor="#2B2E30"
+            android:textSize="17sp"
             android:textStyle="bold" />
 
         <ImageView
             android:id="@+id/iv_showMore"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="20dp"
+            android:layout_marginRight="15dp"
             android:src="@drawable/ic_arrow_down" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="76dp"
+        android:layout_height="70dp"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="10dp"
             android:src="@drawable/ic_lead_details_contract_address" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingRight="15dp">
 
             <TextView
                 android:id="@+id/tv_leadDetailsContractAddress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:ellipsize="marquee"
+                android:lines="1"
                 android:textColor="@color/lead_details_blue_text_color"
-                android:textSize="16sp"
+                android:textSize="17sp"
                 android:textStyle="bold"
                 tools:text="7266 Red Water Ct" />
 
@@ -64,85 +67,95 @@
                 android:layout_height="wrap_content"
                 android:text="@string/lead_contract_address"
                 android:textColor="@color/lead_details_grey_text_color"
-                android:textSize="12sp" />
+                android:textSize="13sp" />
         </LinearLayout>
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#F1F3F6" />
+        android:background="#EBEEF2" />
 
     <LinearLayout
         android:id="@+id/ll_leadDetailsContractContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingBottom="16dp"
-        android:paddingTop="16dp"
+        android:orientation="horizontal"
+        android:paddingBottom="20dp"
+        android:paddingTop="20dp"
         android:visibility="gone"
         tools:visibility="visible">
 
-        <TextView
-            android:id="@+id/tv_leadDetailsContractPurchase"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="8dp"
-            android:textColor="@color/lead_details_blue_text_color"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            tools:text="$ 450, 000" />
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:paddingLeft="15dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="20dp"
-            android:text="@string/lead_contract_purchase"
-            android:textColor="@color/lead_details_grey_text_color"
-            android:textSize="12sp" />
+            <TextView
+                android:id="@+id/tv_leadDetailsContractPurchase"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#2C2E30"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                tools:text="$ 450, 000" />
 
-        <TextView
-            android:id="@+id/tv_leadDetailsContractCommissions"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="8dp"
-            android:textColor="@color/lead_details_blue_text_color"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            tools:text="3.0%" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="11dp"
+                android:text="@string/lead_contract_purchase"
+                android:textColor="#798591"
+                android:textSize="13sp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="20dp"
-            android:text="@string/lead_contract_commissions"
-            android:textColor="@color/lead_details_grey_text_color"
-            android:textSize="12sp" />
+            <TextView
+                android:id="@+id/tv_leadDetailsContractCommissions"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:textColor="#2C2E30"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                tools:text="3.0%" />
 
-        <TextView
-            android:id="@+id/tv_leadDetailsContractGross"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="8dp"
-            android:textColor="@color/lead_details_blue_text_color"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            tools:text="$ 450, 000" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="11dp"
+                android:text="@string/lead_contract_commissions"
+                android:textColor="#798591"
+                android:textSize="13sp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="20dp"
-            android:text="@string/lead_contract_gross"
-            android:textColor="@color/lead_details_grey_text_color"
-            android:textSize="12sp" />
+            <TextView
+                android:id="@+id/tv_leadDetailsContractGross"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:textColor="#2C2E30"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                tools:text="$ 450, 000" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/lead_contract_gross"
+                android:textColor="#798591"
+                android:textSize="13sp" />
+        </LinearLayout>
+
+        <com.makeramen.roundedimageview.RoundedImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/iv_leadDetailsContractHouse"
+            android:layout_width="150dp"
+            android:layout_height="135dp"
+            android:layout_marginRight="15dp"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/lead_cotract_house_placeholder"
+            app:riv_corner_radius="10dp"
+            app:riv_mutate_background="true" />
     </LinearLayout>
 
 </LinearLayout>
