@@ -7,11 +7,15 @@ package com.loomlogic.base;
 public class MessageEvent {
 
     public enum MessageEventType {
-        LEADS_MENU_SELECT
+        LEADS_MENU_SELECT, NAVIGATION_BAR_SHOW, NAVIGATION_BAR_HIDE
     }
 
     private MessageEventType type;
     private Object object;
+
+    public MessageEvent(MessageEventType type) {
+        this.type = type;
+    }
 
     public MessageEvent(MessageEventType type, Object object) {
         this.type = type;

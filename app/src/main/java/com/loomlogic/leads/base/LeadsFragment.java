@@ -41,6 +41,8 @@ import java.util.ArrayList;
 
 public class LeadsFragment extends BaseHomeFragment implements LeadsAdapter.OnLeadClickListener, SearchView.OnQueryTextListener, Toolbar.OnMenuItemClickListener {
     private LeadsMenuManager leadsMenuManager;
+    private View controlBtnContainer;
+    private View leadFilterMarkerView;
     private ArrayList<LeadItem> fakeList;
     private SwipeRefreshLayout layoutSwipeRefresh;
 
@@ -102,6 +104,8 @@ public class LeadsFragment extends BaseHomeFragment implements LeadsAdapter.OnLe
     }
 
     private void initViews(View view) {
+        controlBtnContainer = view.findViewById(R.id.view_leadControlBtnContainer);
+        leadFilterMarkerView = view.findViewById(R.id.view_leadFilter);
         View mainContent = view.findViewById(R.id.view_leadsMainContent);
         DrawerLayout drawerLayout = (DrawerLayout) view.findViewById(R.id.drawer_layout);
         View navigationViewContainer = view.findViewById(R.id.leadMenuLayout);
@@ -227,7 +231,13 @@ public class LeadsFragment extends BaseHomeFragment implements LeadsAdapter.OnLe
             case LEADS_MENU_SELECT:
                 leadsMenuManager.closeDrawer();
                 getHomeActivity().showErrorSnackBar(((LeadMenuItem) (event.getObject())).getName());
-                return;
+                break;
+            case NAVIGATION_BAR_SHOW:
+                getHomeActivity().animateViewAboveNavBar(controlBtnContainer, true);
+                break;
+            case NAVIGATION_BAR_HIDE:
+                getHomeActivity().animateViewAboveNavBar(controlBtnContainer, false);
+                break;
         }
     }
 

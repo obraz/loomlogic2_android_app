@@ -6,27 +6,36 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.util.Pair;
+import android.support.v4.view.ViewCompat;
+import android.support.v4.view.ViewPropertyAnimatorCompat;
+import android.view.View;
 
-import com.ashokvarma.bottomnavigation.BottomNavigationBar;
-import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.loomlogic.R;
+import com.loomlogic.base.MessageEvent;
 import com.loomlogic.leads.base.LeadsFragment;
 import com.loomlogic.multibackstack.BackStackActivity;
-import com.loomlogic.utils.LeadUtils;
+import com.loomlogic.view.navigationbar.BottomNavigationBar;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
+
+import static android.R.attr.offset;
+import static com.loomlogic.view.navigationbar.BottomNavigationBar.DEFAULT_ANIMATION_DURATION;
+import static com.loomlogic.view.navigationbar.BottomNavigationBar.INTERPOLATOR;
 
 /**
  * Created by alex on 2/22/17.
  */
 
-public class HomeActivity extends BackStackActivity implements BottomNavigationBar.OnTabSelectedListener {
+public class HomeActivity extends BackStackActivity implements BottomNavigationBar.BottomNavigationBarListener {
     private static final String STATE_CURRENT_TAB_ID = "current_tab_id";
     private static final int MAIN_TAB_ID = 0;
 
     private BottomNavigationBar bottomNavBar;
     private Fragment curFragment;
     private int curTabId;
+    private ViewPropertyAnimatorCompat mTranslationAnimator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,22 +51,11 @@ public class HomeActivity extends BackStackActivity implements BottomNavigationB
 
     private void setUpBottomNavBar() {
         bottomNavBar = (BottomNavigationBar) findViewById(R.id.bottom_navigation);
-        bottomNavBar.setAutoHideEnabled(true);
-        bottomNavBar.setTabSelectedListener(this);
+        bottomNavBar.setmBottomNavigationBarListenerListener(this);
     }
 
     public void refreshNavBar() {
-        bottomNavBar.clearAll();
-        bottomNavBar
-                .addItem(new BottomNavigationItem(R.drawable.ic_navigation_notifications, ""))
-                .addItem(new BottomNavigationItem(R.drawable.ic_navigation_search, ""))
-                .addItem(new BottomNavigationItem(R.drawable.ic_navigation_leads, ""))
-                .addItem(new BottomNavigationItem(R.drawable.ic_navigation_tasks, ""))
-                .addItem(new BottomNavigationItem(R.drawable.ic_navigation_profile, ""))
-                .setActiveColor(R.color.navBarBgColor)
-                .setBarBackgroundColor(LeadUtils.getCurrentLeadRoleColor())
-                .setFirstSelectedPosition(curTabId)
-                .initialise();
+        getBottomNavBar().refreshCurrentTab();
     }
 
     @NonNull
@@ -82,7 +80,6 @@ public class HomeActivity extends BackStackActivity implements BottomNavigationB
         return bottomNavBar;
     }
 
-
     public BaseHomeFragment gerCurrentFragment() {
         return (BaseHomeFragment) curFragment;
     }
@@ -92,7 +89,7 @@ public class HomeActivity extends BackStackActivity implements BottomNavigationB
         super.onRestoreInstanceState(savedInstanceState);
         curFragment = getSupportFragmentManager().findFragmentById(R.id.container);
         curTabId = savedInstanceState.getInt(STATE_CURRENT_TAB_ID);
-        bottomNavBar.selectTab(curTabId, false);
+        getBottomNavBar().selectTab(curTabId, false);
     }
 
     @Override
@@ -131,12 +128,13 @@ public class HomeActivity extends BackStackActivity implements BottomNavigationB
     }
 
     @Override
-    public void onTabReselected(int position) {
-        backToRoot();
+    public void onBarNavigationShow() {
+        EventBus.getDefault().post(new MessageEvent(MessageEvent.MessageEventType.NAVIGATION_BAR_SHOW));
     }
 
     @Override
-    public void onTabUnselected(int position) {
+    public void onBarNavigationHide() {
+        EventBus.getDefault().post(new MessageEvent(MessageEvent.MessageEventType.NAVIGATION_BAR_HIDE));
     }
 
     public void showFragment(@NonNull Fragment fragment) {
@@ -153,7 +151,7 @@ public class HomeActivity extends BackStackActivity implements BottomNavigationB
     private void backTo(int tabId, @NonNull Fragment fragment) {
         if (tabId != curTabId) {
             curTabId = tabId;
-            bottomNavBar.selectTab(curTabId, false);
+            getBottomNavBar().selectTab(curTabId, false);
         }
         replaceFragment(fragment);
         getSupportFragmentManager().executePendingTransactions();
@@ -191,5 +189,16 @@ public class HomeActivity extends BackStackActivity implements BottomNavigationB
             }
         }
         return null;
+    }
+
+    public void animateViewAboveNavBar(View view, boolean show) {
+        if (mTranslationAnimator == null) {
+            mTranslationAnimator = ViewCompat.animate(view);
+            mTranslationAnimator.setDuration(DEFAULT_ANIMATION_DURATION);
+            mTranslationAnimator.setInterpolator(INTERPOLATOR);
+        } else {
+            mTranslationAnimator.cancel();
+        }
+        mTranslationAnimator.translationY(!show ? getBottomNavBar().getNavBarHeight() : 0).start();
     }
 }
