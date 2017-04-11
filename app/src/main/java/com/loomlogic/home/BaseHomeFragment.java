@@ -16,6 +16,7 @@ import static com.loomlogic.view.navigationbar.BottomNavigationBar.INTERPOLATOR;
 
 public abstract class BaseHomeFragment extends Fragment {
     private HomeActivity activity;
+    private ViewPropertyAnimatorCompat mTranslationAnimator;
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -35,7 +36,7 @@ public abstract class BaseHomeFragment extends Fragment {
         getHomeActivity().showFragment(fragment);
     }
 
-    private ViewPropertyAnimatorCompat mTranslationAnimator;
+
     public void animateViewAboveNavBar(View view, boolean show) {
         if (mTranslationAnimator == null) {
             mTranslationAnimator = ViewCompat.animate(view);

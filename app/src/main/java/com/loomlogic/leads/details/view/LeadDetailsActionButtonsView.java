@@ -21,7 +21,7 @@ import com.loomlogic.utils.ViewUtils;
  */
 
 public class LeadDetailsActionButtonsView extends RelativeLayout implements View.OnClickListener {
-    enum ActionState {NONE, CALL, MESSAGE}
+    enum ActionState {MAIN_SHOW, MAIN_HIDE, CALL, MESSAGE}
 
     private static final int ANIMATION_DURATION = 300;
     private static final int ANIMATION_SECOND_BUTTON_DELAY = ANIMATION_DURATION / 3;
@@ -79,14 +79,16 @@ public class LeadDetailsActionButtonsView extends RelativeLayout implements View
         msgEmailBtnView.setOnClickListener(this);
         msgSmsBtnView.setOnClickListener(this);
 
-        currentState = ActionState.NONE;
+        currentState = ActionState.MAIN_SHOW;
 
         setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if (currentState == ActionState.NONE) {
+                if (currentState == ActionState.MAIN_SHOW || currentState == ActionState.MAIN_HIDE) {
                     return false;
-                } else if (currentState == ActionState.CALL) {
+                }
+
+                if (currentState == ActionState.CALL) {
                     removeActionBg();
                     hideCallActionButtons();
                     showMainActionButtons();
@@ -122,13 +124,20 @@ public class LeadDetailsActionButtonsView extends RelativeLayout implements View
         // setBackgroundColor(null);
     }
 
-    private void showMainActionButtons() {
-        currentState = ActionState.NONE;
+    public void showMainActionButtons() {
+        if (currentState == ActionState.MAIN_SHOW) {
+            return;
+        }
+        currentState = ActionState.MAIN_SHOW;
         animateShowActionBtn(callBtnView, ANIMATION_DURATION);
         animateShowActionBtn(msgBtnView, ANIMATION_DURATION + ANIMATION_SECOND_BUTTON_DELAY);
     }
 
-    private void hideMainActionButtons() {
+    public void hideMainActionButtons() {
+        if (currentState == ActionState.MAIN_HIDE) {
+            return;
+        }
+        currentState = ActionState.MAIN_HIDE;
         animateHideActionBtn(callBtnView, 0);
         animateHideActionBtn(msgBtnView, ANIMATION_SECOND_BUTTON_DELAY);
     }
@@ -179,6 +188,10 @@ public class LeadDetailsActionButtonsView extends RelativeLayout implements View
 
     public void setPhoneNumber(String phone) {
         this.phoneNumber = phone;
+    }
+
+    public int getActionButtonTopOffset() {
+        return callBtnView.getTop();
     }
 
     @Override

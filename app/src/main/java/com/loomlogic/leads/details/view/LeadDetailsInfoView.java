@@ -38,9 +38,15 @@ public class LeadDetailsInfoView extends LinearLayout {
         void onPhoneClick();
 
         void onMessageClick();
+
+        void onDetailsViewShow();
+
+        void onDetailsViewHide();
     }
 
     private LeadItem leadItem;
+    private OnLeadInfoClickListener callback;
+    private int fullViewHeight;
 
     public LeadDetailsInfoView(Context context) {
         super(context);
@@ -71,14 +77,15 @@ public class LeadDetailsInfoView extends LinearLayout {
         updateData();
     }
 
-    public void setButtonsListener(final OnLeadInfoClickListener callback) {
+    public void setCallbacks(final OnLeadInfoClickListener callback) {
+        this.callback = callback;
+
         findViewById(R.id.btn_changeStatus).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 callback.onChangeStatusClick();
             }
         });
-
         findViewById(R.id.btn_send).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -149,9 +156,15 @@ public class LeadDetailsInfoView extends LinearLayout {
                 if (isVisible) {
                     showMoreIcon.setRotation(0);
                     collapse(infoLayout);
+                    callback.onDetailsViewHide();
                 } else {
                     showMoreIcon.setRotation(180);
                     expand(infoLayout);
+                    if (fullViewHeight==0){
+                        calculateFullHeight();
+                    }else {
+                        callback.onDetailsViewShow();
+                    }
                 }
                 isVisible = !isVisible;
             }
@@ -189,5 +202,23 @@ public class LeadDetailsInfoView extends LinearLayout {
 
         TextView infoSourceTv = (TextView) findViewById(R.id.tv_leadDetailsSource);
         infoSourceTv.setText(leadItem.source);
+    }
+
+    private void calculateFullHeight() {
+        post(new Runnable() {
+            @Override
+            public void run() {
+                fullViewHeight = getHeight();
+                callback.onDetailsViewShow();
+            }
+        });
+    }
+
+    public boolean isDetailsViewVisible() {
+        return isVisible;
+    }
+
+    public int getFullHeight() {
+        return fullViewHeight;
     }
 }

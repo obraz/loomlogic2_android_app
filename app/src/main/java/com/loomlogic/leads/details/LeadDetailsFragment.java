@@ -2,6 +2,7 @@ package com.loomlogic.leads.details;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.NestedScrollView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +32,7 @@ import static com.loomlogic.leads.base.LeadDetailsMainFragment.KEY_LEAD_ITEM;
 public class LeadDetailsFragment extends BaseHomeFragment {
     private LeadItem lead;
     private LeadDetailsActionButtonsView actionBtnContainer;
+    private LeadDetailsInfoView infoView;
 
     public static LeadDetailsFragment newInstance(LeadItem lead) {
         LeadDetailsFragment fragment = new LeadDetailsFragment();
@@ -60,16 +62,17 @@ public class LeadDetailsFragment extends BaseHomeFragment {
         initContractView(view);
         initTransactionsView(view);
         initDatesView(view);
+        setupScrollViewBehaviour(view);
     }
 
     private void initActionButtons(View view) {
-        actionBtnContainer = (LeadDetailsActionButtonsView)view.findViewById(R.id.view_leadDetailsActionButtons);
+        actionBtnContainer = (LeadDetailsActionButtonsView) view.findViewById(R.id.view_leadDetailsActionButtons);
     }
 
     private void initInfoView(View view) {
-        LeadDetailsInfoView infoView = (LeadDetailsInfoView) view.findViewById(R.id.view_leadDetailsInfo);
+        infoView = (LeadDetailsInfoView) view.findViewById(R.id.view_leadDetailsInfo);
         infoView.setLead(lead);
-        infoView.setButtonsListener(new LeadDetailsInfoView.OnLeadInfoClickListener() {
+        infoView.setCallbacks(new LeadDetailsInfoView.OnLeadInfoClickListener() {
             @Override
             public void onChangeStatusClick() {
                 getHomeActivity().showErrorSnackBar("onChangeStatusClick");
@@ -89,6 +92,18 @@ public class LeadDetailsFragment extends BaseHomeFragment {
             @Override
             public void onMessageClick() {
                 actionBtnContainer.onMsgClick();
+            }
+
+            @Override
+            public void onDetailsViewShow() {
+                if (infoView.getFullHeight() > actionBtnContainer.getActionButtonTopOffset()) {
+                    actionBtnContainer.hideMainActionButtons();
+                }
+            }
+
+            @Override
+            public void onDetailsViewHide() {
+                actionBtnContainer.showMainActionButtons();
             }
         });
     }
@@ -120,6 +135,22 @@ public class LeadDetailsFragment extends BaseHomeFragment {
         LeadDetailsDatesView datesView = (LeadDetailsDatesView) view.findViewById(R.id.view_leadDetailsDates);
     }
 
+    private void setupScrollViewBehaviour(View view) {
+        NestedScrollView scrollView = (NestedScrollView) view.findViewById(R.id.scrollView_leadDetails);
+        scrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                if (infoView.isDetailsViewVisible()) {
+                    if ((infoView.getHeight() - scrollY) > actionBtnContainer.getActionButtonTopOffset()) {
+                        actionBtnContainer.hideMainActionButtons();
+                    } else {
+                        actionBtnContainer.showMainActionButtons();
+                    }
+                }
+            }
+        });
+    }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(MessageEvent event) {
         switch (event.getType()) {
@@ -127,7 +158,7 @@ public class LeadDetailsFragment extends BaseHomeFragment {
                 animateViewAboveNavBar(actionBtnContainer, true);
                 break;
             case NAVIGATION_BAR_HIDE:
-                 animateViewAboveNavBar(actionBtnContainer, false);
+                animateViewAboveNavBar(actionBtnContainer, false);
                 break;
         }
     }
