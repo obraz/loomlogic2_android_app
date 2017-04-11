@@ -8,13 +8,19 @@ import android.view.ViewGroup;
 
 import com.google.gson.Gson;
 import com.loomlogic.R;
+import com.loomlogic.base.MessageEvent;
 import com.loomlogic.home.BaseHomeFragment;
+import com.loomlogic.leads.details.view.LeadDetailsActionButtonsView;
 import com.loomlogic.leads.details.view.LeadDetailsContractView;
 import com.loomlogic.leads.details.view.LeadDetailsDatesView;
 import com.loomlogic.leads.details.view.LeadDetailsInfoView;
 import com.loomlogic.leads.details.view.LeadDetailsParticipantsView;
 import com.loomlogic.leads.details.view.LeadDetailsTransactionView;
 import com.loomlogic.leads.entity.LeadItem;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import static com.loomlogic.leads.base.LeadDetailsMainFragment.KEY_LEAD_ITEM;
 
@@ -24,6 +30,7 @@ import static com.loomlogic.leads.base.LeadDetailsMainFragment.KEY_LEAD_ITEM;
 
 public class LeadDetailsFragment extends BaseHomeFragment {
     private LeadItem lead;
+    private LeadDetailsActionButtonsView actionBtnContainer;
 
     public static LeadDetailsFragment newInstance(LeadItem lead) {
         LeadDetailsFragment fragment = new LeadDetailsFragment();
@@ -47,11 +54,16 @@ public class LeadDetailsFragment extends BaseHomeFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        initActionButtons(view);
         initInfoView(view);
         initParticipantsView(view);
         initContractView(view);
         initTransactionsView(view);
         initDatesView(view);
+    }
+
+    private void initActionButtons(View view) {
+        actionBtnContainer = (LeadDetailsActionButtonsView)view.findViewById(R.id.view_leadDetailsActionButtons);
     }
 
     private void initInfoView(View view) {
@@ -66,6 +78,17 @@ public class LeadDetailsFragment extends BaseHomeFragment {
             @Override
             public void onSendClick() {
                 getHomeActivity().showErrorSnackBar("onSendClick");
+            }
+
+            @Override
+            public void onPhoneClick() {
+                actionBtnContainer.setPhoneNumber(lead.phone);
+                actionBtnContainer.onCallClick();
+            }
+
+            @Override
+            public void onMessageClick() {
+                actionBtnContainer.onMsgClick();
             }
         });
     }
@@ -95,5 +118,29 @@ public class LeadDetailsFragment extends BaseHomeFragment {
 
     private void initDatesView(View view) {
         LeadDetailsDatesView datesView = (LeadDetailsDatesView) view.findViewById(R.id.view_leadDetailsDates);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(MessageEvent event) {
+        switch (event.getType()) {
+            case NAVIGATION_BAR_SHOW:
+                animateViewAboveNavBar(actionBtnContainer, true);
+                break;
+            case NAVIGATION_BAR_HIDE:
+                 animateViewAboveNavBar(actionBtnContainer, false);
+                break;
+        }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
     }
 }

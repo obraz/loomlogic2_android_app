@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#1D3852</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#03A9F4</color>
 
     <color name="colorPrimaryLightDark">#214263</color>
 
@@ -75,4 +75,6 @@
     <color name="lead_msg_sms_btn_bg_color">#F5A623</color>
     <color name="lead_msg_email_btn_bg_color">#DD0000</color>
     <color name="lead_msg_note_btn_bg_color">#0097EB</color>
+
+    <color name="lead_details_action_buttons_bg_color">#B3FFFFFF</color>
 </resources>

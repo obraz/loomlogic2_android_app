@@ -20,9 +20,6 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
-import static android.R.attr.offset;
-import static com.loomlogic.view.navigationbar.BottomNavigationBar.DEFAULT_ANIMATION_DURATION;
-import static com.loomlogic.view.navigationbar.BottomNavigationBar.INTERPOLATOR;
 
 /**
  * Created by alex on 2/22/17.
@@ -35,7 +32,6 @@ public class HomeActivity extends BackStackActivity implements BottomNavigationB
     private BottomNavigationBar bottomNavBar;
     private Fragment curFragment;
     private int curTabId;
-    private ViewPropertyAnimatorCompat mTranslationAnimator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -189,16 +185,5 @@ public class HomeActivity extends BackStackActivity implements BottomNavigationB
             }
         }
         return null;
-    }
-
-    public void animateViewAboveNavBar(View view, boolean show) {
-        if (mTranslationAnimator == null) {
-            mTranslationAnimator = ViewCompat.animate(view);
-            mTranslationAnimator.setDuration(DEFAULT_ANIMATION_DURATION);
-            mTranslationAnimator.setInterpolator(INTERPOLATOR);
-        } else {
-            mTranslationAnimator.cancel();
-        }
-        mTranslationAnimator.translationY(!show ? getBottomNavBar().getNavBarHeight() : 0).start();
     }
 }

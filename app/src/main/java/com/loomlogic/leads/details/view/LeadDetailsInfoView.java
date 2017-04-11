@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.loomlogic.R;
+import com.loomlogic.home.HomeActivity;
 import com.loomlogic.leads.base.LeadAvatarView;
 import com.loomlogic.leads.details.LeadEscrowStatusItem;
 import com.loomlogic.leads.details.LeadEscrowStatusState;
@@ -33,6 +34,10 @@ public class LeadDetailsInfoView extends LinearLayout {
         void onChangeStatusClick();
 
         void onSendClick();
+
+        void onPhoneClick();
+
+        void onMessageClick();
     }
 
     private LeadItem leadItem;
@@ -78,6 +83,20 @@ public class LeadDetailsInfoView extends LinearLayout {
             @Override
             public void onClick(View v) {
                 callback.onSendClick();
+            }
+        });
+
+        findViewById(R.id.tv_leadDetailsPhone).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                callback.onPhoneClick();
+            }
+        });
+
+        findViewById(R.id.tv_leadDetailsEmail).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                callback.onMessageClick();
             }
         });
     }
@@ -140,12 +159,33 @@ public class LeadDetailsInfoView extends LinearLayout {
 
         TextView infoPhoneTv = (TextView) findViewById(R.id.tv_leadDetailsPhone);
         infoPhoneTv.setText(leadItem.phone);
+        infoPhoneTv.setOnLongClickListener(new OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                ((HomeActivity) getContext()).showCopyTextDialog(leadItem.phone);
+                return true;
+            }
+        });
+
 
         TextView infoAddressTv = (TextView) findViewById(R.id.tv_leadDetailsAddress);
         infoAddressTv.setText(leadItem.address);
+        infoAddressTv.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((HomeActivity) getContext()).showMapDialog(leadItem.lat, leadItem.lon, leadItem.address);
+            }
+        });
 
         TextView infoEmailTv = (TextView) findViewById(R.id.tv_leadDetailsEmail);
         infoEmailTv.setText(leadItem.email);
+        infoEmailTv.setOnLongClickListener(new OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                ((HomeActivity) getContext()).showCopyTextDialog(leadItem.email);
+                return true;
+            }
+        });
 
         TextView infoSourceTv = (TextView) findViewById(R.id.tv_leadDetailsSource);
         infoSourceTv.setText(leadItem.source);

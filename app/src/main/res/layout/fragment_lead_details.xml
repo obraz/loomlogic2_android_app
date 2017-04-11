@@ -1,58 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/main_bg_color">
+    android:layout_height="match_parent">
 
-    <LinearLayout
+
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingBottom="20dp"
-        android:clipToPadding="false">
+        android:layout_height="match_parent"
+        android:background="@color/main_bg_color">
 
-        <com.loomlogic.leads.details.view.LeadDetailsInfoView
-            android:id="@+id/view_leadDetailsInfo"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:elevation="2dp"
-            android:layout_marginBottom="15dp"
-            android:background="@color/main_bg_color"
-            tools:visibility="visible" />
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingBottom="20dp">
 
-        <com.loomlogic.leads.details.view.LeadDetailsParticipantsView
-            android:id="@+id/view_leadDetailsParticipants"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:elevation="2dp"
-            android:layout_marginBottom="15dp"
-            android:background="@color/main_bg_color"
-            tools:visibility="gone" />
+            <com.loomlogic.leads.details.view.LeadDetailsInfoView
+                android:id="@+id/view_leadDetailsInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:background="@color/main_bg_color"
+                android:elevation="2dp"
+                tools:visibility="visible" />
 
-        <com.loomlogic.leads.details.view.LeadDetailsContractView
-            android:id="@+id/view_leadDetailsContract"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:elevation="2dp"
-            android:layout_marginBottom="15dp"
-            android:background="@color/main_bg_color" />
+            <com.loomlogic.leads.details.view.LeadDetailsParticipantsView
+                android:id="@+id/view_leadDetailsParticipants"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/view_leadDetailsInfo"
+                android:layout_marginBottom="15dp"
+                android:background="@color/main_bg_color"
+                android:elevation="2dp"
+                tools:visibility="gone" />
 
-        <com.loomlogic.leads.details.view.LeadDetailsTransactionView
-            android:id="@+id/view_leadDetailsTransaction"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:elevation="2dp"
-            android:layout_marginBottom="15dp"
-            android:background="@color/main_bg_color" />
+            <com.loomlogic.leads.details.view.LeadDetailsContractView
+                android:id="@+id/view_leadDetailsContract"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/view_leadDetailsParticipants"
+                android:layout_marginBottom="15dp"
+                android:background="@color/main_bg_color"
+                android:elevation="2dp" />
 
-        <com.loomlogic.leads.details.view.LeadDetailsDatesView
-            android:id="@+id/view_leadDetailsDates"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:elevation="2dp"
-            android:layout_marginBottom="15dp"
-            android:background="@color/main_bg_color" />
-    </LinearLayout>
-</android.support.v4.widget.NestedScrollView>
+            <com.loomlogic.leads.details.view.LeadDetailsTransactionView
+                android:id="@+id/view_leadDetailsTransaction"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/view_leadDetailsContract"
+                android:layout_marginBottom="15dp"
+                android:background="@color/main_bg_color"
+                android:elevation="2dp" />
+
+            <com.loomlogic.leads.details.view.LeadDetailsDatesView
+                android:id="@+id/view_leadDetailsDates"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/view_leadDetailsTransaction"
+                android:layout_marginBottom="15dp"
+                android:background="@color/main_bg_color"
+                android:elevation="2dp" />
+
+        </RelativeLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+    <com.loomlogic.leads.details.view.LeadDetailsActionButtonsView
+        android:id="@+id/view_leadDetailsActionButtons"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/navigation_bar_height"
+        android:layout_marginTop="-50dp" />
+</FrameLayout>

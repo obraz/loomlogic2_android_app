@@ -233,10 +233,10 @@ public class LeadsFragment extends BaseHomeFragment implements LeadsAdapter.OnLe
                 getHomeActivity().showErrorSnackBar(((LeadMenuItem) (event.getObject())).getName());
                 break;
             case NAVIGATION_BAR_SHOW:
-                getHomeActivity().animateViewAboveNavBar(controlBtnContainer, true);
+                 animateViewAboveNavBar(controlBtnContainer, true);
                 break;
             case NAVIGATION_BAR_HIDE:
-                getHomeActivity().animateViewAboveNavBar(controlBtnContainer, false);
+                 animateViewAboveNavBar(controlBtnContainer, false);
                 break;
         }
     }
@@ -261,6 +261,7 @@ public class LeadsFragment extends BaseHomeFragment implements LeadsAdapter.OnLe
     @Override
     public void onItemClickListener(LeadItem item) {
         mAdapter.notifyDataSetChanged();
+        getHomeActivity().getBottomNavBar().show();
         showFragment(LeadDetailsMainFragment.newInstance(item));
     }
 

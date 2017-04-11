@@ -16,6 +16,11 @@
     <string name="seller">Seller</string>
     <string name="no_results">No Results</string>
     <string name="reset">Reset</string>
+    <string name="call_error">Sorry, you can\'t make a call</string>
+    <string name="map_error">Sorry, you don\'t have a map</string>
+    <string name="map_open_dialog_title">Open Map?</string>
+    <string name="map_open_dialog_message">This action will open default map application</string>
+    <string name="copy_text">Copy to Clipboard</string>
 
     <!-- Sign In -->
     <string name="logIn">Log In</string>

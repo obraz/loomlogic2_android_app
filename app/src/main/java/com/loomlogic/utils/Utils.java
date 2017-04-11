@@ -1,9 +1,13 @@
 package com.loomlogic.utils;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.util.DisplayMetrics;
 import android.util.Patterns;
 import android.view.WindowManager;
+
+import com.loomlogic.base.LoomLogicApp;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -17,6 +21,10 @@ import java.io.InputStreamReader;
 public class Utils {
     public static boolean isUrlValid(String url) {
         return url != null && Patterns.WEB_URL.matcher(url).matches();
+    }
+
+    public static boolean isPhoneValid(String phone) {
+        return phone != null && Patterns.PHONE.matcher(phone).matches();
     }
 
     private static DisplayMetrics getDisplayMetrics(Context context) {
@@ -48,4 +56,11 @@ public class Utils {
             return null;
         }
     }
+
+    public static void copyTextToClipboard(String text) {
+        ClipboardManager clipboard = (ClipboardManager) LoomLogicApp.getSharedContext().getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipData clip = ClipData.newPlainText(text, text);
+        clipboard.setPrimaryClip(clip);
+    }
+
 }

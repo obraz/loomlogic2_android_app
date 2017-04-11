@@ -17,6 +17,8 @@ public class LeadItem extends SwipeData {
     public String lastName;
     public Gender gender;
     public String address;
+    public String lat;
+    public String lon;
     public boolean isFinancing;
     public int escrowStatusDoneCount;
 
@@ -46,6 +48,8 @@ public class LeadItem extends SwipeData {
         this.phone = "+5 (752) 915 25 20";
         this.email = "consectetud@gmail.com";
         this.source = "Zillow";
+        this.lat = "24.03";
+        this.lon = "-12.23";
 
         //avatarUrl, String firstName, String lastName, Gender gender, String phone, String email, String address, LeadParticipantRole role)
         participantList = new ArrayList<LeadParticipantItem>();

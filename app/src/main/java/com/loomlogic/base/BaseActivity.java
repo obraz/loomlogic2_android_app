@@ -1,7 +1,10 @@
 package com.loomlogic.base;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
@@ -9,13 +12,16 @@ import android.support.annotation.StringRes;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 
 import com.loomlogic.R;
 import com.loomlogic.base.resultfix.ActivityResultFixActivity;
+import com.loomlogic.utils.Utils;
 import com.loomlogic.utils.ViewUtils;
 import com.novoda.merlin.Merlin;
 import com.novoda.merlin.MerlinsBeard;
@@ -227,5 +233,59 @@ public class BaseActivity extends ActivityResultFixActivity implements Connectab
         if (view != null) {
             ViewUtils.hideSoftKeyboard(view);
         }
+    }
+
+    public void openDialIntent(String phone) {
+        Intent intent = new Intent(Intent.ACTION_DIAL);
+        if (Utils.isPhoneValid(phone)) {
+            intent.setData(Uri.parse("tel:" + phone));
+        }
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        } else {
+            showErrorSnackBar(getString(R.string.call_error));
+        }
+    }
+
+    public void showMapDialog(final String latitude, final String longitude, final String address){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.map_open_dialog_title);
+        builder.setMessage(R.string.map_open_dialog_message);
+        builder.setNegativeButton(android.R.string.cancel, null);
+        builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                openMapIntent(latitude, longitude, address);
+            }
+        });
+        builder.show();
+    }
+
+    public void openMapIntent(String latitude, String longitude, String address) {
+        String mapRequest = "geo:" + latitude + "," + longitude;
+        if (address != null && !TextUtils.isEmpty(address)) {
+            mapRequest = mapRequest + "?q=" + Uri.encode(address);
+        }
+        Uri gmmIntentUri = Uri.parse(mapRequest);
+        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+        mapIntent.setPackage("com.google.android.apps.maps");
+        if (mapIntent.resolveActivity(getPackageManager()) != null) {
+            startActivity(mapIntent);
+        } else {
+            showErrorSnackBar(getString(R.string.map_error));
+        }
+    }
+
+    public void showCopyTextDialog(final String text){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        String[] de =  {getString(R.string.copy_text)};
+        builder.setItems(de, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Utils.copyTextToClipboard(text);
+            }
+        });
+
+        builder.show();
     }
 }

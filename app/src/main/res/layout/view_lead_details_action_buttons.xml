@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingRight="15dp">
+
+    <LinearLayout
+        android:id="@+id/view_leadCall"
+        android:layout_width="@dimen/action_btn_size"
+        android:layout_height="@dimen/action_btn_size"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/action_btn_margins"
+        android:layout_toLeftOf="@+id/view_leadMsg"
+        android:background="@drawable/circle"
+        android:backgroundTint="@color/lead_call_btn_bg_color"
+        android:clickable="true"
+        android:gravity="center"
+        android:visibility="visible">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="center"
+            android:src="@drawable/ic_call" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/view_leadMsg"
+        android:layout_width="@dimen/action_btn_size"
+        android:layout_height="@dimen/action_btn_size"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="@dimen/action_btn_margins"
+        android:layout_marginLeft="10dp"
+        android:background="@drawable/circle"
+        android:backgroundTint="@color/lead_msg_btn_bg_color"
+        android:clickable="true"
+        android:gravity="center"
+        android:visibility="visible">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="center"
+            android:src="@drawable/ic_send_message" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/view_leadCall_system"
+        android:layout_width="@dimen/action_btn_size"
+        android:layout_height="@dimen/action_btn_size"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/action_btn_margins"
+        android:layout_toLeftOf="@+id/view_leadCall_twillio"
+        android:background="@drawable/circle"
+        android:backgroundTint="@color/lead_call_system_btn_bg_color"
+        android:clickable="true"
+        android:gravity="center"
+        android:visibility="visible">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/ic_call"
+            android:text="@string/lead_call_system"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/view_leadCall_twillio"
+        android:layout_width="@dimen/action_btn_size"
+        android:layout_height="@dimen/action_btn_size"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="@dimen/action_btn_margins"
+        android:layout_marginLeft="10dp"
+        android:background="@drawable/circle"
+        android:backgroundTint="@color/lead_call_twillio_btn_bg_color"
+        android:clickable="true"
+        android:gravity="center"
+        android:visibility="visible">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/ic_lead_call_twillio"
+            android:text="@string/lead_call_twillio"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/view_leadMsg_note"
+        android:layout_width="@dimen/action_btn_size"
+        android:layout_height="@dimen/action_btn_size"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/action_btn_margins"
+        android:layout_toLeftOf="@+id/view_leadMsg_email"
+        android:background="@drawable/circle"
+        android:backgroundTint="@color/lead_msg_note_btn_bg_color"
+        android:clickable="true"
+        android:gravity="center"
+        android:visibility="visible">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/ic_lead_msg_note"
+            android:text="@string/lead_message_note"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/view_leadMsg_email"
+        android:layout_width="@dimen/action_btn_size"
+        android:layout_height="@dimen/action_btn_size"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/action_btn_margins"
+        android:layout_marginLeft="10dp"
+        android:layout_toLeftOf="@+id/view_leadMsg_SMS"
+        android:background="@drawable/circle"
+        android:backgroundTint="@color/lead_msg_email_btn_bg_color"
+        android:clickable="true"
+        android:gravity="center"
+        android:visibility="visible">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/ic_lead_msg_email"
+            android:text="@string/lead_message_email"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/view_leadMsg_SMS"
+        android:layout_width="@dimen/action_btn_size"
+        android:layout_height="@dimen/action_btn_size"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="@dimen/action_btn_margins"
+        android:layout_marginLeft="10dp"
+        android:background="@drawable/circle"
+        android:backgroundTint="@color/lead_msg_sms_btn_bg_color"
+        android:clickable="true"
+        android:gravity="center"
+        android:visibility="visible">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/ic_lead_msg_sms"
+            android:text="@string/lead_message_sms"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
+    </LinearLayout>
+</RelativeLayout>
