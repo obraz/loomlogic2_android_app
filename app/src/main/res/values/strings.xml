@@ -154,11 +154,9 @@
     <string name="create_new_lead_hint_phone">Phone</string>
     <string name="create_new_lead_hint_email">Email</string>
     <string name="create_new_lead_hint_source">Source</string>
-    <string name="create_new_lead_hint_selectSource">Select source</string>
-    <string name="create_new_lead_hint_address">Address</string>
-    <string name="create_new_lead_hint_unit">Unit #</string>
+    <string name="create_new_lead_hint_address">Street</string>
+    <string name="create_new_lead_hint_unit">Unit</string>
     <string name="create_new_lead_hint_state">State</string>
-    <string name="create_new_lead_hint_selectState">Select state</string>
     <string name="create_new_lead_hint_city">City</string>
     <string name="create_new_lead_hint_zip">Zip Code</string>
     <string name="create_new_lead_hint_note">Note</string>

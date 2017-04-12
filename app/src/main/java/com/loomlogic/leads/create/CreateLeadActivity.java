@@ -14,9 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.RadioButton;
-import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.loomlogic.R;
@@ -25,6 +23,7 @@ import com.loomlogic.leads.entity.LeadRole;
 import com.loomlogic.leads.entity.LeadSourceItem;
 import com.loomlogic.utils.LeadPreferencesUtils;
 import com.loomlogic.utils.ViewUtils;
+import com.loomlogic.view.LLEditText;
 
 import static com.loomlogic.R.id.rb_createLead_buyer;
 import static com.loomlogic.R.id.rb_createLead_seller;
@@ -44,8 +43,7 @@ public class CreateLeadActivity extends BaseActivity implements View.OnClickList
     private static final int RESULT_PICK_SOURCE = 124;
     private static final int RESULT_PICK_STATE = 125;
 
-    private EditText nameEt, phoneEt, emailEt;
-    private TextView sourceTv, stateTv;
+    private LLEditText nameEt, phoneEt, emailEt, sourceEt, stateEt;
     private LeadSourceItem sourceSelected;
     private State stateSelected;
 
@@ -70,14 +68,14 @@ public class CreateLeadActivity extends BaseActivity implements View.OnClickList
     private void initViews() {
         initRoleViews();
 
-        nameEt = (EditText) findViewById(R.id.et_createLead_name);
-        phoneEt = (EditText) findViewById(R.id.et_createLead_phone);
-        emailEt = (EditText) findViewById(R.id.et_createLead_email);
-        sourceTv = ((TextView) findViewById(R.id.tv_createLead_source));
-        stateTv = ((TextView) findViewById(R.id.tv_createLead_state));
+        nameEt = (LLEditText) findViewById(R.id.et_createLead_name);
+        phoneEt = (LLEditText) findViewById(R.id.et_createLead_phone);
+        emailEt = (LLEditText) findViewById(R.id.et_createLead_email);
+        sourceEt = ((LLEditText) findViewById(R.id.et_createLead_source));
+        stateEt = ((LLEditText) findViewById(R.id.et_createLead_state));
 
-        sourceTv.setOnClickListener(this);
-        stateTv.setOnClickListener(this);
+        findViewById(R.id.view_createLead_source).setOnClickListener(this);
+        findViewById(R.id.view_createLead_state).setOnClickListener(this);
 
         phoneEt.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
     }
@@ -188,15 +186,13 @@ public class CreateLeadActivity extends BaseActivity implements View.OnClickList
 
     private void statePicked(Intent data) {
         stateSelected = new Gson().fromJson(data.getExtras().getString(KEY_STATE), State.class);
-        stateTv.setText(stateSelected.name);
-        stateTv.setTextColor(ContextCompat.getColor(this, R.color.lead_create_new_black_text_color));
+        stateEt.setText(stateSelected.name);
     }
 
     private void sourcePicked(Intent data) {
         sourceSelected = new Gson().fromJson(data.getExtras().getString(KEY_SOURCE), LeadSourceItem.class);
-        sourceTv.setText(sourceSelected.name);
-        sourceTv.setTextColor(ContextCompat.getColor(this, R.color.lead_create_new_black_text_color));
-        sourceTv.setError(null);
+        sourceEt.setText(sourceSelected.name);
+        sourceEt.setError(null);
     }
 
     @Override
@@ -210,7 +206,7 @@ public class CreateLeadActivity extends BaseActivity implements View.OnClickList
         switch (item.getItemId()) {
             case R.id.action_ok:
                 if (sourceSelected == null) {
-                    sourceTv.setError("");
+                    sourceEt.setError("");
                     showErrorSnackBar(getString(R.string.create_new_lead_source_error));
                 } else {
                     ViewUtils.hideSoftKeyboard(getCurrentFocus());
@@ -237,10 +233,10 @@ public class CreateLeadActivity extends BaseActivity implements View.OnClickList
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.tv_createLead_source:
+            case R.id.view_createLead_source:
                 startActivityForResult(new Intent(CreateLeadActivity.this, SourceListActivity.class), RESULT_PICK_SOURCE);
                 break;
-            case R.id.tv_createLead_state:
+            case R.id.view_createLead_state:
                 startActivityForResult(new Intent(CreateLeadActivity.this, StateListActivity.class), RESULT_PICK_STATE);
                 break;
         }

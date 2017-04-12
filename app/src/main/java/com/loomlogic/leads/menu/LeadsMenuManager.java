@@ -13,7 +13,10 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -224,15 +227,31 @@ public class LeadsMenuManager {
     }
 
     private void openCreateLeadDialog() {
+        ListAdapter adapter = new ArrayAdapter<String>(
+                activity,
+                android.R.layout.select_dialog_item,
+                android.R.id.text1,
+                activity.getResources().getStringArray(R.array.lead_create_new_chooser)) {
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                View v = super.getView(position, convertView, parent);
+                TextView tv = (TextView) v.findViewById(android.R.id.text1);
+
+                tv.setCompoundDrawablesWithIntrinsicBounds(position == 0 ? R.drawable.ic_lead_create_from_contact : R.drawable.ic_lead_create_new, 0, 0, 0);
+                tv.setCompoundDrawablePadding((int)activity.getResources().getDimension(R.dimen.dialog_item_icon_margin));
+                tv.setTextSize(16);
+                return v;
+            }
+        };
+
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-        builder.setItems(R.array.lead_create_new_chooser, new DialogInterface.OnClickListener() {
+        builder.setAdapter(adapter, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                //closeDrawer();
                 activity.startActivity(CreateLeadActivity.getCreateLeadActivityIntent(activity, which == 0));
             }
-
         });
         builder.show();
     }
+
 }
