@@ -159,11 +159,8 @@ public class LeadDetailsMainFragment extends BaseHomeFragment implements TabLayo
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_one:
-                getHomeActivity().showErrorSnackBar("action 1");
-                break;
-            case R.id.action_two:
-                getHomeActivity().showErrorSnackBar("action 2");
+            case R.id.action_edit:
+                getContext().startActivity(LeadSettingsActivity.getLeadSettingsActivityIntent(getContext()));
                 break;
             default:
                 break;

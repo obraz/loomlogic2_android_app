@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_bg_color"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar_light" />
+
+    <TextView
+        android:id="@+id/view_leadSettingsContact"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white"
+        android:clickable="true"
+        android:drawableRight="@drawable/ic_arrow_right"
+        android:foreground="?selectableItemBackground"
+        android:gravity="center_vertical"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:text="@string/lead_settings_contact_info"
+        android:textColor="#2B2E30"
+        android:textSize="17sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#EEF0F3" />
+
+    <TextView
+        android:id="@+id/view_leadSettingsParticipants"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white"
+        android:clickable="true"
+        android:drawableRight="@drawable/ic_arrow_right"
+        android:foreground="?selectableItemBackground"
+        android:gravity="center_vertical"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:text="@string/lead_settings_participants"
+        android:textColor="#2B2E30"
+        android:textSize="17sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#EEF0F3" />
+
+    <TextView
+        android:id="@+id/view_leadSettingsContract"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white"
+        android:clickable="true"
+        android:drawableRight="@drawable/ic_arrow_right"
+        android:foreground="?selectableItemBackground"
+        android:gravity="center_vertical"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:text="@string/lead_settings_contract"
+        android:textColor="#2B2E30"
+        android:textSize="17sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#EEF0F3" />
+</LinearLayout>
