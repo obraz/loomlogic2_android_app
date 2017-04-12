@@ -7,6 +7,7 @@ import android.view.View;
 
 import com.loomlogic.R;
 import com.loomlogic.base.BaseActivity;
+import com.loomlogic.leads.create.EditLeadActivity;
 
 /**
  * Created by alex on 4/12/17.
@@ -27,7 +28,7 @@ public class LeadSettingsActivity extends BaseActivity {
         findViewById(R.id.view_leadSettingsContact).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                startActivity(EditLeadActivity.getEditLeadActivityIntent(LeadSettingsActivity.this, null));
             }
         });
 

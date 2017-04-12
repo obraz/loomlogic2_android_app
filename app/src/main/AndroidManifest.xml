@@ -47,7 +47,11 @@
             android:name=".leads.create.CreateLeadActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="sensorPortrait"></activity>
-
+        <activity
+            android:name=".leads.create.EditLeadActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="sensorPortrait"
+            android:windowSoftInputMode="adjustPan"></activity>
         <activity
             android:name=".leads.create.SourceListActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"

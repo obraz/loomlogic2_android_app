@@ -14,14 +14,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 
 import com.google.gson.Gson;
 import com.loomlogic.R;
 import com.loomlogic.base.BaseActivity;
-import com.loomlogic.leads.entity.LeadRole;
 import com.loomlogic.leads.entity.LeadSourceItem;
-import com.loomlogic.utils.LeadPreferencesUtils;
 import com.loomlogic.utils.ViewUtils;
 import com.loomlogic.view.LLEditText;
 
@@ -93,6 +92,7 @@ public class CreateLeadActivity extends BaseActivity implements View.OnClickList
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
+                    setRightMarginToAddressContainerView(addressContainer, 0);
                     collapse(addressContainer);
                     sellerRole.setChecked(false);
                     changeRadioBtnTextColor(buyerRole, colorGrey, colorBlack);
@@ -106,6 +106,7 @@ public class CreateLeadActivity extends BaseActivity implements View.OnClickList
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
+                    setRightMarginToAddressContainerView(addressContainer, (int)getResources().getDimension(R.dimen.margins15));
                     expand(addressContainer);
                     buyerRole.setChecked(false);
                     changeRadioBtnTextColor(sellerRole, colorGrey, colorBlack);
@@ -115,9 +116,18 @@ public class CreateLeadActivity extends BaseActivity implements View.OnClickList
             }
         });
 
-        if (LeadPreferencesUtils.getCurrentLeadRole() == LeadRole.SELLER) {
-            sellerRole.setChecked(true);
-        }
+        // if (LeadPreferencesUtils.getCurrentLeadRole() == LeadRole.SELLER) {
+        //      sellerRole.setChecked(true);
+        //  }
+    }
+
+    private void setRightMarginToAddressContainerView(View addressContainer, int margin) {
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+        );
+        params.setMargins(0, 0, 0, margin);
+        addressContainer.setLayoutParams(params);
     }
 
     private void openContactPickerIfNeed() {
@@ -205,16 +215,22 @@ public class CreateLeadActivity extends BaseActivity implements View.OnClickList
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_ok:
-                if (sourceSelected == null) {
-                    sourceEt.setError("");
-                    showErrorSnackBar(getString(R.string.create_new_lead_source_error));
-                } else {
+                if (validateFields()) {
                     ViewUtils.hideSoftKeyboard(getCurrentFocus());
 // TODO: 3/29/17  only if user PRo Agent
                     openCreateLeadDialog();
                 }
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public boolean validateFields() {
+        if (sourceSelected == null) {
+            sourceEt.setError("");
+            showErrorSnackBar(getString(R.string.create_new_lead_source_error));
+            return false;
+        }
+        return true;
     }
 
     private void openCreateLeadDialog() {

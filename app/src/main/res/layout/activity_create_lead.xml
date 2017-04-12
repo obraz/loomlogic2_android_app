@@ -16,6 +16,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:clipToPadding="false"
             android:orientation="vertical">
 
             <com.makeramen.roundedimageview.RoundedImageView xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -31,125 +32,134 @@
                 app:riv_oval="true"
                 tools:visibility="gone" />
 
-            <com.loomlogic.view.LLEditText
-                android:id="@+id/et_createLead_name"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/create_new_lead_hint_name"
-                android:inputType="textCapWords" />
-
-            <View style="@style/CreateLeadDivider" />
-
-            <com.loomlogic.view.LLEditText
-                android:id="@+id/et_createLead_additionalName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/create_new_lead_hint_additionalName"
-                android:inputType="textCapWords" />
-
-            <View style="@style/CreateLeadDivider" />
-
-            <com.loomlogic.view.LLEditText
-                android:id="@+id/et_createLead_phone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/create_new_lead_hint_phone"
-                android:inputType="phone"
-                android:maxLength="14" />
-
-            <View style="@style/CreateLeadDivider" />
-
-            <com.loomlogic.view.LLEditText
-                android:id="@+id/et_createLead_email"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/create_new_lead_hint_email"
-                android:imeOptions="actionDone"
-                android:inputType="textEmailAddress" />
-
-            <View style="@style/CreateLeadDivider" />
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_marginBottom="@dimen/margins15"
+                android:background="@color/white"
+                android:elevation="2dp"
+                android:orientation="vertical">
 
                 <com.loomlogic.view.LLEditText
-                    android:id="@+id/et_createLead_source"
+                    android:id="@+id/et_createLead_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/create_new_lead_hint_source" />
+                    android:hint="@string/create_new_lead_hint_name"
+                    android:inputType="textCapWords" />
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical|right"
-                    android:layout_marginRight="15dp"
-                    android:src="@drawable/ic_arrow_right" />
+                <View style="@style/CreateLeadDivider" />
 
-                <View
-                    android:id="@+id/view_createLead_source"
+                <com.loomlogic.view.LLEditText
+                    android:id="@+id/et_createLead_additionalName"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="?selectableItemBackground"
-                    android:clickable="true" />
-            </FrameLayout>
+                    android:layout_height="wrap_content"
+                    android:hint="@string/create_new_lead_hint_additionalName"
+                    android:inputType="textCapWords" />
 
-            <View style="@style/CreateLeadDivider" />
+                <View style="@style/CreateLeadDivider" />
 
-            <LinearLayout
-                android:id="@+id/ll_createLead_typeContainer"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@color/white"
-                android:orientation="horizontal">
+                <com.loomlogic.view.LLEditText
+                    android:id="@+id/et_createLead_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/create_new_lead_hint_phone"
+                    android:inputType="phone"
+                    android:maxLength="14" />
+
+                <View style="@style/CreateLeadDivider" />
+
+                <com.loomlogic.view.LLEditText
+                    android:id="@+id/et_createLead_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/create_new_lead_hint_email"
+                    android:imeOptions="actionDone"
+                    android:inputType="textEmailAddress" />
+
+                <View style="@style/CreateLeadDivider" />
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.loomlogic.view.LLEditText
+                        android:id="@+id/et_createLead_source"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/create_new_lead_hint_source" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical|right"
+                        android:layout_marginRight="15dp"
+                        android:src="@drawable/ic_arrow_right" />
+
+                    <View
+                        android:id="@+id/view_createLead_source"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="?selectableItemBackground"
+                        android:clickable="true" />
+                </FrameLayout>
+
+                <View style="@style/CreateLeadDivider" />
 
                 <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center">
+                    android:id="@+id/ll_createLead_typeContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@color/white"
+                    android:orientation="horizontal">
 
-                    <RadioButton
-                        android:id="@+id/rb_createLead_buyer"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:button="@drawable/radio_btn"
-                        android:checked="true"
-                        android:paddingLeft="10dp"
-                        android:text="@string/buyer"
-                        android:textColor="@color/lead_create_new_black_text_color"
-                        android:textSize="14sp" />
+                        android:layout_weight="1"
+                        android:gravity="center">
+
+                        <RadioButton
+                            android:id="@+id/rb_createLead_buyer"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:button="@drawable/radio_btn"
+                            android:checked="true"
+                            android:paddingLeft="10dp"
+                            android:text="@string/buyer"
+                            android:textColor="@color/lead_create_new_black_text_color"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center">
+
+                        <RadioButton
+                            android:id="@+id/rb_createLead_seller"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:button="@drawable/radio_btn"
+                            android:checked="false"
+                            android:paddingLeft="10dp"
+                            android:text="@string/seller"
+                            android:textColor="@color/lead_create_new_grey_text_color"
+                            android:textSize="14sp" />
+                    </LinearLayout>
                 </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center">
-
-                    <RadioButton
-                        android:id="@+id/rb_createLead_seller"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:button="@drawable/radio_btn"
-                        android:checked="false"
-                        android:paddingLeft="10dp"
-                        android:text="@string/seller"
-                        android:textColor="@color/lead_create_new_grey_text_color"
-                        android:textSize="14sp" />
-                </LinearLayout>
+                <View style="@style/CreateLeadDivider" />
             </LinearLayout>
-
-            <View
-                style="@style/CreateLeadDivider"
-                android:layout_marginBottom="15dp" />
 
             <LinearLayout
                 android:id="@+id/ll_createLead_addressContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margins15"
+                android:background="@color/main_bg_color"
+                android:elevation="2dp"
                 android:orientation="vertical"
-                android:paddingBottom="15dp"
                 android:visibility="gone"
                 tools:visibility="visible">
 
@@ -228,29 +238,36 @@
                 <View style="@style/CreateLeadDivider" />
             </LinearLayout>
 
-            <com.loomlogic.view.LLEditText
-                android:id="@+id/et_createLead_note"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/create_new_lead_hint_note"
-                android:inputType="textMultiLine" />
-
-            <View style="@style/CreateLeadDivider" />
-
-            <Switch
-                android:layout_width="match_parent"
-                android:layout_height="55dp"
+                android:layout_marginBottom="30dp"
                 android:background="@color/white"
-                android:checked="true"
-                android:paddingLeft="15dp"
-                android:paddingRight="20dp"
-                android:text="@string/create_new_lead_enableDripCompaigns"
-                android:textColor="#28323C"
-                android:textSize="14sp" />
+                android:elevation="2dp"
+                android:orientation="vertical">
 
-            <View
-                style="@style/CreateLeadDivider"
-                android:layout_marginBottom="30dp" />
+                <com.loomlogic.view.LLEditText
+                    android:id="@+id/et_createLead_note"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/create_new_lead_hint_note"
+                    android:inputType="textMultiLine" />
+
+                <View style="@style/CreateLeadDivider" />
+
+                <Switch
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:background="@color/white"
+                    android:checked="true"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="20dp"
+                    android:text="@string/create_new_lead_enableDripCompaigns"
+                    android:textColor="#28323C"
+                    android:textSize="14sp" />
+
+                <View style="@style/CreateLeadDivider" />
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
