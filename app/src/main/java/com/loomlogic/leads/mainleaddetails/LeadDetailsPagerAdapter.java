@@ -1,4 +1,4 @@
-package com.loomlogic.leads.base;
+package com.loomlogic.leads.mainleaddetails;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

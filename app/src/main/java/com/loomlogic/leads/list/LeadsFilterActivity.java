@@ -1,4 +1,4 @@
-package com.loomlogic.leads.base;
+package com.loomlogic.leads.list;
 
 import android.content.Context;
 import android.content.Intent;

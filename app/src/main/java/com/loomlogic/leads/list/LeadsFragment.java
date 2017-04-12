@@ -1,4 +1,4 @@
-package com.loomlogic.leads.base;
+package com.loomlogic.leads.list;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -23,6 +23,7 @@ import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
 import com.loomlogic.R;
 import com.loomlogic.base.MessageEvent;
 import com.loomlogic.home.BaseHomeFragment;
+import com.loomlogic.leads.mainleaddetails.LeadDetailsMainFragment;
 import com.loomlogic.leads.entity.Gender;
 import com.loomlogic.leads.entity.LeadItem;
 import com.loomlogic.leads.menu.LeadMenuItem;

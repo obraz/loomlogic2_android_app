@@ -6,13 +6,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.util.Pair;
-import android.support.v4.view.ViewCompat;
-import android.support.v4.view.ViewPropertyAnimatorCompat;
-import android.view.View;
 
 import com.loomlogic.R;
 import com.loomlogic.base.MessageEvent;
-import com.loomlogic.leads.base.LeadsFragment;
+import com.loomlogic.leads.list.LeadsFragment;
 import com.loomlogic.multibackstack.BackStackActivity;
 import com.loomlogic.view.navigationbar.BottomNavigationBar;
 

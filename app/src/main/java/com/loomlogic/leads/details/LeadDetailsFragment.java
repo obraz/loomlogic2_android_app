@@ -23,7 +23,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import static com.loomlogic.leads.base.LeadDetailsMainFragment.KEY_LEAD_ITEM;
+import static com.loomlogic.leads.mainleaddetails.LeadDetailsMainFragment.KEY_LEAD_ITEM;
 
 /**
  * Created by alex on 3/2/17.
