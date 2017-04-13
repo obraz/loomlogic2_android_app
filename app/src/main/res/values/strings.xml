@@ -149,6 +149,21 @@
     <string name="lead_settings_contract">Contract Details</string>
     <string name="lead_edit_title">Edit Contact</string>
 
+    <!-- Lead Edit Contract -->
+    <string name="lead_edit_contract_title">Edit Contract Details</string>
+    <string name="lead_edit_contract_address_title">Property Address</string>
+    <string name="lead_edit_contract_hint_address">Address</string>
+    <string name="lead_edit_contract_hint_unit">Unit #</string>
+    <string name="lead_edit_contract_hint_state">State</string>
+    <string name="lead_edit_contract_hint_city">City</string>
+    <string name="lead_edit_contract_hint_zip">Zip</string>
+    <string name="lead_edit_contract_details_title">Contract Details</string>
+    <string name="lead_edit_contract_hint_price">Purchase Price</string>
+    <string name="lead_edit_contract_hint_commission">Commission</string>
+    <string name="lead_edit_contract_hint_gross">Gross</string>
+    <string name="lead_edit_contract_hint_financing_type">Financing Type</string>
+    <string name="financing_types_list_title">Financing Type</string>
+
     <!-- Leads Create New -->
     <string name="create_new_lead_title">Add Contact</string>
     <string name="create_new_lead_hint_name">Name</string>

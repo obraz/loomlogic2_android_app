@@ -3,20 +3,20 @@
     android:id="@+id/ti_textInput"
     android:layout_width="match_parent"
     android:layout_height="55dp"
-    android:minHeight="55dp"
     android:background="@color/white"
+    android:minHeight="55dp"
     android:paddingTop="8dp"
     android:textColorHint="#798591"
     android:theme="@style/LLTextInputLabel">
 
-    <android.support.design.widget.TextInputEditText
+    <com.loomlogic.view.LLEditText
         android:id="@+id/et_editText"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
         android:paddingBottom="10dp"
         android:paddingLeft="20dp"
-        android:paddingRight="15dp"
+        android:paddingRight="20dp"
         android:textColor="#28323C"
         android:textSize="15sp" />
 

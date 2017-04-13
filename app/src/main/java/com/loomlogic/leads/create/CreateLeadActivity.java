@@ -21,8 +21,9 @@ import com.google.gson.Gson;
 import com.loomlogic.R;
 import com.loomlogic.base.BaseActivity;
 import com.loomlogic.leads.entity.LeadSourceItem;
+import com.loomlogic.leads.entity.State;
 import com.loomlogic.utils.ViewUtils;
-import com.loomlogic.view.LLEditText;
+import com.loomlogic.view.LLEditTextWithHint;
 
 import static com.loomlogic.R.id.rb_createLead_buyer;
 import static com.loomlogic.R.id.rb_createLead_seller;
@@ -42,7 +43,7 @@ public class CreateLeadActivity extends BaseActivity implements View.OnClickList
     private static final int RESULT_PICK_SOURCE = 124;
     private static final int RESULT_PICK_STATE = 125;
 
-    private LLEditText nameEt, phoneEt, emailEt, sourceEt, stateEt;
+    private LLEditTextWithHint nameEt, phoneEt, emailEt, sourceEt, stateEt;
     private LeadSourceItem sourceSelected;
     private State stateSelected;
 
@@ -57,21 +58,28 @@ public class CreateLeadActivity extends BaseActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_lead);
         setTitle(R.string.create_new_lead_title);
-        getToolbar().setNavigationIcon(R.drawable.ic_back);
 
         initViews();
 
         openContactPickerIfNeed();
     }
 
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        if (getToolbar() != null) {
+            getToolbar().setNavigationIcon(R.drawable.ic_back);
+        }
+    }
+
     private void initViews() {
         initRoleViews();
 
-        nameEt = (LLEditText) findViewById(R.id.et_createLead_name);
-        phoneEt = (LLEditText) findViewById(R.id.et_createLead_phone);
-        emailEt = (LLEditText) findViewById(R.id.et_createLead_email);
-        sourceEt = ((LLEditText) findViewById(R.id.et_createLead_source));
-        stateEt = ((LLEditText) findViewById(R.id.et_createLead_state));
+        nameEt = (LLEditTextWithHint) findViewById(R.id.et_createLead_name);
+        phoneEt = (LLEditTextWithHint) findViewById(R.id.et_createLead_phone);
+        emailEt = (LLEditTextWithHint) findViewById(R.id.et_createLead_email);
+        sourceEt = ((LLEditTextWithHint) findViewById(R.id.et_createLead_source));
+        stateEt = ((LLEditTextWithHint) findViewById(R.id.et_createLead_state));
 
         findViewById(R.id.view_createLead_source).setOnClickListener(this);
         findViewById(R.id.view_createLead_state).setOnClickListener(this);
@@ -106,7 +114,7 @@ public class CreateLeadActivity extends BaseActivity implements View.OnClickList
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    setRightMarginToAddressContainerView(addressContainer, (int)getResources().getDimension(R.dimen.margins15));
+                    setRightMarginToAddressContainerView(addressContainer, (int) getResources().getDimension(R.dimen.margins15));
                     expand(addressContainer);
                     buyerRole.setChecked(false);
                     changeRadioBtnTextColor(sellerRole, colorGrey, colorBlack);

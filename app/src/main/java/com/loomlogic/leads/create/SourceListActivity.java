@@ -34,9 +34,16 @@ public class SourceListActivity extends BaseActivity implements SourcesListAdapt
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_lead_sources);
         setTitle(R.string.create_new_lead_source_title);
-        getToolbar().setNavigationIcon(R.drawable.ic_back);
 
         initViews();
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        if (getToolbar() != null) {
+            getToolbar().setNavigationIcon(R.drawable.ic_back);
+        }
     }
 
     private void initViews() {

@@ -31,7 +31,7 @@
         <item name="android:textSize">18sp</item>
     </style>
 
-    <style name="CreateLeadDivider">
+    <style name="MainLeadDivider">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">1dp</item>
         <item name="android:background">#D7DDE4</item>
@@ -81,5 +81,9 @@
         <item name="colorAccent">#798591</item>
         <item name="colorControlNormal">#D7DDE4</item>
         <item name="colorControlActivated">#798591</item>
+    </style>
+
+    <style name="ColorSwitchStyle">
+        <item name="colorControlActivated">@color/colorAccent</item>
     </style>
 </resources>

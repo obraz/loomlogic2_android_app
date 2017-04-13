@@ -28,10 +28,12 @@
         <attr name="android:background" />
     </declare-styleable>
 
-    <declare-styleable name="LLEditText">
+    <declare-styleable name="LLEditTextWithHint">
         <attr name="android:hint" />
         <attr name="android:imeOptions"/>
         <attr name="android:inputType"/>
         <attr name="android:maxLength"/>
+        <attr name="android:drawableRight"/>
+        <attr name="android:enabled"/>
     </declare-styleable>
 </resources>

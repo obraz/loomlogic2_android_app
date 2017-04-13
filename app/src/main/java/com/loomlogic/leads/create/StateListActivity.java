@@ -14,6 +14,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.loomlogic.R;
 import com.loomlogic.base.BaseActivity;
+import com.loomlogic.leads.entity.State;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -36,9 +37,16 @@ public class StateListActivity extends BaseActivity implements StatesListAdapter
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_lead_states);
         setTitle(R.string.create_new_lead_state_title);
-        getToolbar().setNavigationIcon(R.drawable.ic_back);
 
         initViews();
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        if (getToolbar() != null) {
+            getToolbar().setNavigationIcon(R.drawable.ic_back);
+        }
     }
 
     private void initViews() {

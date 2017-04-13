@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/toolbar" />
+    <include layout="@layout/toolbar_light" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -40,25 +40,25 @@
                 android:elevation="2dp"
                 android:orientation="vertical">
 
-                <com.loomlogic.view.LLEditText
+                <com.loomlogic.view.LLEditTextWithHint
                     android:id="@+id/et_createLead_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/create_new_lead_hint_name"
                     android:inputType="textCapWords" />
 
-                <View style="@style/CreateLeadDivider" />
+                <View style="@style/MainLeadDivider" />
 
-                <com.loomlogic.view.LLEditText
+                <com.loomlogic.view.LLEditTextWithHint
                     android:id="@+id/et_createLead_additionalName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/create_new_lead_hint_additionalName"
                     android:inputType="textCapWords" />
 
-                <View style="@style/CreateLeadDivider" />
+                <View style="@style/MainLeadDivider" />
 
-                <com.loomlogic.view.LLEditText
+                <com.loomlogic.view.LLEditTextWithHint
                     android:id="@+id/et_createLead_phone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -66,9 +66,9 @@
                     android:inputType="phone"
                     android:maxLength="14" />
 
-                <View style="@style/CreateLeadDivider" />
+                <View style="@style/MainLeadDivider" />
 
-                <com.loomlogic.view.LLEditText
+                <com.loomlogic.view.LLEditTextWithHint
                     android:id="@+id/et_createLead_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -76,24 +76,19 @@
                     android:imeOptions="actionDone"
                     android:inputType="textEmailAddress" />
 
-                <View style="@style/CreateLeadDivider" />
+                <View style="@style/MainLeadDivider" />
 
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <com.loomlogic.view.LLEditText
+                    <com.loomlogic.view.LLEditTextWithHint
                         android:id="@+id/et_createLead_source"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:drawableRight="@drawable/ic_arrow_right"
+                        android:enabled="false"
                         android:hint="@string/create_new_lead_hint_source" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical|right"
-                        android:layout_marginRight="15dp"
-                        android:src="@drawable/ic_arrow_right" />
 
                     <View
                         android:id="@+id/view_createLead_source"
@@ -103,7 +98,7 @@
                         android:clickable="true" />
                 </FrameLayout>
 
-                <View style="@style/CreateLeadDivider" />
+                <View style="@style/MainLeadDivider" />
 
                 <LinearLayout
                     android:id="@+id/ll_createLead_typeContainer"
@@ -149,7 +144,7 @@
                     </LinearLayout>
                 </LinearLayout>
 
-                <View style="@style/CreateLeadDivider" />
+                <View style="@style/MainLeadDivider" />
             </LinearLayout>
 
             <LinearLayout
@@ -163,40 +158,35 @@
                 android:visibility="gone"
                 tools:visibility="visible">
 
-                <com.loomlogic.view.LLEditText
+                <com.loomlogic.view.LLEditTextWithHint
                     android:id="@+id/et_createLead_address"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/create_new_lead_hint_address"
                     android:inputType="textCapWords" />
 
-                <View style="@style/CreateLeadDivider" />
+                <View style="@style/MainLeadDivider" />
 
-                <com.loomlogic.view.LLEditText
+                <com.loomlogic.view.LLEditTextWithHint
                     android:id="@+id/et_createLead_unit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/create_new_lead_hint_unit"
                     android:inputType="text" />
 
-                <View style="@style/CreateLeadDivider" />
+                <View style="@style/MainLeadDivider" />
 
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="55dp">
 
-                    <com.loomlogic.view.LLEditText
+                    <com.loomlogic.view.LLEditTextWithHint
                         android:id="@+id/et_createLead_state"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:drawableRight="@drawable/ic_arrow_right"
+                        android:enabled="false"
                         android:hint="@string/create_new_lead_hint_state" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical|right"
-                        android:layout_marginRight="15dp"
-                        android:src="@drawable/ic_arrow_right" />
 
                     <View
                         android:id="@+id/view_createLead_state"
@@ -206,14 +196,14 @@
                         android:clickable="true" />
                 </FrameLayout>
 
-                <View style="@style/CreateLeadDivider" />
+                <View style="@style/MainLeadDivider" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <com.loomlogic.view.LLEditText
+                    <com.loomlogic.view.LLEditTextWithHint
                         android:id="@+id/et_createLead_city"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -222,11 +212,11 @@
                         android:inputType="textCapWords" />
 
                     <View
-                        style="@style/CreateLeadDivider"
+                        style="@style/MainLeadDivider"
                         android:layout_width="1dp"
                         android:layout_height="match_parent" />
 
-                    <com.loomlogic.view.LLEditText
+                    <com.loomlogic.view.LLEditTextWithHint
                         android:id="@+id/et_createLead_zip"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -235,7 +225,7 @@
                         android:inputType="number" />
                 </LinearLayout>
 
-                <View style="@style/CreateLeadDivider" />
+                <View style="@style/MainLeadDivider" />
             </LinearLayout>
 
             <LinearLayout
@@ -246,14 +236,14 @@
                 android:elevation="2dp"
                 android:orientation="vertical">
 
-                <com.loomlogic.view.LLEditText
+                <com.loomlogic.view.LLEditTextWithHint
                     android:id="@+id/et_createLead_note"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/create_new_lead_hint_note"
                     android:inputType="textMultiLine" />
 
-                <View style="@style/CreateLeadDivider" />
+                <View style="@style/MainLeadDivider" />
 
                 <Switch
                     android:layout_width="match_parent"
@@ -264,9 +254,10 @@
                     android:paddingRight="20dp"
                     android:text="@string/create_new_lead_enableDripCompaigns"
                     android:textColor="#28323C"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:theme="@style/ColorSwitchStyle"/>
 
-                <View style="@style/CreateLeadDivider" />
+                <View style="@style/MainLeadDivider" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

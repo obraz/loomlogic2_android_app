@@ -42,7 +42,7 @@ public class LeadSettingsActivity extends BaseActivity {
         findViewById(R.id.view_leadSettingsContract).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                startActivity(EditLeadContractActivity.getEditLeadContractActivityIntent(LeadSettingsActivity.this, null));
             }
         });
     }

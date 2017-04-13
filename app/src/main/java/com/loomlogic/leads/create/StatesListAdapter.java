@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.loomlogic.R;
+import com.loomlogic.leads.entity.State;
 
 import java.util.List;
 

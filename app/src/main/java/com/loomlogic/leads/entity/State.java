@@ -1,4 +1,4 @@
-package com.loomlogic.leads.create;
+package com.loomlogic.leads.entity;
 
 /**
  * Created by alex on 05.10.2016.
