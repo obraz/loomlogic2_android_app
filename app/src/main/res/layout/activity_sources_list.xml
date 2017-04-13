@@ -19,12 +19,12 @@
         android:layout_height="0dp"
         android:layout_weight="1" />
 
-    <android.support.design.widget.FloatingActionButton
+    <ImageButton
         android:id="@+id/fab_lead_source_new"
         android:layout_width="55dp"
         android:layout_height="55dp"
         android:layout_gravity="center_horizontal"
         android:layout_margin="15dp"
-        android:src="@drawable/ic_lead_addnew"
-        app:backgroundTint="@color/colorMainBuyer" />
+        android:background="@drawable/selector_blue_btn"
+        android:src="@drawable/ic_lead_addnew" />
 </LinearLayout>

@@ -32,7 +32,7 @@ public class SourceListActivity extends BaseActivity implements SourcesListAdapt
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_lead_sources);
+        setContentView(R.layout.activity_sources_list);
         setTitle(R.string.create_new_lead_source_title);
 
         initViews();

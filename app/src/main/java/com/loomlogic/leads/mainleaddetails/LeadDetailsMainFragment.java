@@ -21,6 +21,7 @@ import com.google.gson.Gson;
 import com.loomlogic.R;
 import com.loomlogic.home.BaseHomeFragment;
 import com.loomlogic.leads.entity.LeadItem;
+import com.loomlogic.leads.settings.LeadSettingsActivity;
 import com.loomlogic.utils.Utils;
 
 /**
@@ -160,7 +161,7 @@ public class LeadDetailsMainFragment extends BaseHomeFragment implements TabLayo
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_edit:
-                getContext().startActivity(LeadSettingsActivity.getLeadSettingsActivityIntent(getContext()));
+                getContext().startActivity(LeadSettingsActivity.getLeadSettingsActivityIntent(getContext(), leadItem));
                 break;
             default:
                 break;

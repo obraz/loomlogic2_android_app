@@ -1,4 +1,4 @@
-package com.loomlogic.leads.create;
+package com.loomlogic.leads.settings;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.loomlogic.R;
+import com.loomlogic.leads.create.CreateLeadActivity;
 import com.loomlogic.leads.entity.LeadItem;
 
 /**

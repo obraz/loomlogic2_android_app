@@ -1,4 +1,4 @@
-package com.loomlogic.leads.mainleaddetails;
+package com.loomlogic.leads.settings;
 
 import android.app.Activity;
 import android.content.Intent;

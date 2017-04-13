@@ -23,7 +23,7 @@ import static com.loomlogic.utils.AnimationUtils.expand;
  */
 
 public class LeadDetailsParticipantsView extends LinearLayout {
-    private LeadDetailsParticipantItemView currentParticipantView;
+    private LeadParticipantAvatarView currentParticipantView;
     private LeadParticipantItem currentParticipant;
     private TextView participantNameTv, participantRoleTv, participantPhoneTv, participantCompanyTv, participantEmailTv;
     private LinearLayout infoLayout;
@@ -97,8 +97,8 @@ public class LeadDetailsParticipantsView extends LinearLayout {
         for (int i = 0; i < participantsList.size(); i++) {
             final LeadParticipantItem participant = participantsList.get(i);
 
-            final LeadDetailsParticipantItemView participantAvatarView = new LeadDetailsParticipantItemView(getContext());
-            participantAvatarView.setParticipant(participant, new LeadDetailsParticipantItemView.OnParticipantItemClickListener() {
+            final LeadParticipantAvatarView participantAvatarView = new LeadParticipantAvatarView(getContext());
+            participantAvatarView.setParticipant(participant, new LeadParticipantAvatarView.OnParticipantItemClickListener() {
                 @Override
                 public void onParticipantItemClick(LeadParticipantItem participantItem) {
                     currentParticipant = participant;

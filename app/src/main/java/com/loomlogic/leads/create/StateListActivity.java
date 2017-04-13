@@ -35,7 +35,7 @@ public class StateListActivity extends BaseActivity implements StatesListAdapter
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_lead_states);
+        setContentView(R.layout.activity_states_list);
         setTitle(R.string.create_new_lead_state_title);
 
         initViews();
