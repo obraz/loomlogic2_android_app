@@ -149,6 +149,7 @@
     <string name="lead_settings_contract">Contract Details</string>
     <string name="lead_edit_title">Edit Contact</string>
     <string name="lead_edit_participants_title">Edit Participants</string>
+    <string name="lead_add_participant_title">Add Participant</string>
 
     <!-- Lead Edit Contract -->
     <string name="lead_edit_contract_title">Edit Contract Details</string>

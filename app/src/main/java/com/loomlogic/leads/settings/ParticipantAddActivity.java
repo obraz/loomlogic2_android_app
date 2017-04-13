@@ -34,7 +34,7 @@ public class ParticipantAddActivity extends BaseActivity implements Participants
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_participant_add);
-        setTitle(R.string.create_new_lead_state_title);
+        setTitle(R.string.lead_add_participant_title);
 
         initViews();
     }
