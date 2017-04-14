@@ -94,6 +94,28 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="adjustPan" />
+
+
+        <activity
+            android:name=".Test"
+            android:taskAffinity=""
+            android:documentLaunchMode="always"
+            android:autoRemoveFromRecents="true"
+            android:screenOrientation="sensorPortrait"
+            android:configChanges="orientation|screenSize"
+            android:parentActivityName=".home.HomeActivity">
+
+            <intent-filter>
+                <data
+                    android:host="resetpassword"
+                    android:scheme="loomlogic"/>
+
+                <action android:name="android.intent.action.VIEW"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
