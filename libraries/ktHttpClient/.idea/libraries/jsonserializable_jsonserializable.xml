@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="jsonserializable.jsonserializable">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../jsonserializable/build/libs/jsonserializable.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

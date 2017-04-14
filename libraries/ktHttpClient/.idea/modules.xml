@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/../../StyleCloud.iml" filepath="$PROJECT_DIR$/../../StyleCloud.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../app/app.iml" filepath="$PROJECT_DIR$/../../app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../datepicker/datepicker.iml" filepath="$PROJECT_DIR$/../datepicker/datepicker.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../jsonserializable/jsonserializable.iml" filepath="$PROJECT_DIR$/../jsonserializable/jsonserializable.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lshttpclient.iml" filepath="$PROJECT_DIR$/lshttpclient.iml" />
+    </modules>
+  </component>
+</project>
