@@ -159,6 +159,12 @@ public class CreateLeadActivity extends BaseActivity implements View.OnClickList
                     sourcePicked(data);
                     break;
             }
+        } else {
+            switch (requestCode) {
+                case RESULT_PICK_CONTACT:
+                    finish();
+                    break;
+            }
         }
     }
 
