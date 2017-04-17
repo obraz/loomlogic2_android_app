@@ -8,9 +8,9 @@ import com.google.gson.annotations.SerializedName;
 public class UserData extends TokenData {
 
     @SerializedName("id")
-    private String userId;
+    private int userId;
 
-    public String getUserId() {
+    public int getUserId() {
         return userId;
     }
 

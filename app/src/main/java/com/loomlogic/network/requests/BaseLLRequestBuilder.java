@@ -10,11 +10,9 @@ import com.loomlogic.network.responses.ApiError;
 
 import java.lang.reflect.Type;
 
-/**
- * Created on 30.09.2016.
- */
-public class BaseStylesRequestBuilder extends BaseRequestBuilder {
-    public BaseStylesRequestBuilder() {
+
+public class BaseLLRequestBuilder extends BaseRequestBuilder {
+    public BaseLLRequestBuilder() {
         this.setRequestMethod(BaseRequest.RequestMethod.POST);
         this.setResponseFormat(BaseRequest.ResponseFormat.JSON);
         this.setRequestFormat(BaseRequest.RequestFormat.JSON);

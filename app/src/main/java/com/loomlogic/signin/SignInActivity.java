@@ -3,17 +3,24 @@ package com.loomlogic.signin;
 import android.animation.LayoutTransition;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 
+import com.kt.http.base.ResponseData;
 import com.loomlogic.BuildConfig;
 import com.loomlogic.R;
 import com.loomlogic.home.HomeActivity;
+import com.loomlogic.network.Model;
+import com.loomlogic.network.managers.BaseItemManager;
+import com.loomlogic.network.managers.RegisterManager;
+import com.loomlogic.network.responses.UserData;
 import com.loomlogic.signin.signup.SignUpActivity;
 
 import static com.loomlogic.R.id.btn_signIn;
@@ -26,9 +33,25 @@ public class SignInActivity extends BaseSignInActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
         initView();
-        if (BuildConfig.FLAVOR.equals("loomlogicDebug"))
-            startActivity(new Intent(SignInActivity.this, HomeActivity.class));
-       // startActivity(CreateLeadActivity.getCreateLeadActivityIntent(this, false));
+
+
+        RegisterManager registerManager = Model.instance().getRegisterManager();
+        registerManager.addDataFetchCompleteListener(new BaseItemManager.OnDataFetchCompleteListener<UserData, String>() {
+            @Override
+            public void onDataFetchComplete(UserData result, ResponseData data, String requestTag) {
+
+            }
+
+            @Override
+            public void onDataFetchFailed(UserData result, ResponseData data, String requestTag) {
+
+            }
+        });
+     //   registerManager.fetchData(null);
+         if (BuildConfig.FLAVOR.equals("loomlogicDebug")) {
+             startActivity(new Intent(SignInActivity.this, HomeActivity.class));
+             // startActivity(CreateLeadActivity.getCreateLeadActivityIntent(this, false));
+         }
     }
 
     private void initView() {
@@ -51,6 +74,21 @@ public class SignInActivity extends BaseSignInActivity implements View.OnClickLi
         final EditText signInPasswordEt = (EditText) findViewById(R.id.et_signIn_password);
         setUpEditTextLeftIcon(signInPasswordEt);
 
+        final ImageButton passwordVisibilityView = (ImageButton) findViewById(R.id.ib_passswordVisibility);
+        passwordVisibilityView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (signInPasswordEt.getInputType() == (InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD)) {
+                    signInPasswordEt.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                    passwordVisibilityView.setImageResource(R.drawable.ic_password_show);
+                } else {
+                    signInPasswordEt.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                    passwordVisibilityView.setImageResource(R.drawable.ic_password_hide);
+                }
+                signInPasswordEt.setSelection(signInPasswordEt.getText().length());
+            }
+        });
+
         final Button signInBtn = (Button) findViewById(btn_signIn);
         signInBtn.setOnClickListener(this);
 
@@ -66,6 +104,7 @@ public class SignInActivity extends BaseSignInActivity implements View.OnClickLi
                 signInContainerView.setVisibility(View.VISIBLE);
                 animateViewFadeIn(signInEmailEt, 0);
                 animateViewFadeIn(signInPasswordEt, 500);
+                animateViewFadeIn(passwordVisibilityView, 500);
                 animateViewFadeIn(signInBtn, 1000);
                 animateViewFadeIn(createAccountView, 2000);
                 animateViewFadeIn(forgotPasswordView, 2000);
