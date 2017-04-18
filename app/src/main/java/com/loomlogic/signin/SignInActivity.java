@@ -47,7 +47,7 @@ public class SignInActivity extends BaseSignInActivity implements View.OnClickLi
 
             }
         });
-     //   registerManager.fetchData(null);
+        registerManager.fetchData(null);
          if (BuildConfig.FLAVOR.equals("loomlogicDebug")) {
              startActivity(new Intent(SignInActivity.this, HomeActivity.class));
              // startActivity(CreateLeadActivity.getCreateLeadActivityIntent(this, false));

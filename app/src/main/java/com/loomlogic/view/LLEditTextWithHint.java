@@ -12,6 +12,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.loomlogic.R;
@@ -110,6 +111,10 @@ public class LLEditTextWithHint extends LinearLayout {
         editText.setText(text);
     }
 
+    public void setMaxSelection() {
+        editText.setSelection(editText.length());
+    }
+
     public void setSelection(int length) {
         editText.setSelection(length);
     }
@@ -118,8 +123,19 @@ public class LLEditTextWithHint extends LinearLayout {
         editText.addTextChangedListener(textWatcher);
     }
 
+    public void removeTextChangedListener(TextWatcher textWatcher) {
+        editText.removeTextChangedListener(textWatcher);
+    }
+
+    public EditText getEditText() {
+        return editText;
+    }
+
     public void setError(String error) {
         editText.setError(error);
     }
 
+    public String getText() {
+        return editText.getText().toString();
+    }
 }

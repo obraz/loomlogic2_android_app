@@ -129,7 +129,7 @@
                     android:layout_height="wrap_content"
                     android:drawableRight="@drawable/ic_contract_dollar"
                     android:hint="@string/lead_edit_contract_hint_price"
-                    android:inputType="numberDecimal" />
+                    android:inputType="number" />
 
                 <View style="@style/MainLeadDivider" />
 
@@ -150,7 +150,7 @@
                     android:drawableRight="@drawable/ic_contract_dollar"
                     android:hint="@string/lead_edit_contract_hint_gross"
                     android:imeOptions="actionDone"
-                    android:inputType="numberDecimal" />
+                    android:inputType="number" />
 
                 <View style="@style/MainLeadDivider" />
 
