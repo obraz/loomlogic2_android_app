@@ -82,7 +82,13 @@ public class ViewUtils {
 
         View snackbarView = snackbar.getView();
         snackbarView.setBackgroundColor(ContextCompat.getColor(activity, R.color.alertMessageBgColor));
-
+        snackbarView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                snackbar.dismiss();
+                return false;
+            }
+        });
         snackbar.show();
 
         return snackbar;
