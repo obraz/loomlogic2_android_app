@@ -2,7 +2,11 @@ package com.loomlogic.signin;
 
 import android.animation.LayoutTransition;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.text.InputType;
 import android.view.View;
 import android.view.WindowManager;
@@ -18,15 +22,20 @@ import com.loomlogic.BuildConfig;
 import com.loomlogic.R;
 import com.loomlogic.home.HomeActivity;
 import com.loomlogic.network.Model;
+import com.loomlogic.network.RetryRequestCallback;
 import com.loomlogic.network.managers.BaseItemManager;
 import com.loomlogic.network.managers.RegisterManager;
+import com.loomlogic.network.responses.ResponseDataWrapper;
 import com.loomlogic.network.responses.UserData;
 import com.loomlogic.signin.signup.SignUpActivity;
+import com.loomlogic.utils.Utils;
 
 import static com.loomlogic.R.id.btn_signIn;
 
 
-public class SignInActivity extends BaseSignInActivity implements View.OnClickListener {
+public class SignInActivity extends BaseSignInActivity implements View.OnClickListener, RetryRequestCallback {
+    private EditText signInEmailEt;
+    private EditText signInPasswordEt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,11 +56,11 @@ public class SignInActivity extends BaseSignInActivity implements View.OnClickLi
 
             }
         });
-        registerManager.fetchData(null);
-         if (BuildConfig.FLAVOR.equals("loomlogicDebug")) {
-             startActivity(new Intent(SignInActivity.this, HomeActivity.class));
-             // startActivity(CreateLeadActivity.getCreateLeadActivityIntent(this, false));
-         }
+        //   registerManager.fetchData(null);
+        if (BuildConfig.FLAVOR.equals("loomlogicDebug")) {
+            //  startActivity(new Intent(SignInActivity.this, HomeActivity.class));
+            // startActivity(CreateLeadActivity.getCreateLeadActivityIntent(this, false));
+        }
     }
 
     private void initView() {
@@ -61,17 +70,18 @@ public class SignInActivity extends BaseSignInActivity implements View.OnClickLi
         final View logoView = findViewById(R.id.iv_logo);
 
         final View createAccountView = findViewById(R.id.btn_createAccount);
-        createAccountView.setOnClickListener(this);
+        createAccountView.setVisibility(View.INVISIBLE);
+        // createAccountView.setOnClickListener(this);
 
         final View forgotPasswordView = findViewById(R.id.btn_forgotPassword);
         forgotPasswordView.setOnClickListener(this);
 
         final View signInContainerView = findViewById(R.id.ll_signIn_container);
 
-        final EditText signInEmailEt = (EditText) findViewById(R.id.et_signIn_email);
+        signInEmailEt = (EditText) findViewById(R.id.et_signIn_email);
         setUpEditTextLeftIcon(signInEmailEt);
 
-        final EditText signInPasswordEt = (EditText) findViewById(R.id.et_signIn_password);
+        signInPasswordEt = (EditText) findViewById(R.id.et_signIn_password);
         setUpEditTextLeftIcon(signInPasswordEt);
 
         final ImageButton passwordVisibilityView = (ImageButton) findViewById(R.id.ib_passswordVisibility);
@@ -106,7 +116,7 @@ public class SignInActivity extends BaseSignInActivity implements View.OnClickLi
                 animateViewFadeIn(signInPasswordEt, 500);
                 animateViewFadeIn(passwordVisibilityView, 500);
                 animateViewFadeIn(signInBtn, 1000);
-                animateViewFadeIn(createAccountView, 2000);
+                // animateViewFadeIn(createAccountView, 2000);
                 animateViewFadeIn(forgotPasswordView, 2000);
                 showControls();
             }
@@ -117,6 +127,10 @@ public class SignInActivity extends BaseSignInActivity implements View.OnClickLi
             }
         });
         logoView.startAnimation(splashAnim);
+
+
+        signInEmailEt.setText("loomlogic.agent@gmail.com");
+        signInPasswordEt.setText("54321");
     }
 
     @Override
@@ -146,8 +160,76 @@ public class SignInActivity extends BaseSignInActivity implements View.OnClickLi
                 startActivity(new Intent(SignInActivity.this, ForgotPasswordActivity.class));
                 break;
             case R.id.btn_signIn:
-                startActivity(new Intent(SignInActivity.this, HomeActivity.class));
+                doLogin();
                 break;
         }
+    }
+
+    private void doLogin() {
+        if (!isOnline()) {
+            return;
+        }
+        if (!validateFields()) {
+            return;
+        }
+        final String email = signInEmailEt.getText().toString();
+        final String password = signInPasswordEt.getText().toString();
+
+        showProgressBar();
+        new AsyncTask<Void, Void, ResponseData>() {
+
+            @Override
+            protected ResponseData doInBackground(Void... params) {
+                ResponseData response = Model.instance().performLogin(email, password);
+                return response;
+            }
+
+            @Override
+            protected void onPostExecute(ResponseData response) {
+                super.onPostExecute(response);
+                hideProgressBar();
+                if (response != null && response.getData() != null) {
+                    ResponseDataWrapper dataWrapper = (ResponseDataWrapper) response.getData();
+                    if (dataWrapper.success) {
+                        startActivity(new Intent(SignInActivity.this, HomeActivity.class));
+                    } else {
+                        showResponseError(response);
+                    }
+                } else {
+                    showResponseError(response);
+                }
+            }
+        }.execute();
+    }
+
+    private boolean validateFields() {
+        final String email = signInEmailEt.getText().toString();
+        if (!Utils.isEmailValid(email)) {
+            showValidationError(signInEmailEt, getString(R.string.email_error));
+            return false;
+        }
+
+        final String password = signInPasswordEt.getText().toString();
+        if (password.length() < 3) {
+            showValidationError(signInPasswordEt, getString(R.string.password_error));
+            return false;
+        }
+
+        return true;
+    }
+
+    private void showValidationError(EditText editText, String error) {
+        editText.setTag("error");
+
+        final Drawable icon = editText.getCompoundDrawables()[0];
+        final int colorError = ContextCompat.getColor(this, R.color.errorIconColor);
+        DrawableCompat.setTint(icon, colorError);
+
+        showErrorSnackBar(error);
+    }
+
+    @Override
+    public void onRetry() {
+        doLogin();
     }
 }

@@ -48,9 +48,11 @@ public class BaseSignInActivity extends BaseActivity {
         view.startAnimation(fadeOut);
     }
 
-    public void setUpEditTextLeftIcon(EditText editText) {
+    public void setUpEditTextLeftIcon(final EditText editText) {
+        editText.setTag("text");
         final int colorWhite = Color.WHITE;
         final int colorWhiteTransparent = ContextCompat.getColor(this, R.color.white_transparent_50);
+        final int colorError = ContextCompat.getColor(this, R.color.errorIconColor);
         final Drawable icEditText = editText.getCompoundDrawables()[0];
         DrawableCompat.setTint(icEditText, colorWhiteTransparent);
         editText.addTextChangedListener(new TextWatcher() {
@@ -61,12 +63,17 @@ public class BaseSignInActivity extends BaseActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (editText.getTag().equals("error")) {
+                    changeIconColor(icEditText, colorError, colorWhite);
+                }
                 if (s.length() == 1 && start == 0 && before == 0 && count == 1) {
                     changeIconColor(icEditText, colorWhiteTransparent, colorWhite);
                 }
                 if (s.length() == 0) {
                     changeIconColor(icEditText, colorWhite, colorWhiteTransparent);
+
                 }
+                editText.setTag("text");
             }
 
             @Override
@@ -75,7 +82,7 @@ public class BaseSignInActivity extends BaseActivity {
         });
     }
 
-    private void changeIconColor(final Drawable icon, int colorFrom, int colorTo) {
+    public void changeIconColor(final Drawable icon, int colorFrom, int colorTo) {
         ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
         colorAnimation.setDuration(250);
         colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {

@@ -4,8 +4,8 @@
     <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
 
     <string name="submit">Submit</string>
-    <string name="general_error">Oops, something went wrong. Please try again later.</string>
-    <string name="internet_error">Please check your internet connection</string>
+    <string name="general_error">Something went wrong</string>
+    <string name="internet_error">You are currently ofline</string>
     <string name="Connect">Connect</string>
     <string name="agent">Agent</string>
     <string name="lender">Lender</string>
@@ -23,6 +23,7 @@
     <string name="copy_text">Copy to Clipboard</string>
     <string name="edit">Edit</string>
     <string name="save">Save</string>
+    <string name="retry">Retry</string>
 
     <!-- Sign In -->
     <string name="logIn">Log In</string>
@@ -30,6 +31,8 @@
     <string name="password">Password</string>
     <string name="createAccount">Create Account</string>
     <string name="forgotPasword">Forgot password</string>
+    <string name="email_error">Incorrect Email</string>
+    <string name="password_error">Password is too short (minimum is 3 characters)</string>
 
     <!-- Forgot Password -->
     <string name="forgotPaswordTitle">FORGOT PASSWORD ?</string>

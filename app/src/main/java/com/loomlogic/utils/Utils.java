@@ -19,6 +19,10 @@ import java.io.InputStreamReader;
  */
 
 public class Utils {
+    public static boolean isEmailValid(String email) {
+        return email != null && Patterns.EMAIL_ADDRESS.matcher(email).matches();
+    }
+
     public static boolean isUrlValid(String url) {
         return url != null && Patterns.WEB_URL.matcher(url).matches();
     }

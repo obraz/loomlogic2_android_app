@@ -12,7 +12,9 @@ import android.view.View;
 import android.widget.RelativeLayout;
 
 import com.loomlogic.R;
+import com.loomlogic.base.BaseActivity;
 import com.loomlogic.home.HomeActivity;
+import com.loomlogic.utils.IntentUtils;
 import com.loomlogic.utils.ViewUtils;
 
 
@@ -204,7 +206,7 @@ public class LeadDetailsActionButtonsView extends RelativeLayout implements View
                 onMsgClick();
                 break;
             case R.id.view_leadCall_system:
-                ((HomeActivity) getContext()).openDialIntent(phoneNumber);
+                IntentUtils.openDialIntent((BaseActivity) getContext(), phoneNumber);
                 break;
             case R.id.view_leadCall_twillio:
                 ((HomeActivity) getContext()).showErrorSnackBar("twillio");

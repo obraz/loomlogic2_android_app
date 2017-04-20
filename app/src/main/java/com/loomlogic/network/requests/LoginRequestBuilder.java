@@ -10,20 +10,16 @@ import java.util.Map;
 
 public class LoginRequestBuilder extends BaseLLRequestBuilder {
 
-    public LoginRequestBuilder() {
+    public LoginRequestBuilder(String email, String password) {
         Type dataType = new TypeToken<ResponseDataWrapper<UserData>>() {
         }.getType();
         this.setResponseClassSpecifier(dataType);
 
-        this.setLocalPath("customer" + "/login");
+        setLocalPath("auth/sign_in");
 
         Map<String, String> objectToPost = new HashMap<>();
-        objectToPost.put("password", "1762");
-        objectToPost.put("phone", "+155");
-        objectToPost.put("grant_type", "password");
-      //  objectToPost.put("client_id", ApplicationConfig.CLIENT_ID);
-      //  objectToPost.put("client_secret", ApplicationConfig.CLIENT_SECRET);
-
+        objectToPost.put("email", email);
+        objectToPost.put("password", password);
         this.setObjectToPost(objectToPost);
     }
 }

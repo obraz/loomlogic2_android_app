@@ -2,10 +2,8 @@ package com.loomlogic.network.responses;
 
 import com.google.gson.annotations.SerializedName;
 
-/**
- * Created on 29.09.2016.
- */
-public class UserData extends TokenData {
+
+public class UserData extends TokenData{
 
     @SerializedName("id")
     private int userId;

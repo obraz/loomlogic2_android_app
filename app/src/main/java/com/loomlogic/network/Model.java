@@ -76,8 +76,8 @@ public class Model {
     /**
      * NOTE: login is performed in synchroneus way so you must never call it from UI thread.
      */
-    public ResponseData performLogin() {
-        return this.loginManager.login(queue);
+    public ResponseData performLogin(String email, String password) {
+        return this.loginManager.login(email, password, queue);
     }
 
     public void performLogout() {
