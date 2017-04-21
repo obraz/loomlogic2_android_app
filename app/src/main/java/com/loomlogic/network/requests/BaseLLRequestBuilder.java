@@ -6,7 +6,7 @@ import com.google.gson.reflect.TypeToken;
 import com.kt.http.base.BaseRequest;
 import com.kt.http.base.BaseRequestBuilder;
 import com.loomlogic.network.ApplicationConfig;
-import com.loomlogic.network.responses.ApiError;
+import com.loomlogic.network.responses.errors.ApiError;
 
 import java.lang.reflect.Type;
 

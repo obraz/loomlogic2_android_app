@@ -11,7 +11,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -23,7 +22,6 @@ import com.kt.http.base.ResponseData;
 import com.loomlogic.R;
 import com.loomlogic.base.resultfix.ActivityResultFixActivity;
 import com.loomlogic.network.RetryRequestCallback;
-import com.loomlogic.network.responses.ResponseDataWrapper;
 import com.loomlogic.utils.IntentUtils;
 import com.loomlogic.utils.InternetConnectionManager;
 import com.loomlogic.utils.Utils;
@@ -69,9 +67,9 @@ public class BaseActivity extends ActivityResultFixActivity {
     @SuppressWarnings("unused")
     @Subscribe
     public void onEvent(ConnectivityChanged event) {
-        if (event.getConnectivityStatus() == ConnectivityStatus.MOBILE_CONNECTED) {
+        if (event.getConnectivityStatus() == ConnectivityStatus.MOBILE_CONNECTED || event.getConnectivityStatus() == ConnectivityStatus.WIFI_CONNECTED_HAS_INTERNET) {
             onConnect();
-        } else if (event.getConnectivityStatus() == ConnectivityStatus.OFFLINE) {
+        } else {
             onDisconnect();
         }
     }
@@ -90,11 +88,11 @@ public class BaseActivity extends ActivityResultFixActivity {
     protected void onResume() {
         super.onResume();
 
-        if (isOnline()) {
-            onConnect();
-        } else {
-            onDisconnect();
-        }
+//        if (isOnline()) {
+//            onConnect();
+//        } else {
+//            onDisconnect();
+//        }
     }
 
     @Override
@@ -213,13 +211,6 @@ public class BaseActivity extends ActivityResultFixActivity {
 //                Toast.makeText(this, R.string.response401, Toast.LENGTH_LONG).show();
 //                logout();
             } else {
-                if (data.getData() != null) {
-                    ResponseDataWrapper dataWrapper = (ResponseDataWrapper) data.getData();
-                    if (dataWrapper.alert != null && !TextUtils.isEmpty(dataWrapper.alert)) {
-                        showAlertSnackBar(dataWrapper.alert, callback);
-                        return;
-                    }
-                }
 //                if (data.getParsedErrorResponse() != null) {
 //                    ResponseData dataWrapper = (ResponseData) data.getParsedErrorResponse();
 //                    ApiError error = (ApiError) dataWrapper.getData();

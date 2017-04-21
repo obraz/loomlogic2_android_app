@@ -124,7 +124,7 @@ public class CreateLeadActivity extends BaseActivity implements View.OnClickList
             }
         });
 
-        // if (LeadPreferencesUtils.getCurrentLeadRole() == LeadRole.SELLER) {
+        // if (LeadPreferencesUtils.getCurrentLeadType() == LeadType.SELLER) {
         //      sellerRole.setChecked(true);
         //  }
     }

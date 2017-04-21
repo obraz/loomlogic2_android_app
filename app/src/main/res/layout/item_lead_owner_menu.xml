@@ -5,11 +5,11 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/tv_leadFilterName"
+        android:id="@+id/tv_leadOwner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/selectableItemBackground"
-        android:drawableLeft="@drawable/ic_lead_filter_my"
+        android:drawableLeft="@drawable/ic_lead_owner_my"
         android:drawablePadding="6dp"
         android:gravity="center_vertical"
         android:paddingBottom="12dp"

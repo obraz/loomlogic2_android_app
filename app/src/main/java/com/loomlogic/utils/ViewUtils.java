@@ -5,8 +5,10 @@ import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
@@ -14,11 +16,14 @@ import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.HorizontalScrollView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.androidadvance.topsnackbar.TSnackbar;
 import com.loomlogic.R;
+import com.loomlogic.base.LoomLogicApp;
 import com.loomlogic.network.RetryRequestCallback;
 
 /**
@@ -166,5 +171,35 @@ public class ViewUtils {
 
         });
         colorAnimation.start();
+    }
+
+    public static Runnable configTab(final TabLayout mTabLayout, final boolean shouldAnimate) {
+        return new Runnable() {
+            @Override
+            public void run() {
+                int widthDiff = Utils.getDisplayWidth(LoomLogicApp.getSharedContext()) - mTabLayout.getWidth();
+                if (widthDiff > 0) {
+                    int widthAdd = widthDiff / mTabLayout.getTabCount();
+                    for (int i = 0; i < mTabLayout.getTabCount(); i++) {
+                        if (i == mTabLayout.getTabCount() - 1) {
+                            widthAdd = widthAdd + widthDiff % mTabLayout.getTabCount();
+                        }
+                        View tabView = mTabLayout.getTabAt(i).getCustomView();
+                        tabView.setLayoutParams(new LinearLayout.LayoutParams(tabView.getWidth() + widthAdd, LinearLayout.LayoutParams.WRAP_CONTENT));
+                    }
+
+                } else if (shouldAnimate) {
+                    // todo do it only once
+                    mTabLayout.fullScroll(HorizontalScrollView.FOCUS_RIGHT);
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            mTabLayout.fullScroll(HorizontalScrollView.FOCUS_LEFT);
+                        }
+                    }, 800);
+
+                }
+            }
+        };
     }
 }

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.text.InputType;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
@@ -22,18 +23,19 @@ import com.loomlogic.BuildConfig;
 import com.loomlogic.R;
 import com.loomlogic.home.HomeActivity;
 import com.loomlogic.network.Model;
-import com.loomlogic.network.RetryRequestCallback;
-import com.loomlogic.network.managers.BaseItemManager;
-import com.loomlogic.network.managers.RegisterManager;
-import com.loomlogic.network.responses.ResponseDataWrapper;
-import com.loomlogic.network.responses.UserData;
+import com.loomlogic.network.responses.errors.ApiError;
+import com.loomlogic.network.responses.errors.SignInErrors;
 import com.loomlogic.signin.signup.SignUpActivity;
 import com.loomlogic.utils.Utils;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import static com.loomlogic.R.id.btn_signIn;
 
 
-public class SignInActivity extends BaseSignInActivity implements View.OnClickListener, RetryRequestCallback {
+public class SignInActivity extends BaseSignInActivity implements View.OnClickListener {
     private EditText signInEmailEt;
     private EditText signInPasswordEt;
 
@@ -43,23 +45,24 @@ public class SignInActivity extends BaseSignInActivity implements View.OnClickLi
         setContentView(R.layout.activity_sign_in);
         initView();
 
-
-        RegisterManager registerManager = Model.instance().getRegisterManager();
-        registerManager.addDataFetchCompleteListener(new BaseItemManager.OnDataFetchCompleteListener<UserData, String>() {
-            @Override
-            public void onDataFetchComplete(UserData result, ResponseData data, String requestTag) {
-
-            }
-
-            @Override
-            public void onDataFetchFailed(UserData result, ResponseData data, String requestTag) {
-
-            }
-        });
-        //   registerManager.fetchData(null);
         if (BuildConfig.FLAVOR.equals("loomlogicDebug")) {
-            //  startActivity(new Intent(SignInActivity.this, HomeActivity.class));
+              startActivity(new Intent(SignInActivity.this, HomeActivity.class));
             // startActivity(CreateLeadActivity.getCreateLeadActivityIntent(this, false));
+        }
+
+
+        String responce = "{\"success\":false,\"alert\":\"\",\"errors\":[{\"credentials\":\"Invalid login credentials. Please try again.\"}]}";
+
+        try {
+            JSONObject obj = new JSONObject(responce);
+
+            String alert = obj.getString("alert");
+
+            JSONArray array = obj.getJSONArray("errors");
+            Log.e("onCreate: ", "ede");
+
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
     }
 
@@ -188,16 +191,21 @@ public class SignInActivity extends BaseSignInActivity implements View.OnClickLi
             protected void onPostExecute(ResponseData response) {
                 super.onPostExecute(response);
                 hideProgressBar();
-                if (response != null && response.getData() != null) {
-                    ResponseDataWrapper dataWrapper = (ResponseDataWrapper) response.getData();
-                    if (dataWrapper.success) {
-                        startActivity(new Intent(SignInActivity.this, HomeActivity.class));
-                    } else {
-                        showResponseError(response);
-                    }
-                } else {
-                    showResponseError(response);
-                }
+
+                ResponseData errorDataWrapper = (ResponseData) response.getParsedErrorResponse();
+                ApiError error = (ApiError) errorDataWrapper.getData();
+                SignInErrors errors = (SignInErrors) error.getErrors();
+
+//                if (response != null && response.getData() != null) {
+//                    ResponseDataWrapper dataWrapper = (ResponseDataWrapper) response.getData();
+//                    if (dataWrapper.success) {
+//                        startActivity(new Intent(SignInActivity.this, HomeActivity.class));
+//                    } else {
+//                        showResponseError(response);
+//                    }
+//                } else {
+//                    showResponseError(response);
+//                }
             }
         }.execute();
     }
@@ -228,8 +236,4 @@ public class SignInActivity extends BaseSignInActivity implements View.OnClickLi
         showErrorSnackBar(error);
     }
 
-    @Override
-    public void onRetry() {
-        doLogin();
-    }
 }

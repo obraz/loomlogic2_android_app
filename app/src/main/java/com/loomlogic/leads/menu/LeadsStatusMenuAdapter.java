@@ -17,10 +17,10 @@ import java.util.ArrayList;
  * Created by alex on 3/1/17.
  */
 
-public class LeadsMenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class LeadsStatusMenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private ArrayList<LeadMenuItem> items;
 
-    public LeadsMenuAdapter(ArrayList<LeadMenuItem> items) {
+    public LeadsStatusMenuAdapter(ArrayList<LeadMenuItem> items) {
         this.items = items;
     }
 

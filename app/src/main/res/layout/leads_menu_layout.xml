@@ -65,10 +65,10 @@
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="1"
-            android:background="@drawable/bg_lead_filter_spinner_closed">
+            android:background="@drawable/bg_lead_owner_spinner_closed">
 
             <com.loomlogic.view.EventListeningSpinner
-                android:id="@+id/sp_leadFilter"
+                android:id="@+id/sp_leadOwner"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="?selectableItemBackground"

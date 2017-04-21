@@ -8,7 +8,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.loomlogic.leads.base.LeadData;
+import com.loomlogic.leads.base.LeadOwner;
+import com.loomlogic.leads.base.LeadStatus;
+import com.loomlogic.leads.base.LeadType;
+
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Created by alex on 2/28/17.
@@ -16,9 +22,12 @@ import java.util.ArrayList;
 
 public class LeadsTypeAdapter extends PagerAdapter {
     private Context context;
+    private LeadOwner leadOwner;
+    private LeadsStatusMenuAdapter adapter;
 
-    public LeadsTypeAdapter(Context context) {
+    public LeadsTypeAdapter(Context context, LeadOwner leadOwner) {
         this.context = context;
+        this.leadOwner = leadOwner;
     }
 
     @Override
@@ -36,30 +45,68 @@ public class LeadsTypeAdapter extends PagerAdapter {
     }
 
     private void initList(RecyclerView recyclerView, int position) {
-
-        LeadRole role = position == 0 ? LeadRole.BUYER : LeadRole.SELLER;
-        LeadsMenuAdapter adapter = new LeadsMenuAdapter(getFakeMenuItems(role));
-
+        adapter = new LeadsStatusMenuAdapter(getMenuItems(position));
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
     }
 
-    private ArrayList<LeadMenuItem> getFakeMenuItems(LeadRole role) {
+    private ArrayList<LeadMenuItem> generateBuyersLeads(){
+        LeadType type = LeadType.BUYER;
         ArrayList<LeadMenuItem> items = new ArrayList<>();
-        if (role == LeadRole.BUYER) {
-            items.add(new LeadMenuItem(LeadTypes.LEADS, 12, role));
-            items.add(new LeadMenuItem(LeadTypes.LENDER, 0, role));
-            items.add(new LeadMenuItem(LeadTypes.SHOPPING, 22, role));
-            items.add(new LeadMenuItem(LeadTypes.CONTRACT, 32, role));
-            items.add(new LeadMenuItem(LeadTypes.CLOSED, 7, role));
+
+        items.add(new LeadMenuItem(new LeadData(type, leadOwner, LeadStatus.LEADS), new Random().nextInt()));
+        items.add(new LeadMenuItem(new LeadData(type, leadOwner, LeadStatus.LENDER), 12));
+        items.add(new LeadMenuItem(new LeadData(type, leadOwner, LeadStatus.SHOPPING), 12));
+        items.add(new LeadMenuItem(new LeadData(type, leadOwner, LeadStatus.CONTRACT), 12));
+        items.add(new LeadMenuItem(new LeadData(type, leadOwner, LeadStatus.CLOSED), 12));
+
+        return items;
+    }
+
+    private ArrayList<LeadMenuItem> generateSellersLeads(){
+        LeadType type = LeadType.SELLER;
+        ArrayList<LeadMenuItem> items = new ArrayList<>();
+
+        items.add(new LeadMenuItem(new LeadData(type, leadOwner, LeadStatus.LEADS), 12));
+        items.add(new LeadMenuItem(new LeadData(type, leadOwner, LeadStatus.COMING_SOON), 12));
+        items.add(new LeadMenuItem(new LeadData(type, leadOwner, LeadStatus.ACTIVE), 12));
+        items.add(new LeadMenuItem(new LeadData(type, leadOwner, LeadStatus.WITHDRAW), 12));
+        items.add(new LeadMenuItem(new LeadData(type, leadOwner, LeadStatus.PENDING), 12));
+        items.add(new LeadMenuItem(new LeadData(type, leadOwner, LeadStatus.CLOSED), 12));
+
+        return items;
+    }
+
+    private ArrayList<LeadMenuItem> getMenuItems(int position) {
+        ArrayList<LeadMenuItem> items = new ArrayList<>();
+        if (position == LeadsMenuManager.TYPE_BUYER_MENU_POSITION) {
+            LeadType type = LeadType.BUYER;
+
+            items.add(new LeadMenuItem(new LeadData(type, leadOwner, LeadStatus.LEADS), new Random().nextInt()));
+            items.add(new LeadMenuItem(new LeadData(type, leadOwner, LeadStatus.LENDER), 12));
+            items.add(new LeadMenuItem(new LeadData(type, leadOwner, LeadStatus.SHOPPING), 12));
+            items.add(new LeadMenuItem(new LeadData(type, leadOwner, LeadStatus.CONTRACT), 12));
+            items.add(new LeadMenuItem(new LeadData(type, leadOwner, LeadStatus.CLOSED), 12));
+//            items.add(new LeadMenuItem(LeadStatus.LENDER, 0, role));
+//            items.add(new LeadMenuItem(LeadStatus.SHOPPING, 22, role));
+//            items.add(new LeadMenuItem(LeadStatus.CONTRACT, 32, role));
+//            items.add(new LeadMenuItem(LeadStatus.CLOSED, 7, role));
         } else {
-            items.add(new LeadMenuItem(LeadTypes.LEADS, 12, role));
-            items.add(new LeadMenuItem(LeadTypes.COMING_SOON, 0, role));
-            items.add(new LeadMenuItem(LeadTypes.ACTIVE, 22, role));
-            items.add(new LeadMenuItem(LeadTypes.WITHDRAW, 32, role));
-            items.add(new LeadMenuItem(LeadTypes.PENDING, 1, role));
-            items.add(new LeadMenuItem(LeadTypes.CLOSED, 7, role));
+            LeadType type = LeadType.SELLER;
+
+            items.add(new LeadMenuItem(new LeadData(type, leadOwner, LeadStatus.LEADS), 12));
+            items.add(new LeadMenuItem(new LeadData(type, leadOwner, LeadStatus.COMING_SOON), 12));
+            items.add(new LeadMenuItem(new LeadData(type, leadOwner, LeadStatus.ACTIVE), 12));
+            items.add(new LeadMenuItem(new LeadData(type, leadOwner, LeadStatus.WITHDRAW), 12));
+            items.add(new LeadMenuItem(new LeadData(type, leadOwner, LeadStatus.PENDING), 12));
+            items.add(new LeadMenuItem(new LeadData(type, leadOwner, LeadStatus.CLOSED), 12));
+//            items.add(new LeadMenuItem(LeadStatus.LEADS, 12, role));
+//            items.add(new LeadMenuItem(LeadStatus.COMING_SOON, 0, role));
+//            items.add(new LeadMenuItem(LeadStatus.ACTIVE, 22, role));
+//            items.add(new LeadMenuItem(LeadStatus.WITHDRAW, 32, role));
+//            items.add(new LeadMenuItem(LeadStatus.PENDING, 1, role));
+//            items.add(new LeadMenuItem(LeadStatus.CLOSED, 7, role));
         }
         return items;
     }

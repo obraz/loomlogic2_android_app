@@ -76,8 +76,8 @@
         <item>@string/create_new_lead</item>
     </array>
 
-    <string name="lead_menu_filter_my">My Leads</string>
-    <string name="lead_menu_filter_team">Team Leads</string>
+    <string name="lead_menu_owner_my">My Leads</string>
+    <string name="lead_menu_owner_team">Team Leads</string>
 
     <!-- Leads List -->
     <string name="lead_call_twillio">Twillio</string>
@@ -88,6 +88,17 @@
     <string name="lead_message_note">Note</string>
     <string name="lead_menu">Menu</string>
     <string name="lead_filter">Filter</string>
+    <string name="lead_tab_name_new">New</string>
+    <string name="lead_tab_name_engaged">Engaged</string>
+    <string name="lead_tab_name_future">Future</string>
+    <string name="lead_tab_name_appointment">Appointment</string>
+    <string name="lead_tab_name_application">Application</string>
+
+    <string name="lead_leads_title">Leads</string>
+    <string name="lead_leads_lender_title">Sent to Lender </string>
+    <string name="lead_leads_shopping_title">Shopping</string>
+    <string name="lead_leads_contract_title">Contract</string>
+    <string name="lead_leads_closed_title">Closed</string>
 
     <!-- Leads Filter -->
     <string name="leads_filter_header_filter">Filter</string>

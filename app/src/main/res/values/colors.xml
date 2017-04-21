@@ -47,6 +47,8 @@
     <color name="lead_menu_title_notactive">#91A1B1</color>
     <color name="lead_menu_spinner_arrow_closed_color">#335371</color>
 
+    <color name="leads_substage_counter_bg_color">#1F3D5B</color>
+
     <color name="lead_deadline_upnext_color">#798591</color>
     <color name="lead_deadline_today_color">#FFA50F</color>
     <color name="lead_deadline_expired_color">#F72741</color>

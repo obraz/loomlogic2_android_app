@@ -12,7 +12,7 @@ public class LeadUtils {
 
     @ColorRes
     public static int getCurrentLeadRoleColor() {
-        switch (LeadPreferencesUtils.getCurrentLeadRole()) {
+        switch (LeadPreferencesUtils.getCurrentLeadType()) {
             case BUYER:
                 return R.color.colorMainBuyer;
             case SELLER:
