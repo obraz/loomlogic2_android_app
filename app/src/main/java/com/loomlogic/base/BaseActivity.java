@@ -21,6 +21,7 @@ import com.github.pwittchen.networkevents.library.event.ConnectivityChanged;
 import com.kt.http.base.ResponseData;
 import com.loomlogic.R;
 import com.loomlogic.base.resultfix.ActivityResultFixActivity;
+import com.loomlogic.network.ApplicationConfig;
 import com.loomlogic.network.RetryRequestCallback;
 import com.loomlogic.utils.IntentUtils;
 import com.loomlogic.utils.InternetConnectionManager;
@@ -211,6 +212,11 @@ public class BaseActivity extends ActivityResultFixActivity {
 //                Toast.makeText(this, R.string.response401, Toast.LENGTH_LONG).show();
 //                logout();
             } else {
+                if (data.getStatusCode() == ApplicationConfig.HTTP_VALIDATION_ERROR){
+                    // TODO: 4/21/17 show validation error
+                }else {
+                    // TODO: 4/21/17 show alert
+                }
 //                if (data.getParsedErrorResponse() != null) {
 //                    ResponseData dataWrapper = (ResponseData) data.getParsedErrorResponse();
 //                    ApiError error = (ApiError) dataWrapper.getData();

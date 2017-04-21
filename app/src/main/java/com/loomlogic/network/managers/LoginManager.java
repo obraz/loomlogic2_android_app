@@ -8,6 +8,8 @@ import com.loomlogic.network.requests.LoginRequestBuilder;
 import com.loomlogic.network.responses.ResponseDataWrapper;
 import com.loomlogic.network.responses.UserData;
 
+import java.util.Map;
+
 public class LoginManager implements ILoginManager {
 
     private UserData mUserData;
@@ -20,6 +22,11 @@ public class LoginManager implements ILoginManager {
         if (loginResponseData != null && loginResponseData.getData() != null) {
             ResponseDataWrapper<UserData> dataWrapper = (ResponseDataWrapper<UserData>) loginResponseData.getData();
             UserData data = dataWrapper.data;
+
+            Map<String, String> headers = loginResponseData.getHeaders();
+            data.setAccessToken(headers.get("access-token"));
+            data.setUid(headers.get("uid"));
+            data.setClient(headers.get("client"));
             this.applyLoginResponse(data);
         }
 
@@ -38,7 +45,7 @@ public class LoginManager implements ILoginManager {
 
     public UserData getUserDataStored() {
         if (mUserData == null) {
-              mUserData = ProfileDataStorage.INSTANCE.readUserData();
+            mUserData = ProfileDataStorage.INSTANCE.readUserData();
         }
         return mUserData;
     }
@@ -60,10 +67,9 @@ public class LoginManager implements ILoginManager {
         //apply some session-dependent data to request
         UserData userData = getUserDataStored();
         if (userData != null) {
-           // "access-token": "z6oVDt-trgjl1ovXo4srmA",
-                  //  "client": "VmTxKXbNz55YbpeSifDfkA",  "uid": "testapimobile@testapimobile.com",
-//            Log.e("Authorization  id=" + userData.getUserId(), userData.getAccessToken());
-//            request.addRequestHeader("Authorization", "Bearer " + userData.getAccessToken());
+            request.addRequestHeader("access-token", userData.getAccessToken());
+            request.addRequestHeader("client", userData.getClient());
+            request.addRequestHeader("uid", userData.getUid());
         }
     }
 
