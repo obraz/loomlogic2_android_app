@@ -27,4 +27,12 @@ public class LeadData {
     public LeadStatus getStatus() {
         return status;
     }
+
+    public LeadSubStage getSubStage() {
+        return subStage;
+    }
+
+    public void setSubStage(LeadSubStage subStage) {
+        this.subStage = subStage;
+    }
 }

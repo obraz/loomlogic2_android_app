@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.gson.Gson;
 import com.h6ah4i.android.widget.advrecyclerview.animator.GeneralItemAnimator;
 import com.h6ah4i.android.widget.advrecyclerview.animator.SwipeDismissItemAnimator;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager;
@@ -20,15 +21,15 @@ import com.h6ah4i.android.widget.advrecyclerview.touchguard.RecyclerViewTouchAct
 import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
 import com.loomlogic.R;
 import com.loomlogic.home.BaseHomeFragment;
-import com.loomlogic.leads.base.LeadStatus;
+import com.loomlogic.leads.base.LeadData;
+import com.loomlogic.leads.base.LeadUtils;
 import com.loomlogic.leads.entity.Gender;
 import com.loomlogic.leads.entity.LeadItem;
 import com.loomlogic.leads.mainleaddetails.LeadDetailsMainFragment;
-import com.loomlogic.utils.LeadUtils;
 
 import java.util.ArrayList;
 
-import static com.loomlogic.leads.main.LeadsMainFragment.KEY_LEAD_STATUS;
+import static com.loomlogic.leads.main.LeadsMainFragment.KEY_LEAD_DATA;
 
 /**
  * Created by alex on 2/22/17.
@@ -47,10 +48,10 @@ public class LeadsFragment extends BaseHomeFragment implements LeadsAdapter.OnLe
 
     private LeadsAdapter mItemAdapter;
 
-    public static LeadsFragment newInstance(LeadStatus status) {
+    public static LeadsFragment newInstance(LeadData leadData) {
         LeadsFragment fragment = new LeadsFragment();
         Bundle args = new Bundle();
-        args.putSerializable(KEY_LEAD_STATUS, status);
+        args.putSerializable(KEY_LEAD_DATA, new Gson().toJson(leadData));
         fragment.setArguments(args);
         return fragment;
     }
@@ -69,13 +70,13 @@ public class LeadsFragment extends BaseHomeFragment implements LeadsAdapter.OnLe
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initViews(view);
-        LeadStatus leadStatus = (LeadStatus) getArguments().get(KEY_LEAD_STATUS);
-        Log.e(  "onViewCreated: ", ""+leadStatus);
+        LeadData leadData = new Gson().fromJson(getArguments().getString(KEY_LEAD_DATA), LeadData.class);
+        Log.e(leadData.getOwner()+" : " + leadData.getStatus(), "" + leadData.getSubStage());
     }
 
     private void initViews(View view) {
         layoutSwipeRefresh = (SwipeRefreshLayout) view.findViewById(R.id.layoutSwipeRefresh);
-        layoutSwipeRefresh.setColorSchemeColors(ContextCompat.getColor(getContext(), LeadUtils.getCurrentLeadRoleColor()));
+        layoutSwipeRefresh.setColorSchemeColors(ContextCompat.getColor(getContext(), LeadUtils.getCurrentLeadTypeColor()));
         layoutSwipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

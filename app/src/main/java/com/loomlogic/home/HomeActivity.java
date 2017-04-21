@@ -9,8 +9,11 @@ import android.support.v4.util.Pair;
 
 import com.loomlogic.R;
 import com.loomlogic.base.MessageEvent;
-import com.loomlogic.leads.main.LeadsMainFragment;
+import com.loomlogic.leads.base.LeadData;
+import com.loomlogic.leads.base.LeadOwner;
 import com.loomlogic.leads.base.LeadStatus;
+import com.loomlogic.leads.base.LeadType;
+import com.loomlogic.leads.main.LeadsMainFragment;
 import com.loomlogic.multibackstack.BackStackActivity;
 import com.loomlogic.view.navigationbar.BottomNavigationBar;
 
@@ -60,7 +63,7 @@ public class HomeActivity extends BackStackActivity implements BottomNavigationB
             case 1:
                 return DefaultFragment.newInstance();
             case 2:
-                return LeadsMainFragment.newInstance(LeadStatus.LEADS);
+                return LeadsMainFragment.newInstance(new LeadData(LeadType.BUYER, LeadOwner.MY_LEAD, LeadStatus.LEADS));
             case 3:
                 return DefaultFragment.newInstance();
             case 4:

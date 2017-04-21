@@ -23,7 +23,6 @@ import java.util.Random;
 public class LeadsTypeAdapter extends PagerAdapter {
     private Context context;
     private LeadOwner leadOwner;
-    private LeadsStatusMenuAdapter adapter;
 
     public LeadsTypeAdapter(Context context, LeadOwner leadOwner) {
         this.context = context;
@@ -45,37 +44,10 @@ public class LeadsTypeAdapter extends PagerAdapter {
     }
 
     private void initList(RecyclerView recyclerView, int position) {
-        adapter = new LeadsStatusMenuAdapter(getMenuItems(position));
+        LeadsStatusMenuAdapter adapter = new LeadsStatusMenuAdapter(getMenuItems(position));
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
-    }
-
-    private ArrayList<LeadMenuItem> generateBuyersLeads(){
-        LeadType type = LeadType.BUYER;
-        ArrayList<LeadMenuItem> items = new ArrayList<>();
-
-        items.add(new LeadMenuItem(new LeadData(type, leadOwner, LeadStatus.LEADS), new Random().nextInt()));
-        items.add(new LeadMenuItem(new LeadData(type, leadOwner, LeadStatus.LENDER), 12));
-        items.add(new LeadMenuItem(new LeadData(type, leadOwner, LeadStatus.SHOPPING), 12));
-        items.add(new LeadMenuItem(new LeadData(type, leadOwner, LeadStatus.CONTRACT), 12));
-        items.add(new LeadMenuItem(new LeadData(type, leadOwner, LeadStatus.CLOSED), 12));
-
-        return items;
-    }
-
-    private ArrayList<LeadMenuItem> generateSellersLeads(){
-        LeadType type = LeadType.SELLER;
-        ArrayList<LeadMenuItem> items = new ArrayList<>();
-
-        items.add(new LeadMenuItem(new LeadData(type, leadOwner, LeadStatus.LEADS), 12));
-        items.add(new LeadMenuItem(new LeadData(type, leadOwner, LeadStatus.COMING_SOON), 12));
-        items.add(new LeadMenuItem(new LeadData(type, leadOwner, LeadStatus.ACTIVE), 12));
-        items.add(new LeadMenuItem(new LeadData(type, leadOwner, LeadStatus.WITHDRAW), 12));
-        items.add(new LeadMenuItem(new LeadData(type, leadOwner, LeadStatus.PENDING), 12));
-        items.add(new LeadMenuItem(new LeadData(type, leadOwner, LeadStatus.CLOSED), 12));
-
-        return items;
     }
 
     private ArrayList<LeadMenuItem> getMenuItems(int position) {

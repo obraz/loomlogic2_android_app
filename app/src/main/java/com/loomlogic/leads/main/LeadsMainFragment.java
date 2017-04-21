@@ -14,13 +14,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.loomlogic.R;
 import com.loomlogic.base.MessageEvent;
 import com.loomlogic.home.BaseHomeFragment;
-import com.loomlogic.leads.base.LeadStatus;
+import com.loomlogic.leads.base.LeadData;
 import com.loomlogic.leads.base.LeadUtils;
 import com.loomlogic.leads.list.LeadsFilterActivity;
-import com.loomlogic.leads.menu.LeadMenuItem;
 import com.loomlogic.leads.menu.LeadsMenuManager;
 import com.loomlogic.utils.ViewUtils;
 
@@ -28,17 +28,18 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+
 /**
  * Created by alex on 3/14/17.
  */
 
 public class LeadsMainFragment extends BaseHomeFragment implements TabLayout.OnTabSelectedListener {
-    public static final String KEY_LEAD_STATUS = "KEY_LEAD_STATUS";
+    public static final String KEY_LEAD_DATA = "KEY_LEAD_DATA";
 
-    public static LeadsMainFragment newInstance(LeadStatus status) {
+    public static LeadsMainFragment newInstance(LeadData leadData) {
         LeadsMainFragment fragment = new LeadsMainFragment();
         Bundle args = new Bundle();
-        args.putSerializable(KEY_LEAD_STATUS, status);
+        args.putSerializable(KEY_LEAD_DATA, new Gson().toJson(leadData));
         fragment.setArguments(args);
         return fragment;
     }
@@ -59,11 +60,12 @@ public class LeadsMainFragment extends BaseHomeFragment implements TabLayout.OnT
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        LeadStatus leadStatus = (LeadStatus) getArguments().get(KEY_LEAD_STATUS);
+        LeadData leadData = new Gson().fromJson(getArguments().getString(KEY_LEAD_DATA), LeadData.class);
 
         initViews(view);
-        updateTabLayout(leadStatus);
+        updateTabLayout(leadData);
         initViewPager(view);
+        updateViewPager(leadData);
 
         onTabSelected(mTabLayout.getTabAt(0));
     }
@@ -101,7 +103,9 @@ public class LeadsMainFragment extends BaseHomeFragment implements TabLayout.OnT
         switch (event.getType()) {
             case LEADS_MENU_SELECT:
                 leadsMenuManager.closeDrawer();
-                updateTabLayout(((LeadMenuItem) (event.getObject())).getStatus());
+                LeadData leadData = (LeadData) (event.getObject());
+                updateTabLayout(leadData);
+                updateViewPager(leadData);
                 break;
             case NAVIGATION_BAR_SHOW:
                 animateViewAboveNavBar(controlBtnContainer, true);
@@ -131,15 +135,21 @@ public class LeadsMainFragment extends BaseHomeFragment implements TabLayout.OnT
 
     private void initViewPager(View view) {
         viewPager = (ViewPager) view.findViewById(R.id.vp_leads);
-        LeadsMainPagerAdapter adapter = new LeadsMainPagerAdapter(getChildFragmentManager(), mTabLayout.getTabCount());
-        viewPager.setAdapter(adapter);
+        // LeadsMainPagerAdapter adapter = new LeadsMainPagerAdapter(getChildFragmentManager(), mTabLayout.getTabCount());
+        // viewPager.setAdapter(adapter);
+        //updateViewPager();
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayout));
     }
 
-    private void updateTabLayout(LeadStatus leadStatus) {
+    private void updateViewPager(LeadData leadData) {
+        LeadsMainPagerAdapter adapter = new LeadsMainPagerAdapter(getChildFragmentManager(), leadData);
+        viewPager.setAdapter(adapter);
+    }
+
+    private void updateTabLayout(LeadData leadData) {
         mTabLayout.removeAllTabs();
 
-        switch (leadStatus) {
+        switch (leadData.getStatus()) {
             case LEADS:
                 mTabLayout.addTab(mTabLayout.newTab().setCustomView(getViewForTab(R.string.lead_tab_name_new, 10)));
                 mTabLayout.addTab(mTabLayout.newTab().setCustomView(getViewForTab(R.string.lead_tab_name_engaged, 2)));
@@ -159,7 +169,7 @@ public class LeadsMainFragment extends BaseHomeFragment implements TabLayout.OnT
         mTabLayout.addOnTabSelectedListener(this);
         mTabLayout.post(ViewUtils.configTab(mTabLayout, false));
 
-        toolbar.setTitle(LeadUtils.getLeadStatusTitle(leadStatus));
+        toolbar.setTitle(LeadUtils.getLeadStatusTitle(leadData.getStatus()));
     }
 
     private View getViewForTab(@StringRes int tabName, int notifCount) {

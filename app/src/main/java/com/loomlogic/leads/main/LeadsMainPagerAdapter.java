@@ -2,52 +2,73 @@ package com.loomlogic.leads.main;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.loomlogic.leads.base.LeadStatus;
+import com.loomlogic.leads.base.LeadData;
+import com.loomlogic.leads.base.LeadSubStage;
+import com.loomlogic.leads.base.LeadUtils;
 import com.loomlogic.leads.list.LeadsFragment;
 
 /**
  * Created by alex on 3/15/17.
  */
 
-public class LeadsMainPagerAdapter extends FragmentPagerAdapter {
-   // private LeadItem mLeadItem;
+public class LeadsMainPagerAdapter extends FragmentStatePagerAdapter {
+    private LeadData leadData;
     private int mNumOfTabs;
 
-    public LeadsMainPagerAdapter(FragmentManager fm, int numOfTabs) {
+    public LeadsMainPagerAdapter(FragmentManager fm, LeadData leadData) {
         super(fm);
-       // this.mLeadItem = leadItem;
-        this.mNumOfTabs = numOfTabs;
+        this.leadData = leadData;
+
     }
 
     @Override
     public Fragment getItem(int position) {
-        Fragment fragment;
+        switch (leadData.getStatus()) {
+            case LEADS:
+                setLeadsNewSubStage(position);
+                break;
+            case LENDER:
+                setLeadsLenderSubStage(position);
+                break;
+        }
+        return LeadsFragment.newInstance(leadData);
+    }
+
+    private void setLeadsNewSubStage(int position) {
         switch (position) {
             case 0:
-                fragment = LeadsFragment.newInstance(LeadStatus.ACTIVE);
+                leadData.setSubStage(LeadSubStage.NEW);
                 break;
             case 1:
-                fragment = LeadsFragment.newInstance(LeadStatus.ACTIVE);
+                leadData.setSubStage(LeadSubStage.ENGAGED);
                 break;
             case 2:
-                fragment = LeadsFragment.newInstance(LeadStatus.ACTIVE);
+                leadData.setSubStage(LeadSubStage.FUTURE);
+                break;
+        }
+    }
+
+    private void setLeadsLenderSubStage(int position) {
+        switch (position) {
+            case 0:
+                leadData.setSubStage(LeadSubStage.NEW);
+                break;
+            case 1:
+                leadData.setSubStage(LeadSubStage.ENGAGED);
+                break;
+            case 2:
+                leadData.setSubStage(LeadSubStage.APPOINTMENT);
                 break;
             case 3:
-                fragment = LeadsFragment.newInstance(LeadStatus.ACTIVE);
+                leadData.setSubStage(LeadSubStage.APPLICATION);
                 break;
-            case 4:
-                fragment = LeadsFragment.newInstance(LeadStatus.ACTIVE);
-                break;
-            default:
-                fragment = LeadsFragment.newInstance(LeadStatus.ACTIVE);
         }
-        return fragment;
     }
 
     @Override
     public int getCount() {
-        return mNumOfTabs;
+        return LeadUtils.getLeadSubStagesCount(leadData);
     }
 }

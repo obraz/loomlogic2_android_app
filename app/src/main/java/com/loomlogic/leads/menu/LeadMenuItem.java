@@ -12,14 +12,20 @@ import com.loomlogic.leads.base.LeadUtils;
  */
 
 public class LeadMenuItem {
+    private LeadData data;
     private LeadStatus status;
     private int count;
     private LeadType type;
 
     public LeadMenuItem(LeadData data, int count) {
+        this.data = data;
         this.type = data.getType();
         this.status = data.getStatus();
         this.count = count;
+    }
+
+    public LeadData getLead() {
+        return data;
     }
 
     public LeadStatus getStatus() {

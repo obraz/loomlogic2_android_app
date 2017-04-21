@@ -1,10 +1,12 @@
 package com.loomlogic.leads.base;
 
 import android.graphics.drawable.Drawable;
+import android.support.annotation.ColorRes;
 import android.support.v4.content.ContextCompat;
 
 import com.loomlogic.R;
 import com.loomlogic.base.LoomLogicApp;
+import com.loomlogic.utils.LeadPreferencesUtils;
 
 /**
  * Created by alex on 3/1/17.
@@ -96,5 +98,28 @@ public class LeadUtils {
                 drawableRes = R.drawable.ic_lead_new_buyer;
         }
         return ContextCompat.getDrawable(LoomLogicApp.getSharedContext(), drawableRes);
+    }
+
+    public static int getLeadSubStagesCount(LeadData leadData) {
+        switch (leadData.getStatus()) {
+            case LEADS:
+                return 3;
+            case LENDER:
+                return 4;
+            default:
+                return 1;
+        }
+    }
+
+    @ColorRes
+    public static int getCurrentLeadTypeColor() {
+        switch (LeadPreferencesUtils.getCurrentLeadType()) {
+            case BUYER:
+                return R.color.colorMainBuyer;
+            case SELLER:
+                return R.color.colorMainSeller;
+            default:
+                return R.color.colorMainBuyer;
+        }
     }
 }

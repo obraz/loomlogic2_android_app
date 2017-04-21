@@ -25,9 +25,9 @@ import com.loomlogic.R;
 import com.loomlogic.home.HomeActivity;
 import com.loomlogic.leads.base.LeadOwner;
 import com.loomlogic.leads.base.LeadType;
+import com.loomlogic.leads.base.LeadUtils;
 import com.loomlogic.leads.create.CreateLeadActivity;
 import com.loomlogic.utils.LeadPreferencesUtils;
-import com.loomlogic.utils.LeadUtils;
 import com.loomlogic.utils.ViewUtils;
 import com.loomlogic.view.EventListeningSpinner;
 import com.loomlogic.view.LinePageIndicator;
@@ -106,8 +106,8 @@ public class LeadsMenuManager {
                         break;
                 }
 
-                titleIndicator.setSelectedColor(ContextCompat.getColor(activity, LeadUtils.getCurrentLeadRoleColor()));
-                newLeadFAB.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(activity, LeadUtils.getCurrentLeadRoleColor())));
+                titleIndicator.setSelectedColor(ContextCompat.getColor(activity, LeadUtils.getCurrentLeadTypeColor()));
+                newLeadFAB.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(activity, LeadUtils.getCurrentLeadTypeColor())));
 
                 if (roleWasChanged) {
                     activity.refreshNavBar();
