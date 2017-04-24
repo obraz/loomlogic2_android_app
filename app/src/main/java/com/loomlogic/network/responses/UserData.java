@@ -8,6 +8,9 @@ public class UserData extends TokenData{
     @SerializedName("id")
     private int userId;
 
+    @SerializedName("subscription_expires_at")
+    private String subscriptionExpiration;
+
     public int getUserId() {
         return userId;
     }

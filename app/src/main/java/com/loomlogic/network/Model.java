@@ -15,6 +15,7 @@ import com.kt.util.internal.VolleyHelperFactory;
 import com.loomlogic.network.managers.LoginManager;
 import com.loomlogic.network.managers.OkHttpStack;
 import com.loomlogic.network.managers.RegisterManager;
+import com.loomlogic.network.managers.ResetPasswordManager;
 
 import java.io.File;
 import java.net.CookieHandler;
@@ -52,6 +53,7 @@ public class Model {
     private RequestQueue queue;
     //Managers
     private RegisterManager registerManager;
+    private ResetPasswordManager resetPasswordManager;
 
     public KTClient getClient() {
         return client;
@@ -71,6 +73,10 @@ public class Model {
 
     public RegisterManager getRegisterManager() {
         return registerManager;
+    }
+
+    public ResetPasswordManager getResetPasswordManager() {
+        return resetPasswordManager;
     }
 
     /**
@@ -95,6 +101,7 @@ public class Model {
                 .build();
 
         registerManager = new RegisterManager(client);
+        resetPasswordManager = new ResetPasswordManager(client);
     }
 
     //Initialization

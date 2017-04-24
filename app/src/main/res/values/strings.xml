@@ -35,8 +35,9 @@
     <string name="password_error">Password is too short (minimum is 3 characters)</string>
 
     <!-- Forgot Password -->
-    <string name="forgotPaswordTitle">FORGOT PASSWORD ?</string>
-    <string name="forgotPaswordMsg">Enter your e-mail address below to reset your password</string>
+    <string name="forgotPasswordTitle">FORGOT PASSWORD ?</string>
+    <string name="forgotPasswordMsg">Enter your e-mail address below to reset your password</string>
+    <string name="forgotPasswordCheckEmail">Check your Email.\nWe sent you a new password</string>
 
     <!-- Create Account -->
     <string name="createAccountTitle">CREATE ACCOUNT</string>

@@ -82,6 +82,14 @@ public class BaseSignInActivity extends BaseActivity {
         });
     }
 
+    protected void showValidationError(EditText editText) {
+        editText.setTag("error");
+
+        final Drawable icon = editText.getCompoundDrawables()[0];
+        final int colorError = ContextCompat.getColor(this, R.color.errorIconColor);
+        DrawableCompat.setTint(icon, colorError);
+    }
+
     public void changeIconColor(final Drawable icon, int colorFrom, int colorTo) {
         ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
         colorAnimation.setDuration(250);

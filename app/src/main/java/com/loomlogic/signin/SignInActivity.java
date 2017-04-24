@@ -2,11 +2,8 @@ package com.loomlogic.signin;
 
 import android.animation.LayoutTransition;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.drawable.DrawableCompat;
 import android.text.InputType;
 import android.view.View;
 import android.view.WindowManager;
@@ -22,6 +19,8 @@ import com.loomlogic.BuildConfig;
 import com.loomlogic.R;
 import com.loomlogic.home.HomeActivity;
 import com.loomlogic.network.Model;
+import com.loomlogic.network.responses.errors.ApiError;
+import com.loomlogic.network.responses.errors.ErrorsConstant;
 import com.loomlogic.signin.signup.SignUpActivity;
 import com.loomlogic.utils.Utils;
 
@@ -47,6 +46,7 @@ public class SignInActivity extends BaseSignInActivity implements View.OnClickLi
         }
         //  Model.instance().getRegisterManager().fetchData(null);
     }
+
 
     private void initView() {
         RelativeLayout mContentView = (RelativeLayout) findViewById(R.id.fullscreen_content);
@@ -179,11 +179,17 @@ public class SignInActivity extends BaseSignInActivity implements View.OnClickLi
                 hideProgressBar();
 
                 if (response != null && response.getData() != null) {
-                    startActivity(new Intent(SignInActivity.this, HomeActivity.class));
+                    HomeActivity.start(SignInActivity.this);
                 } else {
                     if (isValidationError(response)) {
-                        showValidationError(signInEmailEt);
-                        showValidationError(signInPasswordEt);
+                        ApiError errors = getApiError(response);
+                        for (String error:errors.getErrors()) {
+                            if (error.equals(ErrorsConstant.ERROR_CREDENTIALS)){
+                                showValidationError(signInEmailEt);
+                                showValidationError(signInPasswordEt);
+                                break;
+                            }
+                        }
                     }
                     showResponseError(response);
                 }
@@ -207,14 +213,6 @@ public class SignInActivity extends BaseSignInActivity implements View.OnClickLi
         }
 
         return true;
-    }
-
-    private void showValidationError(EditText editText) {
-        editText.setTag("error");
-
-        final Drawable icon = editText.getCompoundDrawables()[0];
-        final int colorError = ContextCompat.getColor(this, R.color.errorIconColor);
-        DrawableCompat.setTint(icon, colorError);
     }
 
 }
