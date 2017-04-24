@@ -1,5 +1,7 @@
 package com.loomlogic.home;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -33,6 +35,12 @@ public class HomeActivity extends BackStackActivity implements BottomNavigationB
     private BottomNavigationBar bottomNavBar;
     private Fragment curFragment;
     private int curTabId;
+
+    public static void start(@NonNull Activity activity) {
+        Intent intent = new Intent(activity, HomeActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        activity.startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -143,7 +143,7 @@ public class LeadDetailsInfoView extends LinearLayout {
         TextView nameTv = (TextView) findViewById(R.id.tv_leadName);
         nameTv.setText(leadItem.getFullFormattedName());
 
-        TextView addressTv = (TextView) findViewById(R.id.tv_leadAddress);
+        TextView addressTv = (TextView) findViewById(R.id.tv_leadInfo);
         addressTv.setText(leadItem.address);
         addressTv.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(getContext(), leadItem.isFinancing ? R.drawable.ic_buyer_financing : R.drawable.ic_buyer_cash), null, null, null);
 

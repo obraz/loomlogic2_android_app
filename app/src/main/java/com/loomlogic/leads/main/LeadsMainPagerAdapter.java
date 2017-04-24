@@ -3,6 +3,7 @@ package com.loomlogic.leads.main;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.view.ViewGroup;
 
 import com.loomlogic.leads.base.LeadData;
 import com.loomlogic.leads.base.LeadSubStage;
@@ -15,12 +16,10 @@ import com.loomlogic.leads.list.LeadsFragment;
 
 public class LeadsMainPagerAdapter extends FragmentStatePagerAdapter {
     private LeadData leadData;
-    private int mNumOfTabs;
 
     public LeadsMainPagerAdapter(FragmentManager fm, LeadData leadData) {
         super(fm);
         this.leadData = leadData;
-
     }
 
     @Override
@@ -70,5 +69,9 @@ public class LeadsMainPagerAdapter extends FragmentStatePagerAdapter {
     @Override
     public int getCount() {
         return LeadUtils.getLeadSubStagesCount(leadData);
+    }
+
+    public LeadsFragment getCurrentLeadsFragment(ViewGroup view, int position) {
+        return (LeadsFragment) instantiateItem(view, position);
     }
 }

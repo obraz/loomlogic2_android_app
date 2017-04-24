@@ -1,5 +1,6 @@
 package com.loomlogic.leads.base;
 
+import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.ColorRes;
 import android.support.v4.content.ContextCompat;
@@ -121,5 +122,23 @@ public class LeadUtils {
             default:
                 return R.color.colorMainBuyer;
         }
+    }
+
+
+    public static Drawable getLeadQuality(String quality) {
+        int color = R.color.transparent;
+        if (quality.equals("A")) {
+            color = R.color.lead_quality_bg_color_A;
+        } else if (quality.equals("B")) {
+            color = R.color.lead_quality_bg_color_B;
+        } else if (quality.equals("C")) {
+            color = R.color.lead_quality_bg_color_C;
+        } else if (quality.equals("D")) {
+            color = R.color.lead_quality_bg_color_D;
+        }
+        Drawable circleDrawable = ContextCompat.getDrawable(LoomLogicApp.getSharedContext(), R.drawable.circle);
+        Drawable bg = circleDrawable.getConstantState().newDrawable();
+        bg.setColorFilter(ContextCompat.getColor(LoomLogicApp.getSharedContext(), color), PorterDuff.Mode.SRC_ATOP);
+        return bg;
     }
 }

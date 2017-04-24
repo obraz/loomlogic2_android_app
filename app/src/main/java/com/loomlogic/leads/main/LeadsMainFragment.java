@@ -9,6 +9,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +21,6 @@ import com.loomlogic.base.MessageEvent;
 import com.loomlogic.home.BaseHomeFragment;
 import com.loomlogic.leads.base.LeadData;
 import com.loomlogic.leads.base.LeadUtils;
-import com.loomlogic.leads.list.LeadsFilterActivity;
 import com.loomlogic.leads.menu.LeadsMenuManager;
 import com.loomlogic.utils.ViewUtils;
 
@@ -47,6 +47,7 @@ public class LeadsMainFragment extends BaseHomeFragment implements TabLayout.OnT
     private Toolbar toolbar;
     private TabLayout mTabLayout;
     private ViewPager viewPager;
+    private LeadsMainPagerAdapter pagerAdapter;
     private LeadsMenuManager leadsMenuManager;
     private View controlBtnContainer;
     private View leadFilterMarkerView;
@@ -93,7 +94,9 @@ public class LeadsMainFragment extends BaseHomeFragment implements TabLayout.OnT
         view.findViewById(R.id.view_leadFilterBtn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getHomeActivity().startActivity(LeadsFilterActivity.getLeadsFilterActivityIntent(getContext()));
+                LeadData leadData = pagerAdapter.getCurrentLeadsFragment(viewPager, viewPager.getCurrentItem()).getLeadData();
+                Log.e(leadData.getOwner() + " : " + leadData.getStatus(), "" + leadData.getSubStage());
+              //  getHomeActivity().startActivity(LeadsFilterActivity.getLeadsFilterActivityIntent(getContext()));
             }
         });
     }
@@ -142,8 +145,8 @@ public class LeadsMainFragment extends BaseHomeFragment implements TabLayout.OnT
     }
 
     private void updateViewPager(LeadData leadData) {
-        LeadsMainPagerAdapter adapter = new LeadsMainPagerAdapter(getChildFragmentManager(), leadData);
-        viewPager.setAdapter(adapter);
+        pagerAdapter = new LeadsMainPagerAdapter(getChildFragmentManager(), leadData);
+        viewPager.setAdapter(pagerAdapter);
     }
 
     private void updateTabLayout(LeadData leadData) {

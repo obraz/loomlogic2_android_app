@@ -43,7 +43,7 @@ public class SignInActivity extends BaseSignInActivity implements View.OnClickLi
             // startActivity(CreateLeadActivity.getCreateLeadActivityIntent(this, false));
         }
         if (Model.instance().getLoginManager().canRestoreLogin()) {
-            startActivity(new Intent(SignInActivity.this, HomeActivity.class));
+            HomeActivity.start(this);
         }
         //  Model.instance().getRegisterManager().fetchData(null);
     }
