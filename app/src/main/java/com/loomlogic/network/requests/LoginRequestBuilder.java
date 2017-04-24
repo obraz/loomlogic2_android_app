@@ -3,8 +3,6 @@ package com.loomlogic.network.requests;
 import com.google.gson.reflect.TypeToken;
 import com.loomlogic.network.responses.ResponseDataWrapper;
 import com.loomlogic.network.responses.UserData;
-import com.loomlogic.network.responses.errors.ApiError;
-import com.loomlogic.network.responses.errors.SignInErrors;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;
@@ -23,9 +21,5 @@ public class LoginRequestBuilder extends BaseLLRequestBuilder {
         objectToPost.put("email", email);
         objectToPost.put("password", password);
         this.setObjectToPost(objectToPost);
-
-        Type errorType = new TypeToken<ApiError<SignInErrors>>() {
-        }.getType();
-        this.setErrorResponseClassSpecifier(errorType);
     }
 }

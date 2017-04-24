@@ -1,19 +1,34 @@
 package com.loomlogic.network.responses.errors;
 
+import android.text.TextUtils;
+
 import com.google.gson.annotations.SerializedName;
 
-public class ApiError<T> {
+import java.util.List;
+
+public class ApiError {
     @SerializedName("alert")
-    private String alert;
+    private List<String> alert;
 
     @SerializedName("errors")
-    private T errors;
+    private List<String> errors;
 
-    public String getAlert() {
+    public List<String> getAlert() {
         return alert;
     }
 
-    public T getErrors() {
+    public List<String> getErrors() {
         return errors;
+    }
+
+    public String getHumanizedAlert() {
+        String humanizedAlert = "";
+        for (String txt : alert) {
+            humanizedAlert = humanizedAlert + txt + "\n";
+        }
+        if (!TextUtils.isEmpty(humanizedAlert)) {
+            humanizedAlert = humanizedAlert.substring(0, humanizedAlert.length() - 1);
+        }
+        return humanizedAlert;
     }
 }

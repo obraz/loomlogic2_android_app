@@ -23,6 +23,7 @@ import com.loomlogic.R;
 import com.loomlogic.base.resultfix.ActivityResultFixActivity;
 import com.loomlogic.network.ApplicationConfig;
 import com.loomlogic.network.RetryRequestCallback;
+import com.loomlogic.network.responses.errors.ApiError;
 import com.loomlogic.utils.IntentUtils;
 import com.loomlogic.utils.InternetConnectionManager;
 import com.loomlogic.utils.Utils;
@@ -212,27 +213,13 @@ public class BaseActivity extends ActivityResultFixActivity {
 //                Toast.makeText(this, R.string.response401, Toast.LENGTH_LONG).show();
 //                logout();
             } else {
-                if (data.getStatusCode() == ApplicationConfig.HTTP_VALIDATION_ERROR){
-                    // TODO: 4/21/17 show validation error
-                }else {
-                    // TODO: 4/21/17 show alert
-                }
-//                if (data.getParsedErrorResponse() != null) {
-//                    ResponseData dataWrapper = (ResponseData) data.getParsedErrorResponse();
-//                    ApiError error = (ApiError) dataWrapper.getData();
-//                    if (error != null && error.getMessage() != null && !TextUtils.isEmpty(error.getMessage())) {
-//                        showErrorSnackBar(error.getMessage());
-//                        Log.e(TAG, error.getMessage());
-//                    } else {
-//                        showErrorSnackBar(ResponseUtils.getResponseErrorByCode(this, data.getStatusCode()));
-//                        Log.e(TAG, ResponseUtils.getResponseErrorByCode(this, data.getStatusCode()));
-//                    }
-//                } else {
-//                    showErrorSnackBar(ResponseUtils.getResponseErrorByCode(this, data.getStatusCode()));
-//                    Log.e(TAG, ResponseUtils.getResponseErrorByCode(this, data.getStatusCode()));
-//                }
-                if (data.getParsedErrorResponse() != null) {
-
+                ApiError errors = getApiError(data);
+                if (errors != null && errors.getAlert() != null) {
+                    if (isValidationError(data)) {
+                        showErrorSnackBar(errors.getHumanizedAlert());
+                    } else {
+                        showAlertSnackBar(errors.getHumanizedAlert(), callback);
+                    }
                 } else {
                     showGeneralAlertSnackBar(callback);
                 }
@@ -240,6 +227,26 @@ public class BaseActivity extends ActivityResultFixActivity {
         } else {
             showGeneralAlertSnackBar(callback);
         }
+    }
+
+    public boolean isValidationError(ResponseData data) {
+        ApiError errors = getApiError(data);
+        if (errors != null && data.getStatusCode() == ApplicationConfig.HTTP_VALIDATION_ERROR && !errors.getErrors().isEmpty()) {
+            return true;
+        }
+        return false;
+    }
+
+    @Nullable
+    public ApiError getApiError(ResponseData data) {
+        if (data != null && data.getParsedErrorResponse() != null) {
+            ResponseData dataWrapper = (ResponseData) data.getParsedErrorResponse();
+            ApiError errors = (ApiError) dataWrapper.getData();
+            if (errors != null && errors.getErrors() != null && errors.getAlert() != null) {
+                return errors;
+            }
+        }
+        return null;
     }
 
     public void showAlertSnackBar(String errorMsg, RetryRequestCallback callback) {
