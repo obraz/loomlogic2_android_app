@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.kt.http.base.ResponseData;
+import com.loomlogic.BuildConfig;
 import com.loomlogic.R;
 import com.loomlogic.network.Model;
 import com.loomlogic.network.managers.BaseItemManager;
@@ -62,7 +63,9 @@ public class ForgotPasswordActivity extends BaseSignInActivity implements View.O
 
         findViewById(btn_back).setOnClickListener(this);
 
-        forgotPasswordEmailEt.setText("alex@tmregroup.com");
+        if (BuildConfig.FLAVOR.equals("loomlogicDebug")) {
+            forgotPasswordEmailEt.setText("alex@tmregroup.com");
+        }
     }
 
     @Override

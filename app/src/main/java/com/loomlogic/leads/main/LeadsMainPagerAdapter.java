@@ -38,12 +38,15 @@ public class LeadsMainPagerAdapter extends FragmentStatePagerAdapter {
     private void setLeadsNewSubStage(int position) {
         switch (position) {
             case 0:
-                leadData.setSubStage(LeadSubStage.NEW);
+                leadData.setSubStage(LeadSubStage.ALL);
                 break;
             case 1:
-                leadData.setSubStage(LeadSubStage.ENGAGED);
+                leadData.setSubStage(LeadSubStage.NEW);
                 break;
             case 2:
+                leadData.setSubStage(LeadSubStage.ENGAGED);
+                break;
+            case 3:
                 leadData.setSubStage(LeadSubStage.FUTURE);
                 break;
         }
@@ -52,15 +55,18 @@ public class LeadsMainPagerAdapter extends FragmentStatePagerAdapter {
     private void setLeadsLenderSubStage(int position) {
         switch (position) {
             case 0:
-                leadData.setSubStage(LeadSubStage.NEW);
+                leadData.setSubStage(LeadSubStage.ALL);
                 break;
             case 1:
-                leadData.setSubStage(LeadSubStage.ENGAGED);
+                leadData.setSubStage(LeadSubStage.NEW);
                 break;
             case 2:
-                leadData.setSubStage(LeadSubStage.APPOINTMENT);
+                leadData.setSubStage(LeadSubStage.ENGAGED);
                 break;
             case 3:
+                leadData.setSubStage(LeadSubStage.APPOINTMENT);
+                break;
+            case 4:
                 leadData.setSubStage(LeadSubStage.APPLICATION);
                 break;
         }

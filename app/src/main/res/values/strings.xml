@@ -89,6 +89,7 @@
     <string name="lead_message_note">Note</string>
     <string name="lead_menu">Menu</string>
     <string name="lead_filter">Filter</string>
+    <string name="lead_tab_name_all">All</string>
     <string name="lead_tab_name_new">New</string>
     <string name="lead_tab_name_engaged">Engaged</string>
     <string name="lead_tab_name_future">Future</string>

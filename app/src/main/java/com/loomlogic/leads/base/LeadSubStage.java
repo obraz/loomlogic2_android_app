@@ -5,5 +5,5 @@ package com.loomlogic.leads.base;
  */
 
 public enum LeadSubStage {
-    NEW, ENGAGED, FUTURE, APPOINTMENT, APPLICATION
+    ALL, NEW, ENGAGED, FUTURE, APPOINTMENT, APPLICATION
 }

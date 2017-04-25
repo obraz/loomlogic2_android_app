@@ -42,7 +42,7 @@ public class SignInActivity extends BaseSignInActivity implements View.OnClickLi
             // startActivity(CreateLeadActivity.getCreateLeadActivityIntent(this, false));
         }
         if (Model.instance().getLoginManager().canRestoreLogin()) {
-            //HomeActivity.start(this);
+            HomeActivity.start(this);
         }
         //  Model.instance().getRegisterManager().fetchData(null);
     }
@@ -113,13 +113,13 @@ public class SignInActivity extends BaseSignInActivity implements View.OnClickLi
         });
         logoView.startAnimation(splashAnim);
 
+        if (BuildConfig.FLAVOR.equals("loomlogicDebug")) {
+            signInEmailEt.setText("loomlogic.agent@gmail.com");
+            signInPasswordEt.setText("5432");
 
-        signInEmailEt.setText("loomlogic.agent@gmail.com");
-        signInPasswordEt.setText("5432");
-
-        signInEmailEt.setText("alex@tmregroup.com");
-        signInPasswordEt.setText("password");
-
+            signInEmailEt.setText("alex@tmregroup.com");
+            signInPasswordEt.setText("password");
+        }
     }
 
     @Override

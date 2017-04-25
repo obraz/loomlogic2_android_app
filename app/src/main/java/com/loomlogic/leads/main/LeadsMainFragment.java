@@ -154,12 +154,14 @@ public class LeadsMainFragment extends BaseHomeFragment implements TabLayout.OnT
 
         switch (leadData.getStatus()) {
             case LEADS:
+                mTabLayout.addTab(mTabLayout.newTab().setCustomView(getViewForTab(R.string.lead_tab_name_all, 24)));
                 mTabLayout.addTab(mTabLayout.newTab().setCustomView(getViewForTab(R.string.lead_tab_name_new, 10)));
                 mTabLayout.addTab(mTabLayout.newTab().setCustomView(getViewForTab(R.string.lead_tab_name_engaged, 2)));
                 mTabLayout.addTab(mTabLayout.newTab().setCustomView(getViewForTab(R.string.lead_tab_name_future, 10)));
                 mTabLayout.setVisibility(View.VISIBLE);
                 break;
             case LENDER:
+                mTabLayout.addTab(mTabLayout.newTab().setCustomView(getViewForTab(R.string.lead_tab_name_all, 44)));
                 mTabLayout.addTab(mTabLayout.newTab().setCustomView(getViewForTab(R.string.lead_tab_name_new, 10)));
                 mTabLayout.addTab(mTabLayout.newTab().setCustomView(getViewForTab(R.string.lead_tab_name_engaged, 2)));
                 mTabLayout.addTab(mTabLayout.newTab().setCustomView(getViewForTab(R.string.lead_tab_name_appointment, 10)));
