@@ -4,8 +4,8 @@
     <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
 
     <string name="submit">Submit</string>
-    <string name="general_error">Oops, something went wrong. Please try again later.</string>
-    <string name="internet_error">Please check your internet connection</string>
+    <string name="general_error">Something went wrong</string>
+    <string name="internet_error">You are currently ofline</string>
     <string name="Connect">Connect</string>
     <string name="agent">Agent</string>
     <string name="lender">Lender</string>
@@ -23,6 +23,7 @@
     <string name="copy_text">Copy to Clipboard</string>
     <string name="edit">Edit</string>
     <string name="save">Save</string>
+    <string name="retry">Retry</string>
 
     <!-- Sign In -->
     <string name="logIn">Log In</string>
@@ -30,10 +31,13 @@
     <string name="password">Password</string>
     <string name="createAccount">Create Account</string>
     <string name="forgotPasword">Forgot password</string>
+    <string name="email_error">Incorrect Email</string>
+    <string name="password_error">Password is too short (minimum is 3 characters)</string>
 
     <!-- Forgot Password -->
-    <string name="forgotPaswordTitle">FORGOT PASSWORD ?</string>
-    <string name="forgotPaswordMsg">Enter your e-mail address below to reset your password</string>
+    <string name="forgotPasswordTitle">FORGOT PASSWORD ?</string>
+    <string name="forgotPasswordMsg">Enter your e-mail address below to reset your password</string>
+    <string name="forgotPasswordCheckEmail">Check your Email.\nWe sent you a new password</string>
 
     <!-- Create Account -->
     <string name="createAccountTitle">CREATE ACCOUNT</string>
@@ -73,8 +77,8 @@
         <item>@string/create_new_lead</item>
     </array>
 
-    <string name="lead_menu_filter_my">My Leads</string>
-    <string name="lead_menu_filter_team">Team Leads</string>
+    <string name="lead_menu_owner_my">My Leads</string>
+    <string name="lead_menu_owner_team">Team Leads</string>
 
     <!-- Leads List -->
     <string name="lead_call_twillio">Twillio</string>
@@ -85,6 +89,18 @@
     <string name="lead_message_note">Note</string>
     <string name="lead_menu">Menu</string>
     <string name="lead_filter">Filter</string>
+    <string name="lead_tab_name_all">All</string>
+    <string name="lead_tab_name_new">New</string>
+    <string name="lead_tab_name_engaged">Engaged</string>
+    <string name="lead_tab_name_future">Future</string>
+    <string name="lead_tab_name_appointment">Appointment</string>
+    <string name="lead_tab_name_application">Application</string>
+
+    <string name="lead_leads_title">Leads</string>
+    <string name="lead_leads_lender_title">Sent to Lender </string>
+    <string name="lead_leads_shopping_title">Shopping</string>
+    <string name="lead_leads_contract_title">Contract</string>
+    <string name="lead_leads_closed_title">Closed</string>
 
     <!-- Leads Filter -->
     <string name="leads_filter_header_filter">Filter</string>

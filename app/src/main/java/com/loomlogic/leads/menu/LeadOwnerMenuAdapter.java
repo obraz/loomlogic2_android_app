@@ -19,13 +19,13 @@ import java.util.List;
  * Created by alex on 4/6/17.
  */
 
-public class LeadMenuFilterAdapter extends BaseAdapter {
-    private List<LeadFilterItem> itemList;
+public class LeadOwnerMenuAdapter extends BaseAdapter {
+    private List<LeadOwnerItem> itemList;
 
-    public LeadMenuFilterAdapter() {
+    public LeadOwnerMenuAdapter() {
         itemList = new ArrayList<>();
-        itemList.add(new LeadFilterItem(R.drawable.ic_lead_filter_my, R.string.lead_menu_filter_my));
-        itemList.add(new LeadFilterItem(R.drawable.ic_lead_filter_team, R.string.lead_menu_filter_team));
+        itemList.add(new LeadOwnerItem(R.drawable.ic_lead_owner_my, R.string.lead_menu_owner_my));
+        itemList.add(new LeadOwnerItem(R.drawable.ic_lead_owner_team, R.string.lead_menu_owner_team));
     }
 
     @Override
@@ -46,13 +46,13 @@ public class LeadMenuFilterAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
-            convertView = View.inflate(parent.getContext(), R.layout.item_lead_menu_filter, null);
+            convertView = View.inflate(parent.getContext(), R.layout.item_lead_owner_menu, null);
         }
         Drawable drawable = ContextCompat.getDrawable(parent.getContext(), itemList.get(position).getIconRes());
         drawable.mutate();
         drawable.setTint(Color.WHITE);
 
-        TextView tv = (TextView) convertView.findViewById(R.id.tv_leadFilterName);
+        TextView tv = (TextView) convertView.findViewById(R.id.tv_leadOwner);
         tv.setText(itemList.get(position).getNameRes());
         tv.setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null);
         tv.setTextColor(Color.WHITE);
@@ -62,9 +62,9 @@ public class LeadMenuFilterAdapter extends BaseAdapter {
     @Override
     public View getDropDownView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         if (convertView == null) {
-            convertView = View.inflate(parent.getContext(), R.layout.item_lead_menu_filter, null);
+            convertView = View.inflate(parent.getContext(), R.layout.item_lead_owner_menu, null);
         }
-        TextView tv = (TextView) convertView.findViewById(R.id.tv_leadFilterName);
+        TextView tv = (TextView) convertView.findViewById(R.id.tv_leadOwner);
         tv.setText(itemList.get(position).getNameRes());
         tv.setCompoundDrawablesWithIntrinsicBounds(itemList.get(position).getIconRes(), 0, 0, 0);
 

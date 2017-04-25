@@ -10,7 +10,7 @@
         android:background="@color/lead_btn_container_bg_color"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        tools:visibility="visible">
+        tools:visibility="invisible">
 
         <Space
             android:layout_width="0dp"
@@ -155,7 +155,7 @@
         android:clickable="true"
         android:foreground="?attr/selectableItemBackground"
         android:orientation="horizontal"
-        tools:visibility="invisible">
+        tools:visibility="visible">
 
         <View
             android:id="@+id/leadContainerBg"
@@ -171,12 +171,33 @@
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <com.loomlogic.leads.base.LeadAvatarView
-                android:id="@+id/view_leadAvatar"
+            <FrameLayout
+                android:id="@+id/view_leadAvatarContainer"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp" />
+                android:layout_marginRight="15dp">
+
+                <com.loomlogic.leads.base.LeadAvatarView
+                    android:id="@+id/view_leadAvatar"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp" />
+
+                <TextView
+                    android:id="@+id/tv_leadQuality"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_gravity="bottom|right"
+                    android:layout_marginBottom="4dp"
+                    android:layout_marginRight="4dp"
+                    android:background="@drawable/circle"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:textSize="10sp"
+                    android:textStyle="bold"
+                    android:visibility="gone"
+                    tools:text="A" />
+            </FrameLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -197,10 +218,9 @@
                     tools:text="Randall Padilla Randall Padilla Randall Padilla Randall Padilla Randall Padilla " />
 
                 <TextView
-                    android:id="@+id/tv_leadAddress"
+                    android:id="@+id/tv_leadInfo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/ic_buyer_financing"
                     android:drawablePadding="5dp"
                     android:ellipsize="marquee"
                     android:maxLines="1"
@@ -223,6 +243,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
+                    android:drawablePadding="3dp"
                     android:textColor="#F72741"
                     android:textSize="13sp"
                     tools:text="21 days" />
@@ -238,6 +259,7 @@
                     android:paddingRight="6dp"
                     android:textColor="@color/white"
                     android:textSize="12sp"
+                    android:visibility="gone"
                     tools:text="2" />
 
             </LinearLayout>

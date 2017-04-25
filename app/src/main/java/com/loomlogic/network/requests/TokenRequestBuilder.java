@@ -8,7 +8,7 @@ import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TokenRequestBuilder extends BaseStylesRequestBuilder {
+public class TokenRequestBuilder extends BaseLLRequestBuilder {
 
     public TokenRequestBuilder(String refreshToken) {
         Type dataType = new TypeToken<ResponseDataWrapper<TokenData>>() {

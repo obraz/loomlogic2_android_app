@@ -14,6 +14,8 @@ import com.kt.http.base.client.KTClient;
 import com.kt.util.internal.VolleyHelperFactory;
 import com.loomlogic.network.managers.LoginManager;
 import com.loomlogic.network.managers.OkHttpStack;
+import com.loomlogic.network.managers.RegisterManager;
+import com.loomlogic.network.managers.ResetPasswordManager;
 
 import java.io.File;
 import java.net.CookieHandler;
@@ -50,6 +52,8 @@ public class Model {
     private CookieStore cookieStore;
     private RequestQueue queue;
     //Managers
+    private RegisterManager registerManager;
+    private ResetPasswordManager resetPasswordManager;
 
     public KTClient getClient() {
         return client;
@@ -67,12 +71,19 @@ public class Model {
         return cookieStore;
     }
 
+    public RegisterManager getRegisterManager() {
+        return registerManager;
+    }
+
+    public ResetPasswordManager getResetPasswordManager() {
+        return resetPasswordManager;
+    }
 
     /**
      * NOTE: login is performed in synchroneus way so you must never call it from UI thread.
      */
-    public ResponseData performLogin() {
-        return this.loginManager.login(queue);
+    public ResponseData performLogin(String email, String password) {
+        return this.loginManager.login(email, password, queue);
     }
 
     public void performLogout() {
@@ -89,7 +100,8 @@ public class Model {
                 .setRequestTimeout(60000)
                 .build();
 
-        //postalCodeManager = new PostalCodeManager(client);
+        registerManager = new RegisterManager(client);
+        resetPasswordManager = new ResetPasswordManager(client);
     }
 
     //Initialization

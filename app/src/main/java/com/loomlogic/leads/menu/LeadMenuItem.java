@@ -2,23 +2,34 @@ package com.loomlogic.leads.menu;
 
 import android.graphics.drawable.Drawable;
 
+import com.loomlogic.leads.base.LeadData;
+import com.loomlogic.leads.base.LeadStatus;
+import com.loomlogic.leads.base.LeadType;
+import com.loomlogic.leads.base.LeadUtils;
+
 /**
  * Created by alex on 3/1/17.
  */
 
 public class LeadMenuItem {
-    private LeadTypes type;
+    private LeadData data;
+    private LeadStatus status;
     private int count;
-    private LeadRole role;
+    private LeadType type;
 
-    public LeadMenuItem(LeadTypes type, int count, LeadRole role) {
-        this.type = type;
+    public LeadMenuItem(LeadData data, int count) {
+        this.data = data;
+        this.type = data.getType();
+        this.status = data.getStatus();
         this.count = count;
-        this.role = role;
     }
 
-    public LeadTypes getType() {
-        return type;
+    public LeadData getLead() {
+        return data;
+    }
+
+    public LeadStatus getStatus() {
+        return status;
     }
 
     public int getCount() {
@@ -26,10 +37,10 @@ public class LeadMenuItem {
     }
 
     public String getName() {
-        return LeadMenuUtils.getLeadTypeName(type);
+        return LeadUtils.getLeadStatusName(status);
     }
 
     public Drawable getDrawableIcon() {
-        return LeadMenuUtils.getLeadTypeIcon(type, role);
+        return LeadUtils.getLeadStatusIcon(status, type);
     }
 }

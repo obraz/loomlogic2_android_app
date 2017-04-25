@@ -93,17 +93,35 @@
                     android:drawableLeft="@drawable/ic_email"
                     android:hint="@string/email"
                     android:inputType="textEmailAddress"
+                    android:paddingRight="15dp"
                     android:visibility="gone"
                     tools:visibility="visible" />
 
-                <EditText
-                    android:id="@+id/et_signIn_password"
-                    style="@style/SignInEditText"
-                    android:drawableLeft="@drawable/ic_password"
-                    android:hint="@string/password"
-                    android:inputType="textPassword"
-                    android:visibility="gone"
-                    tools:visibility="visible" />
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/et_signIn_password"
+                        style="@style/SignInEditText"
+                        android:drawableLeft="@drawable/ic_password"
+                        android:hint="@string/password"
+                        android:inputType="textPassword"
+                        android:paddingRight="50dp"
+                        android:visibility="gone"
+                        tools:visibility="visible" />
+
+                    <ImageButton
+                        android:id="@+id/ib_passswordVisibility"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical|right"
+                        android:background="?selectableItemBackground"
+                        android:padding="15dp"
+                        android:src="@drawable/ic_password_show"
+                        android:visibility="gone"
+                        tools:visibility="visible" />
+                </FrameLayout>
             </LinearLayout>
 
             <Button

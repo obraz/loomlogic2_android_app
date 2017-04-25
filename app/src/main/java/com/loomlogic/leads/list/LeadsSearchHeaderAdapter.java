@@ -5,6 +5,7 @@ import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.h6ah4i.android.widget.advrecyclerview.headerfooter.AbstractHeaderFooterWrapperAdapter;
 import com.loomlogic.R;
@@ -14,7 +15,7 @@ import com.loomlogic.R;
  * Created by alex on 3/13/17.
  */
 
-public class LeadsSearchHeaderAdapter extends AbstractHeaderFooterWrapperAdapter<LeadsSearchHeaderAdapter.HeaderViewHolder, LeadsSearchHeaderAdapter.HeaderViewHolder> {
+public class LeadsSearchHeaderAdapter extends AbstractHeaderFooterWrapperAdapter<LeadsSearchHeaderAdapter.HeaderViewHolder, RecyclerView.ViewHolder> {
     private SearchView.OnQueryTextListener onQueryTextListener;
 
     static class HeaderViewHolder extends RecyclerView.ViewHolder {
@@ -38,7 +39,7 @@ public class LeadsSearchHeaderAdapter extends AbstractHeaderFooterWrapperAdapter
 
     @Override
     public int getFooterItemCount() {
-        return 0;
+        return 1;
     }
 
     @Override
@@ -52,8 +53,11 @@ public class LeadsSearchHeaderAdapter extends AbstractHeaderFooterWrapperAdapter
     }
 
     @Override
-    public HeaderViewHolder onCreateFooterItemViewHolder(ViewGroup parent, int viewType) {
-        return null;
+    public RecyclerView.ViewHolder onCreateFooterItemViewHolder(ViewGroup parent, int viewType) {
+        View v = new View(parent.getContext());
+        v.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) parent.getContext().getResources().getDimension(R.dimen.lead_list_footer_height)));
+        return new RecyclerView.ViewHolder(v) {
+        };
     }
 
     @Override
@@ -66,7 +70,7 @@ public class LeadsSearchHeaderAdapter extends AbstractHeaderFooterWrapperAdapter
     }
 
     @Override
-    public void onBindFooterItemViewHolder(HeaderViewHolder holder, int localPosition) {
+    public void onBindFooterItemViewHolder(RecyclerView.ViewHolder holder, int localPosition) {
 
     }
 

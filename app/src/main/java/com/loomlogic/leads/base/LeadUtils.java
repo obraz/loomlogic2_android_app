@@ -1,19 +1,22 @@
-package com.loomlogic.leads.menu;
+package com.loomlogic.leads.base;
 
+import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.ColorRes;
 import android.support.v4.content.ContextCompat;
 
 import com.loomlogic.R;
 import com.loomlogic.base.LoomLogicApp;
+import com.loomlogic.utils.LeadPreferencesUtils;
 
 /**
  * Created by alex on 3/1/17.
  */
 
-public class LeadMenuUtils {
+public class LeadUtils {
 
-    public static String getLeadTypeName(LeadTypes type) {
-        switch (type) {
+    public static String getLeadStatusName(LeadStatus status) {
+        switch (status) {
             case LEADS:
                 return LoomLogicApp.getSharedContext().getString(R.string.leadMenuItem_Leads);
             case LENDER:
@@ -37,11 +40,28 @@ public class LeadMenuUtils {
         }
     }
 
-    public static Drawable getLeadTypeIcon(LeadTypes type, LeadRole role) {
-        int drawableRes;
-        switch (type) {
+    public static String getLeadStatusTitle(LeadStatus status) {
+        switch (status) {
             case LEADS:
-                if (role == LeadRole.SELLER){
+                return LoomLogicApp.getSharedContext().getString(R.string.lead_leads_title);
+            case LENDER:
+                return LoomLogicApp.getSharedContext().getString(R.string.lead_leads_lender_title);
+            case SHOPPING:
+                return LoomLogicApp.getSharedContext().getString(R.string.lead_leads_shopping_title);
+            case CONTRACT:
+                return LoomLogicApp.getSharedContext().getString(R.string.lead_leads_contract_title);
+            case CLOSED:
+                return LoomLogicApp.getSharedContext().getString(R.string.lead_leads_closed_title);
+            default:
+                return "Unspecified";
+        }
+    }
+
+    public static Drawable getLeadStatusIcon(LeadStatus status, LeadType type) {
+        int drawableRes;
+        switch (status) {
+            case LEADS:
+                if (type == LeadType.SELLER) {
                     drawableRes = R.drawable.ic_lead_new_seller;
                     break;
                 }
@@ -57,7 +77,7 @@ public class LeadMenuUtils {
                 drawableRes = R.drawable.ic_lead_contract;
                 break;
             case CLOSED:
-                if (role == LeadRole.SELLER){
+                if (type == LeadType.SELLER) {
                     drawableRes = R.drawable.ic_lead_closed_seller;
                     break;
                 }
@@ -79,5 +99,46 @@ public class LeadMenuUtils {
                 drawableRes = R.drawable.ic_lead_new_buyer;
         }
         return ContextCompat.getDrawable(LoomLogicApp.getSharedContext(), drawableRes);
+    }
+
+    public static int getLeadSubStagesCount(LeadData leadData) {
+        switch (leadData.getStatus()) {
+            case LEADS:
+                return 3;
+            case LENDER:
+                return 4;
+            default:
+                return 1;
+        }
+    }
+
+    @ColorRes
+    public static int getCurrentLeadTypeColor() {
+        switch (LeadPreferencesUtils.getCurrentLeadType()) {
+            case BUYER:
+                return R.color.colorMainBuyer;
+            case SELLER:
+                return R.color.colorMainSeller;
+            default:
+                return R.color.colorMainBuyer;
+        }
+    }
+
+
+    public static Drawable getLeadQuality(String quality) {
+        int color = R.color.transparent;
+        if (quality.equals("A")) {
+            color = R.color.lead_quality_bg_color_A;
+        } else if (quality.equals("B")) {
+            color = R.color.lead_quality_bg_color_B;
+        } else if (quality.equals("C")) {
+            color = R.color.lead_quality_bg_color_C;
+        } else if (quality.equals("D")) {
+            color = R.color.lead_quality_bg_color_D;
+        }
+        Drawable circleDrawable = ContextCompat.getDrawable(LoomLogicApp.getSharedContext(), R.drawable.circle);
+        Drawable bg = circleDrawable.getConstantState().newDrawable();
+        bg.setColorFilter(ContextCompat.getColor(LoomLogicApp.getSharedContext(), color), PorterDuff.Mode.SRC_ATOP);
+        return bg;
     }
 }

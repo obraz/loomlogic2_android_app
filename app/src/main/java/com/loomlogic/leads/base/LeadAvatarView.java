@@ -51,7 +51,6 @@ public class LeadAvatarView extends FrameLayout {
     }
 
     public void setLeadAvatar(final LeadItem lead) {
-        setEscrowStatus(lead);
         ImageView avatarIV = (ImageView) findViewById(R.id.iv_leadAvatar);
         final TextView initialsTV = (TextView) findViewById(R.id.tv_leadInitials);
 
@@ -99,7 +98,7 @@ public class LeadAvatarView extends FrameLayout {
         avatarIV.setImageDrawable(null);
     }
 
-    private void setEscrowStatus(LeadItem lead) {
+    public void setEscrowStatus(LeadItem lead) {
         LeadEscrowStatusView escrowStatusView = (LeadEscrowStatusView) findViewById(R.id.pr_leadEscrowStatus);
         escrowStatusView.setStrokeWidth(getResources().getDimension(R.dimen.lead_escrow_progress_width));
         escrowStatusView.setColor(ContextCompat.getColor(getContext(), LeadEscrowStatusUtils.getEscrowStatusProgressColor(lead)));

@@ -2,63 +2,56 @@ package com.loomlogic.base;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
-import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 
+import com.androidadvance.topsnackbar.TSnackbar;
+import com.github.pwittchen.networkevents.library.ConnectivityStatus;
+import com.github.pwittchen.networkevents.library.event.ConnectivityChanged;
+import com.kt.http.base.ResponseData;
 import com.loomlogic.R;
 import com.loomlogic.base.resultfix.ActivityResultFixActivity;
+import com.loomlogic.network.ApplicationConfig;
+import com.loomlogic.network.RetryRequestCallback;
+import com.loomlogic.network.responses.errors.ApiError;
+import com.loomlogic.utils.IntentUtils;
+import com.loomlogic.utils.InternetConnectionManager;
 import com.loomlogic.utils.Utils;
 import com.loomlogic.utils.ViewUtils;
-import com.novoda.merlin.Merlin;
-import com.novoda.merlin.MerlinsBeard;
-import com.novoda.merlin.registerable.connection.Connectable;
-import com.novoda.merlin.registerable.disconnection.Disconnectable;
 
-/**
- * Created on 11.12.2015.
- * Use this class as superclass for all your activities
- */
-public class BaseActivity extends ActivityResultFixActivity implements Connectable, Disconnectable {
+import org.greenrobot.eventbus.Subscribe;
+
+import java.net.HttpURLConnection;
+
+
+public class BaseActivity extends ActivityResultFixActivity {
     private static final String TAG = BaseActivity.class.getSimpleName();
     public static final String CONNECTED_ACTION = "connected_action";
     public static final String DISCONNECTED_ACTION = "disconnected_action";
 
     boolean toolbarInitialized;
     private ProgressDialog progressDialog;
-    private MerlinsBeard merlinsBeard;
-    private Merlin merlin;
+    private InternetConnectionManager internetConnectionManager;
     private Toolbar toolbar;
-    private Snackbar noConnectionSnackBar;
+    private TSnackbar noConnectionSnackBar;
     private View view;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         toolbarInitialized = false;
-        merlinsBeard = MerlinsBeard.from(this);
-        merlin = new Merlin.Builder()
-                .withConnectableCallbacks()
-                .withBindableCallbacks()
-                .withDisconnectableCallbacks()
-                .build(this);
-        merlin.registerConnectable(this);
-        merlin.registerDisconnectable(this);
-
-
+        internetConnectionManager = InternetConnectionManager.from(this);
     }
 
     @Override
@@ -73,13 +66,21 @@ public class BaseActivity extends ActivityResultFixActivity implements Connectab
         super.setContentView(view);
     }
 
-    @Override
+    @SuppressWarnings("unused")
+    @Subscribe
+    public void onEvent(ConnectivityChanged event) {
+        if (event.getConnectivityStatus() == ConnectivityStatus.MOBILE_CONNECTED || event.getConnectivityStatus() == ConnectivityStatus.WIFI_CONNECTED_HAS_INTERNET) {
+            onConnect();
+        } else {
+            onDisconnect();
+        }
+    }
+
     public void onConnect() {
         hideNoConnectionSnackBar();
         onFragmentCallback(null, CONNECTED_ACTION, null);
     }
 
-    @Override
     public void onDisconnect() {
         showNoConnectionSnackBar();
         onFragmentCallback(null, DISCONNECTED_ACTION, null);
@@ -88,19 +89,32 @@ public class BaseActivity extends ActivityResultFixActivity implements Connectab
     @Override
     protected void onResume() {
         super.onResume();
-        merlin.bind();
-        if (isOnline()) {
-            onConnect();
-        } else {
-            onDisconnect();
-        }
 
+//        if (isOnline()) {
+//            onConnect();
+//        } else {
+//            onDisconnect();
+//        }
     }
 
     @Override
     protected void onPause() {
+
         super.onPause();
-        merlin.unbind();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        internetConnectionManager.register(this);
+    }
+
+    @Override
+    protected void onStop() {
+        hideProgressBar();
+        hideNoConnectionSnackBar();
+        internetConnectionManager.unregister(this);
+        super.onStop();
     }
 
     @Override
@@ -185,26 +199,73 @@ public class BaseActivity extends ActivityResultFixActivity implements Connectab
         }
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        hideProgressBar();
+    public boolean isOnline() {
+        return internetConnectionManager.isConnected();
     }
 
-    public boolean isOnline() {
-        return merlinsBeard != null ? merlinsBeard.isConnected() : true;
+    public void showResponseError(ResponseData data) {
+        showResponseError(data, null);
+    }
+
+    public void showResponseError(ResponseData data, RetryRequestCallback callback) {
+        if (data != null) {
+            if (data.getStatusCode() == HttpURLConnection.HTTP_UNAUTHORIZED) {
+//                Toast.makeText(this, R.string.response401, Toast.LENGTH_LONG).show();
+//                logout();
+            } else {
+                ApiError errors = getApiError(data);
+                if (errors != null && errors.getAlert() != null) {
+                    if (isValidationError(data)) {
+                        showErrorSnackBar(errors.getHumanizedAlert());
+                    } else {
+                        showAlertSnackBar(errors.getHumanizedAlert(), callback);
+                    }
+                } else {
+                    showGeneralAlertSnackBar(callback);
+                }
+            }
+        } else {
+            showGeneralAlertSnackBar(callback);
+        }
+    }
+
+    public boolean isValidationError(ResponseData data) {
+        ApiError errors = getApiError(data);
+        if (errors != null && data.getStatusCode() == ApplicationConfig.HTTP_VALIDATION_ERROR && !errors.getErrors().isEmpty()) {
+            return true;
+        }
+        return false;
+    }
+
+    @Nullable
+    public ApiError getApiError(ResponseData data) {
+        if (data != null && data.getParsedErrorResponse() != null) {
+            ResponseData dataWrapper = (ResponseData) data.getParsedErrorResponse();
+            ApiError errors = (ApiError) dataWrapper.getData();
+            if (errors != null && errors.getErrors() != null && errors.getAlert() != null) {
+                return errors;
+            }
+        }
+        return null;
+    }
+
+    public void showAlertSnackBar(String errorMsg, RetryRequestCallback callback) {
+        if (view != null && errorMsg != null) {
+            hideSoftKeyboard();
+            ViewUtils.showAlertSnackBar(view, errorMsg, callback);
+        }
+    }
+
+    public void showGeneralAlertSnackBar(RetryRequestCallback callback) {
+        showAlertSnackBar(getString(R.string.general_error), callback);
     }
 
 
     public void showErrorSnackBar(String errorMsg) {
         if (view != null && errorMsg != null) {
             hideSoftKeyboard();
-            ViewUtils.showWhiteMessageInSnackBar(view, errorMsg);
+            ViewUtils.showErrorSnackBar(view, errorMsg);
         }
-    }
-
-    public void showGeneralErrorSnackBar() {
-        showErrorSnackBar(getString(R.string.general_error));
     }
 
     public void showNoConnectionSnackBar() {
@@ -229,25 +290,14 @@ public class BaseActivity extends ActivityResultFixActivity implements Connectab
             ViewUtils.showSoftKeyboard(view);
         }
     }
+
     public void hideSoftKeyboard() {
         if (view != null) {
             ViewUtils.hideSoftKeyboard(view);
         }
     }
 
-    public void openDialIntent(String phone) {
-        Intent intent = new Intent(Intent.ACTION_DIAL);
-        if (Utils.isPhoneValid(phone)) {
-            intent.setData(Uri.parse("tel:" + phone));
-        }
-        if (intent.resolveActivity(getPackageManager()) != null) {
-            startActivity(intent);
-        } else {
-            showErrorSnackBar(getString(R.string.call_error));
-        }
-    }
-
-    public void showMapDialog(final String latitude, final String longitude, final String address){
+    public void showMapDialog(final String latitude, final String longitude, final String address) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.map_open_dialog_title);
         builder.setMessage(R.string.map_open_dialog_message);
@@ -255,30 +305,15 @@ public class BaseActivity extends ActivityResultFixActivity implements Connectab
         builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                openMapIntent(latitude, longitude, address);
+                IntentUtils.openMapIntent(BaseActivity.this, latitude, longitude, address);
             }
         });
         builder.show();
     }
 
-    public void openMapIntent(String latitude, String longitude, String address) {
-        String mapRequest = "geo:" + latitude + "," + longitude;
-        if (address != null && !TextUtils.isEmpty(address)) {
-            mapRequest = mapRequest + "?q=" + Uri.encode(address);
-        }
-        Uri gmmIntentUri = Uri.parse(mapRequest);
-        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
-        mapIntent.setPackage("com.google.android.apps.maps");
-        if (mapIntent.resolveActivity(getPackageManager()) != null) {
-            startActivity(mapIntent);
-        } else {
-            showErrorSnackBar(getString(R.string.map_error));
-        }
-    }
-
-    public void showCopyTextDialog(final String text){
+    public void showCopyTextDialog(final String text) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        String[] de =  {getString(R.string.copy_text)};
+        String[] de = {getString(R.string.copy_text)};
         builder.setItems(de, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

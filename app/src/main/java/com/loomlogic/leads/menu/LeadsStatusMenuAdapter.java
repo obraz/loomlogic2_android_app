@@ -17,10 +17,10 @@ import java.util.ArrayList;
  * Created by alex on 3/1/17.
  */
 
-public class LeadsMenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class LeadsStatusMenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private ArrayList<LeadMenuItem> items;
 
-    public LeadsMenuAdapter(ArrayList<LeadMenuItem> items) {
+    public LeadsStatusMenuAdapter(ArrayList<LeadMenuItem> items) {
         this.items = items;
     }
 
@@ -42,7 +42,7 @@ public class LeadsMenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         holder.layoutRoot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EventBus.getDefault().post(new MessageEvent(MessageEvent.MessageEventType.LEADS_MENU_SELECT, item));
+                EventBus.getDefault().post(new MessageEvent(MessageEvent.MessageEventType.LEADS_MENU_SELECT, item.getLead()));
             }
         });
     }

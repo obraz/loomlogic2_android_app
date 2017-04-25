@@ -2,10 +2,12 @@ package com.loomlogic.signin.signup;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageButton;
 
 import com.loomlogic.R;
 import com.loomlogic.base.resultfix.ActivityResultFixFragment;
@@ -40,6 +42,21 @@ public class SignUpFirstStepFragment extends ActivityResultFixFragment {
 
         passwordEt = (EditText) view.findViewById(et_signUp_password);
         activity.setUpEditTextLeftIcon(passwordEt);
+
+        final ImageButton passwordVisibilityView = (ImageButton) view.findViewById(R.id.ib_passswordVisibility);
+        passwordVisibilityView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (passwordEt.getInputType() == (InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD)) {
+                    passwordEt.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                    passwordVisibilityView.setImageResource(R.drawable.ic_password_show);
+                } else {
+                    passwordEt.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                    passwordVisibilityView.setImageResource(R.drawable.ic_password_hide);
+                }
+                passwordEt.setSelection(passwordEt.getText().length());
+            }
+        });
 
         view.findViewById(R.id.btn_signUp_continue).setOnClickListener(new View.OnClickListener() {
             @Override

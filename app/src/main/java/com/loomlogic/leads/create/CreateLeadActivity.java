@@ -124,7 +124,7 @@ public class CreateLeadActivity extends BaseActivity implements View.OnClickList
             }
         });
 
-        // if (LeadPreferencesUtils.getCurrentLeadRole() == LeadRole.SELLER) {
+        // if (LeadPreferencesUtils.getCurrentLeadType() == LeadType.SELLER) {
         //      sellerRole.setChecked(true);
         //  }
     }
@@ -157,6 +157,12 @@ public class CreateLeadActivity extends BaseActivity implements View.OnClickList
                     break;
                 case RESULT_PICK_SOURCE:
                     sourcePicked(data);
+                    break;
+            }
+        } else {
+            switch (requestCode) {
+                case RESULT_PICK_CONTACT:
+                    finish();
                     break;
             }
         }

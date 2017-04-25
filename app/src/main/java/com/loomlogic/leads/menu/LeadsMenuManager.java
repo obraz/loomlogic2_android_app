@@ -14,6 +14,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
@@ -22,10 +23,11 @@ import android.widget.TextView;
 
 import com.loomlogic.R;
 import com.loomlogic.home.HomeActivity;
+import com.loomlogic.leads.base.LeadOwner;
+import com.loomlogic.leads.base.LeadType;
+import com.loomlogic.leads.base.LeadUtils;
 import com.loomlogic.leads.create.CreateLeadActivity;
-import com.loomlogic.leads.entity.LeadRole;
 import com.loomlogic.utils.LeadPreferencesUtils;
-import com.loomlogic.utils.LeadUtils;
 import com.loomlogic.utils.ViewUtils;
 import com.loomlogic.view.EventListeningSpinner;
 import com.loomlogic.view.LinePageIndicator;
@@ -37,8 +39,8 @@ import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
  */
 
 public class LeadsMenuManager {
-    private static final int ROLE_BUYER_MENU_POSITION = 0;
-    private static final int ROLE_BUYER_SELLER_POSITION = 1;
+    public static final int TYPE_BUYER_MENU_POSITION = 0;
+    public static final int TYPE_BUYER_SELLER_POSITION = 1;
     private HomeActivity activity;
     private View mainContent;
     private DrawerLayout drawer;
@@ -46,6 +48,7 @@ public class LeadsMenuManager {
     private View navigationViewContainer;
     private LeadsTypeAdapter adapter;
     private ViewPager viewPager;
+    private boolean ignoreOwnerSpinnerFirstTime = true;
 
     public LeadsMenuManager(HomeActivity activity, View mainContent, DrawerLayout drawerLayout, View navigationViewContainer) {
         this.activity = activity;
@@ -73,10 +76,8 @@ public class LeadsMenuManager {
         titleIndicator.setFullWidht();
         titleIndicator.setUnselectedColor(ContextCompat.getColor(activity, R.color.lead_menu_title_bg_color));
 
-        adapter = new LeadsTypeAdapter(activity.getBaseContext());
-
         viewPager = (ViewPager) navigationViewContainer.findViewById(R.id.vp_leadsMenu);
-        viewPager.setAdapter(adapter);
+        updateMenuItems(LeadOwner.MY_LEAD);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -87,26 +88,26 @@ public class LeadsMenuManager {
             public void onPageSelected(int position) {
                 boolean roleWasChanged = false;
                 switch (position) {
-                    case ROLE_BUYER_MENU_POSITION:
-                        if (LeadPreferencesUtils.getCurrentLeadRole() == LeadRole.SELLER) {
+                    case TYPE_BUYER_MENU_POSITION:
+                        if (LeadPreferencesUtils.getCurrentLeadType() == LeadType.SELLER) {
                             roleWasChanged = true;
                         }
-                        LeadPreferencesUtils.setCurrentLeadRole(LeadRole.BUYER);
+                        LeadPreferencesUtils.setCurrentLeadType(LeadType.BUYER);
                         buyersTv.setTextColor(ContextCompat.getColor(activity, R.color.lead_menu_title_active));
                         sellersTv.setTextColor(ContextCompat.getColor(activity, R.color.lead_menu_title_notactive));
                         break;
-                    case ROLE_BUYER_SELLER_POSITION:
-                        if (LeadPreferencesUtils.getCurrentLeadRole() == LeadRole.BUYER) {
+                    case TYPE_BUYER_SELLER_POSITION:
+                        if (LeadPreferencesUtils.getCurrentLeadType() == LeadType.BUYER) {
                             roleWasChanged = true;
                         }
-                        LeadPreferencesUtils.setCurrentLeadRole(LeadRole.SELLER);
+                        LeadPreferencesUtils.setCurrentLeadType(LeadType.SELLER);
                         buyersTv.setTextColor(ContextCompat.getColor(activity, R.color.lead_menu_title_notactive));
                         sellersTv.setTextColor(ContextCompat.getColor(activity, R.color.lead_menu_title_active));
                         break;
                 }
 
-                titleIndicator.setSelectedColor(ContextCompat.getColor(activity, LeadUtils.getCurrentLeadRoleColor()));
-                newLeadFAB.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(activity, LeadUtils.getCurrentLeadRoleColor())));
+                titleIndicator.setSelectedColor(ContextCompat.getColor(activity, LeadUtils.getCurrentLeadTypeColor()));
+                newLeadFAB.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(activity, LeadUtils.getCurrentLeadTypeColor())));
 
                 if (roleWasChanged) {
                     activity.refreshNavBar();
@@ -120,16 +121,16 @@ public class LeadsMenuManager {
         });
 
         titleIndicator.setViewPager(viewPager);
-        if (LeadPreferencesUtils.getCurrentLeadRole() == LeadRole.SELLER) {
-            viewPager.setCurrentItem(ROLE_BUYER_SELLER_POSITION);
+        if (LeadPreferencesUtils.getCurrentLeadType() == LeadType.SELLER) {
+            viewPager.setCurrentItem(TYPE_BUYER_SELLER_POSITION);
         }
 
         buyersTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 switch (viewPager.getCurrentItem()) {
-                    case ROLE_BUYER_SELLER_POSITION:
-                        viewPager.setCurrentItem(ROLE_BUYER_MENU_POSITION);
+                    case TYPE_BUYER_SELLER_POSITION:
+                        viewPager.setCurrentItem(TYPE_BUYER_MENU_POSITION);
                         break;
                 }
             }
@@ -139,8 +140,8 @@ public class LeadsMenuManager {
             @Override
             public void onClick(View v) {
                 switch (viewPager.getCurrentItem()) {
-                    case ROLE_BUYER_MENU_POSITION:
-                        viewPager.setCurrentItem(ROLE_BUYER_SELLER_POSITION);
+                    case TYPE_BUYER_MENU_POSITION:
+                        viewPager.setCurrentItem(TYPE_BUYER_SELLER_POSITION);
                         break;
                 }
             }
@@ -151,23 +152,44 @@ public class LeadsMenuManager {
         final View spinnerContainer = navigationViewContainer.findViewById(R.id.fl_leadFilterContainer);
         final ImageView spinnerArrow = (ImageView) navigationViewContainer.findViewById(R.id.iv_leadFilterArrow);
 
-        EventListeningSpinner leadFilterSp = (EventListeningSpinner) navigationViewContainer.findViewById(R.id.sp_leadFilter);
-        leadFilterSp.setAdapter(new LeadMenuFilterAdapter());
-        leadFilterSp.setSpinnerEventsListener(new EventListeningSpinner.OnSpinnerEventsListener() {
+        EventListeningSpinner leadOwnerSp = (EventListeningSpinner) navigationViewContainer.findViewById(R.id.sp_leadOwner);
+        leadOwnerSp.setAdapter(new LeadOwnerMenuAdapter());
+        leadOwnerSp.setSpinnerEventsListener(new EventListeningSpinner.OnSpinnerEventsListener() {
             @Override
             public void onSpinnerOpened(Spinner spinner) {
-                spinnerContainer.setBackgroundResource(R.drawable.bg_lead_filter_spinner_opened);
+                spinnerContainer.setBackgroundResource(R.drawable.bg_lead_owner_spinner_opened);
                 spinnerArrow.setRotation(90);
                 spinnerArrow.setColorFilter(Color.WHITE);
             }
 
             @Override
             public void onSpinnerClosed(Spinner spinner) {
-                spinnerContainer.setBackgroundResource(R.drawable.bg_lead_filter_spinner_closed);
+                spinnerContainer.setBackgroundResource(R.drawable.bg_lead_owner_spinner_closed);
                 spinnerArrow.setRotation(270);
                 spinnerArrow.setColorFilter(ContextCompat.getColor(activity, R.color.lead_menu_spinner_arrow_closed_color));
             }
         });
+
+        leadOwnerSp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (ignoreOwnerSpinnerFirstTime) {
+                    ignoreOwnerSpinnerFirstTime = false;
+                    return;
+                }
+                updateMenuItems(position == 0 ? LeadOwner.MY_LEAD : LeadOwner.TEAM_LEAD);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
+    private void updateMenuItems(LeadOwner owner) {
+        adapter = new LeadsTypeAdapter(activity.getBaseContext(), owner);
+        viewPager.setAdapter(adapter);
     }
 
     private void initNavigation() {
@@ -238,7 +260,7 @@ public class LeadsMenuManager {
                 TextView tv = (TextView) v.findViewById(android.R.id.text1);
 
                 tv.setCompoundDrawablesWithIntrinsicBounds(position == 0 ? R.drawable.ic_lead_create_from_contact : R.drawable.ic_lead_create_new, 0, 0, 0);
-                tv.setCompoundDrawablePadding((int)activity.getResources().getDimension(R.dimen.dialog_item_icon_margin));
+                tv.setCompoundDrawablePadding((int) activity.getResources().getDimension(R.dimen.dialog_item_icon_margin));
                 tv.setTextSize(16);
                 return v;
             }

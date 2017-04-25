@@ -5,6 +5,11 @@
     <color name="colorAccent">#03A9F4</color>
 
     <color name="colorPrimaryLightDark">#214263</color>
+    <color name="alertMessageTextColor">#2C2E30</color>
+    <color name="alertMessageBgColor">#F0F7FD</color>
+    <color name="errorMessageBgColor">#F44336</color>
+
+    <color name="errorIconColor">#F44336</color>
 
     <color name="transparent">#00000000</color>
     <color name="blueBtn">#03A9F4</color>
@@ -33,6 +38,11 @@
     <color name="black_transparent_10">#1A000000</color>
     <color name="black_transparent_50">#80000000</color>
 
+    <color name="lead_quality_bg_color_A">#7FD23B</color>
+    <color name="lead_quality_bg_color_B">#FCB322</color>
+    <color name="lead_quality_bg_color_C">#FC6D64</color>
+    <color name="lead_quality_bg_color_D">#552D16</color>
+
     <color name="lead_gender_male_color">#4990E2</color>
     <color name="lead_gender_female_color">#BD0FE1</color>
     <color name="lead_gender_none_color">#9B9B9B</color>
@@ -41,6 +51,8 @@
     <color name="lead_menu_title_active">#FFFFFF</color>
     <color name="lead_menu_title_notactive">#91A1B1</color>
     <color name="lead_menu_spinner_arrow_closed_color">#335371</color>
+
+    <color name="leads_substage_counter_bg_color">#1F3D5B</color>
 
     <color name="lead_deadline_upnext_color">#798591</color>
     <color name="lead_deadline_today_color">#FFA50F</color>

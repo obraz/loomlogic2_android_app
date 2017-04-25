@@ -6,15 +6,13 @@ import com.google.gson.reflect.TypeToken;
 import com.kt.http.base.BaseRequest;
 import com.kt.http.base.BaseRequestBuilder;
 import com.loomlogic.network.ApplicationConfig;
-import com.loomlogic.network.responses.ApiError;
+import com.loomlogic.network.responses.errors.ApiError;
 
 import java.lang.reflect.Type;
 
-/**
- * Created on 30.09.2016.
- */
-public class BaseStylesRequestBuilder extends BaseRequestBuilder {
-    public BaseStylesRequestBuilder() {
+
+public class BaseLLRequestBuilder extends BaseRequestBuilder {
+    public BaseLLRequestBuilder() {
         this.setRequestMethod(BaseRequest.RequestMethod.POST);
         this.setResponseFormat(BaseRequest.ResponseFormat.JSON);
         this.setRequestFormat(BaseRequest.RequestFormat.JSON);

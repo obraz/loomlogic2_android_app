@@ -4,18 +4,27 @@ import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
-import android.provider.Settings;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TabLayout;
+import android.support.v4.content.ContextCompat;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
+import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.HorizontalScrollView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.TextView;
 
+import com.androidadvance.topsnackbar.TSnackbar;
 import com.loomlogic.R;
+import com.loomlogic.base.LoomLogicApp;
+import com.loomlogic.network.RetryRequestCallback;
 
 /**
  * Created by alex on 2/15/17.
@@ -23,34 +32,70 @@ import com.loomlogic.R;
 
 public class ViewUtils {
 
-    public static void showWhiteMessageInSnackBar(View view, String message) {
-        try {
-            SpannableString txt = new SpannableString(message);
-            txt.setSpan(new ForegroundColorSpan(Color.WHITE), 0, txt.length(), 0);
-            Snackbar.make(view, txt, Snackbar.LENGTH_LONG).show();
-        } catch (Exception e) {
 
-        }
+    public static void showErrorSnackBar(View view, String message) {
+        TSnackbar snackbar = TSnackbar.make(view, message, Snackbar.LENGTH_LONG);
+
+        View snackbarView = snackbar.getView();
+        snackbarView.setBackgroundColor(ContextCompat.getColor(view.getContext(), R.color.errorMessageBgColor));
+        TextView textView = (TextView) snackbarView.findViewById(com.androidadvance.topsnackbar.R.id.snackbar_text);
+        textView.setTextColor(Color.WHITE);
+        textView.setGravity(Gravity.CENTER);
+        snackbar.show();
     }
 
-    public static Snackbar displayNoInternetSnackBar(@NonNull final Activity activity, @NonNull View view) {
-        SpannableString txt = new SpannableString(activity.getString(R.string.internet_error));
-        txt.setSpan(new ForegroundColorSpan(Color.WHITE), 0, txt.length(), 0);
-        Snackbar snackbar = Snackbar.make(view, txt, Snackbar.LENGTH_INDEFINITE)
-                .setAction(R.string.Connect, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        activity.startActivity(new Intent(Settings.ACTION_AIRPLANE_MODE_SETTINGS));
-                    }
-                });
+    public static void showAlertSnackBar(View view, String message, final RetryRequestCallback callback) {
+        SpannableString txt = new SpannableString(message);
+        txt.setSpan(new ForegroundColorSpan(ContextCompat.getColor(view.getContext(), R.color.alertMessageTextColor)), 0, txt.length(), 0);
+        final TSnackbar snackbar = TSnackbar.make(view, txt, Snackbar.LENGTH_INDEFINITE);
 
-        snackbar.show();
-        try {
-            Snackbar.SnackbarLayout layout = (Snackbar.SnackbarLayout) snackbar.getView();
-            layout.setPadding(0, 0, 0, 0);
-        } catch (Exception e) {
-
+        if (callback != null) {
+            snackbar.setAction(R.string.retry, new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    callback.onRetry();
+                }
+            });
         }
+        snackbar.setActionTextColor(ContextCompat.getColor(view.getContext(), R.color.colorAccent));
+
+        View snackbarView = snackbar.getView();
+        snackbarView.setBackgroundColor(ContextCompat.getColor(view.getContext(), R.color.alertMessageBgColor));
+        snackbarView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                snackbar.dismiss();
+                return false;
+            }
+        });
+        snackbar.show();
+    }
+
+    public static TSnackbar displayNoInternetSnackBar(@NonNull final Activity activity, @NonNull View view) {
+        SpannableString txt = new SpannableString(activity.getString(R.string.internet_error));
+        txt.setSpan(new ForegroundColorSpan(ContextCompat.getColor(activity, R.color.alertMessageTextColor)), 0, txt.length(), 0);
+        final TSnackbar snackbar = TSnackbar.make(view, txt, Snackbar.LENGTH_INDEFINITE);
+
+        snackbar.setAction(R.string.Connect, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                IntentUtils.openInternetSettingsIntent(activity);
+            }
+        });
+
+        snackbar.setActionTextColor(ContextCompat.getColor(activity, R.color.colorAccent));
+
+        View snackbarView = snackbar.getView();
+        snackbarView.setBackgroundColor(ContextCompat.getColor(activity, R.color.alertMessageBgColor));
+        snackbarView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                snackbar.dismiss();
+                return false;
+            }
+        });
+        snackbar.show();
+
         return snackbar;
     }
 
@@ -126,5 +171,35 @@ public class ViewUtils {
 
         });
         colorAnimation.start();
+    }
+
+    public static Runnable configTab(final TabLayout mTabLayout, final boolean shouldAnimate) {
+        return new Runnable() {
+            @Override
+            public void run() {
+                int widthDiff = Utils.getDisplayWidth(LoomLogicApp.getSharedContext()) - mTabLayout.getWidth();
+                if (widthDiff > 0) {
+                    int widthAdd = widthDiff / mTabLayout.getTabCount();
+                    for (int i = 0; i < mTabLayout.getTabCount(); i++) {
+                        if (i == mTabLayout.getTabCount() - 1) {
+                            widthAdd = widthAdd + widthDiff % mTabLayout.getTabCount();
+                        }
+                        View tabView = mTabLayout.getTabAt(i).getCustomView();
+                        tabView.setLayoutParams(new LinearLayout.LayoutParams(tabView.getWidth() + widthAdd, LinearLayout.LayoutParams.WRAP_CONTENT));
+                    }
+
+                } else if (shouldAnimate) {
+                    // todo do it only once
+                    mTabLayout.fullScroll(HorizontalScrollView.FOCUS_RIGHT);
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            mTabLayout.fullScroll(HorizontalScrollView.FOCUS_LEFT);
+                        }
+                    }, 800);
+
+                }
+            }
+        };
     }
 }

@@ -27,6 +27,9 @@ import com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultAct
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractSwipeableItemViewHolder;
 import com.loomlogic.R;
 import com.loomlogic.leads.base.LeadAvatarView;
+import com.loomlogic.leads.base.LeadData;
+import com.loomlogic.leads.base.LeadSubStage;
+import com.loomlogic.leads.base.LeadUtils;
 import com.loomlogic.leads.entity.LeadItem;
 
 import java.util.ArrayList;
@@ -44,6 +47,7 @@ public class LeadsAdapter extends RecyclerView.Adapter<LeadsAdapter.LeadsHolder>
     private interface Swipeable extends SwipeableItemConstants {
     }
 
+    private LeadData leadData;
     private List<LeadItem> leads;
     private Context context;
     private float widthButton;
@@ -71,8 +75,9 @@ public class LeadsAdapter extends RecyclerView.Adapter<LeadsAdapter.LeadsHolder>
         void onCallTwillioClickListener(LeadItem item);
     }
 
-    public LeadsAdapter(Context context, OnLeadClickListener eventListener) {
+    public LeadsAdapter(Context context, LeadData leadData, OnLeadClickListener eventListener) {
         this.context = context;
+        this.leadData = leadData;
         float paddings = context.getResources().getDimension(R.dimen.lead_swipe_action_button_padding) * 2;
         widthButton = context.getResources().getDimension(R.dimen.lead_swipe_action_button_width);
         maxSwipeWidth2Buttons = widthButton * 2 + paddings;
@@ -108,7 +113,87 @@ public class LeadsAdapter extends RecyclerView.Adapter<LeadsAdapter.LeadsHolder>
 
     @Override
     public void onBindViewHolder(final LeadsHolder holder, final int position) {
+        setCallbacks(holder, position);
+
         final LeadItem lead = leads.get(position);
+
+        setActionButtonBgColor(holder.mCallIv, lead_call_btn_bg_color);
+        setActionButtonBgColor(holder.mMessageIv, lead_msg_btn_bg_color);
+
+        holder.mAvatarV.setLeadAvatar(lead);
+        holder.mNameTxt.setText(lead.getFullFormattedName());
+        setLeadNotificationsCount(holder, lead);
+
+        switch (leadData.getStatus()) {
+            case LEADS:
+                if (leadData.getSubStage() == LeadSubStage.NEW || leadData.getSubStage() == LeadSubStage.ENGAGED) {
+                    setLeadQuality(holder, lead);
+                } else {
+                    holder.mDeadLineDateTxt.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(context, R.drawable.ic_lead_future_call), null, null, null);
+                }
+                setDeadline(holder, lead);
+                holder.mInfoTxt.setText(lead.source);
+                break;
+            case LENDER:
+                if (leadData.getSubStage() == LeadSubStage.APPOINTMENT) {
+                    holder.mDeadLineDateTxt.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(context, R.drawable.ic_lead_appointment_calendar), null, null, null);
+                } else {
+                }
+                setDeadline(holder, lead);
+                holder.mInfoTxt.setText(lead.lenderName);
+                holder.mInfoTxt.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(context, R.drawable.ic_buyer_financing), null, null, null);
+                break;
+            case SHOPPING:
+                setDeadline(holder, lead);
+                holder.mInfoTxt.setText(String.format("%s - %s", lead.price, lead.loanType));
+                break;
+            case CONTRACT:
+                holder.mAvatarV.setEscrowStatus(lead);
+                setDeadline(holder, lead);
+                holder.mInfoTxt.setText(lead.address);
+                holder.mInfoTxt.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(context, lead.isFinancing ? R.drawable.ic_buyer_financing : R.drawable.ic_buyer_cash), null, null, null);
+                break;
+            case CLOSED:
+                setDeadline(holder, lead);
+                holder.mInfoTxt.setText(lead.lenderName);
+                holder.mInfoTxt.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(context, lead.isFinancing ? R.drawable.ic_buyer_financing : R.drawable.ic_buyer_cash), null, null, null);
+                break;
+        }
+
+        if (!lead.isPinned() && ((ColorDrawable) holder.mContainerBgView.getBackground()).getColor() == colorSwipeBg) {
+            animViewBgColor(holder.mContainerBgView, colorSwipeBg, Color.WHITE, BACKGROUND_COLOR_ANIMATION_TIME);
+        }
+
+        holder.setProportionalSwipeAmountModeEnabled(false);
+        holder.setMaxRightSwipeAmount(0);
+        holder.setMaxLeftSwipeAmount(-maxSwipeWidthCurrent);
+        holder.setSwipeItemHorizontalSlideAmount(lead.isPinned() ? -maxSwipeWidthCurrent : 0);
+
+        lead.setPinned(false);
+    }
+
+    private void setLeadNotificationsCount(LeadsHolder holder, LeadItem lead) {
+        if (lead.unreadNotificationCount > 0) {
+            holder.mNotificationCountTxt.setText(String.valueOf(lead.unreadNotificationCount));
+            holder.mNotificationCountTxt.setVisibility(View.VISIBLE);
+        } else {
+            holder.mNotificationCountTxt.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    private void setLeadQuality(LeadsHolder holder, LeadItem lead) {
+        if (lead.quality != null) {
+            holder.mQualityTxt.setVisibility(View.VISIBLE);
+            holder.mQualityTxt.setText(lead.quality);
+            holder.mQualityTxt.setBackground(LeadUtils.getLeadQuality(lead.quality));
+        } else {
+            holder.mQualityTxt.setVisibility(View.GONE);
+        }
+    }
+
+    private void setCallbacks(final LeadsHolder holder, final int position) {
+        final LeadItem lead = leads.get(position);
+
         setClickListenerToView(holder.mContainer, lead);
         setClickListenerToView(holder.mCallSystemIv, lead);
         setClickListenerToView(holder.mCallTwillioIv, lead);
@@ -143,33 +228,6 @@ public class LeadsAdapter extends RecyclerView.Adapter<LeadsAdapter.LeadsHolder>
                 animateShowLeadConnectBtn(holder.mMessageNoteIv, 3);
             }
         });
-
-        setBgColor(holder.mCallIv, lead_call_btn_bg_color);
-        setBgColor(holder.mMessageIv, lead_msg_btn_bg_color);
-
-        holder.mAvatarV.setLeadAvatar(lead);
-        setDeadline(holder, lead);
-        holder.mNameTxt.setText(lead.getFullFormattedName());
-        holder.mStatusTxt.setText(lead.address);
-        holder.mStatusTxt.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(context, lead.isFinancing ? R.drawable.ic_buyer_financing : R.drawable.ic_buyer_cash), null, null, null);
-
-        if (lead.unreadNotificationCount > 0) {
-            holder.mNotificationCountTxt.setText(String.valueOf(lead.unreadNotificationCount));
-            holder.mNotificationCountTxt.setVisibility(View.VISIBLE);
-        } else {
-            holder.mNotificationCountTxt.setVisibility(View.INVISIBLE);
-        }
-
-        if (!lead.isPinned() && ((ColorDrawable) holder.mContainerBgView.getBackground()).getColor() == colorSwipeBg) {
-            animViewBgColor(holder.mContainerBgView, colorSwipeBg, Color.WHITE, BACKGROUND_COLOR_ANIMATION_TIME);
-        }
-
-        holder.setProportionalSwipeAmountModeEnabled(false);
-        holder.setMaxRightSwipeAmount(0);
-        holder.setMaxLeftSwipeAmount(-maxSwipeWidthCurrent);
-        holder.setSwipeItemHorizontalSlideAmount(lead.isPinned() ? -maxSwipeWidthCurrent : 0);
-
-        lead.setPinned(false);
     }
 
     private void setClickListenerToView(View view, LeadItem lead) {
@@ -177,7 +235,7 @@ public class LeadsAdapter extends RecyclerView.Adapter<LeadsAdapter.LeadsHolder>
         view.setOnClickListener(this);
     }
 
-    private void setBgColor(View view, @ColorRes int color) {
+    private void setActionButtonBgColor(View view, @ColorRes int color) {
         Drawable circleDrawable = ContextCompat.getDrawable(context, R.drawable.circle);
         Drawable msgBg = circleDrawable.getConstantState().newDrawable();
         msgBg.setColorFilter(ContextCompat.getColor(context, color), PorterDuff.Mode.SRC_ATOP);
@@ -311,8 +369,9 @@ public class LeadsAdapter extends RecyclerView.Adapter<LeadsAdapter.LeadsHolder>
     public class LeadsHolder extends AbstractSwipeableItemViewHolder {
         private RelativeLayout mContainer;
         private LeadAvatarView mAvatarV;
+        private TextView mQualityTxt;
         private TextView mNameTxt;
-        private TextView mStatusTxt;
+        private TextView mInfoTxt;
         private TextView mDeadLineDateTxt;
         private TextView mNotificationCountTxt;
         private View mContainerBgView;
@@ -329,8 +388,9 @@ public class LeadsAdapter extends RecyclerView.Adapter<LeadsAdapter.LeadsHolder>
             super(v);
             mContainer = (RelativeLayout) v.findViewById(R.id.container);
             mAvatarV = (LeadAvatarView) v.findViewById(R.id.view_leadAvatar);
+            mQualityTxt = (TextView) v.findViewById(R.id.tv_leadQuality);
             mNameTxt = (TextView) v.findViewById(R.id.tv_leadName);
-            mStatusTxt = (TextView) v.findViewById(R.id.tv_leadAddress);
+            mInfoTxt = (TextView) v.findViewById(R.id.tv_leadInfo);
             mDeadLineDateTxt = (TextView) v.findViewById(R.id.tv_leadDate);
             mNotificationCountTxt = (TextView) v.findViewById(R.id.tv_leadNotificationsCounter);
             mContainerBgView = v.findViewById(R.id.leadContainerBg);

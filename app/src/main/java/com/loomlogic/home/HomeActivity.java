@@ -1,5 +1,7 @@
 package com.loomlogic.home;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -9,7 +11,11 @@ import android.support.v4.util.Pair;
 
 import com.loomlogic.R;
 import com.loomlogic.base.MessageEvent;
-import com.loomlogic.leads.list.LeadsFragment;
+import com.loomlogic.leads.base.LeadData;
+import com.loomlogic.leads.base.LeadOwner;
+import com.loomlogic.leads.base.LeadStatus;
+import com.loomlogic.leads.base.LeadType;
+import com.loomlogic.leads.main.LeadsMainFragment;
 import com.loomlogic.multibackstack.BackStackActivity;
 import com.loomlogic.view.navigationbar.BottomNavigationBar;
 
@@ -29,6 +35,12 @@ public class HomeActivity extends BackStackActivity implements BottomNavigationB
     private BottomNavigationBar bottomNavBar;
     private Fragment curFragment;
     private int curTabId;
+
+    public static void start(@NonNull Activity activity) {
+        Intent intent = new Intent(activity, HomeActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        activity.startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +71,7 @@ public class HomeActivity extends BackStackActivity implements BottomNavigationB
             case 1:
                 return DefaultFragment.newInstance();
             case 2:
-                return LeadsFragment.newInstance();
+                return LeadsMainFragment.newInstance(new LeadData(LeadType.BUYER, LeadOwner.MY_LEAD, LeadStatus.LEADS));
             case 3:
                 return DefaultFragment.newInstance();
             case 4:

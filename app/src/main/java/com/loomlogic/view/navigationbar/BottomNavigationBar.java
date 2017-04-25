@@ -19,7 +19,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.loomlogic.R;
-import com.loomlogic.utils.LeadUtils;
+import com.loomlogic.leads.base.LeadUtils;
 import com.loomlogic.view.navigationbar.behaviour.BottomVerticalScrollBehavior;
 
 import java.util.ArrayList;
@@ -116,7 +116,7 @@ public class BottomNavigationBar extends FrameLayout {
             mBottomNavigationBarListener.onTabSelected(newPosition);
         }
         btnIvList.get(currentPosition).getDrawable().setTint(ContextCompat.getColor(getContext(), R.color.colorNavigationDefault));
-        btnIvList.get(newPosition).getDrawable().setTint(ContextCompat.getColor(getContext(), LeadUtils.getCurrentLeadRoleColor()));
+        btnIvList.get(newPosition).getDrawable().setTint(ContextCompat.getColor(getContext(), LeadUtils.getCurrentLeadTypeColor()));
         currentPosition = newPosition;
     }
 

@@ -1,7 +1,6 @@
 package com.loomlogic.leads.mainleaddetails;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.ColorRes;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
@@ -13,8 +12,6 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.HorizontalScrollView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -22,7 +19,7 @@ import com.loomlogic.R;
 import com.loomlogic.home.BaseHomeFragment;
 import com.loomlogic.leads.entity.LeadItem;
 import com.loomlogic.leads.settings.LeadSettingsActivity;
-import com.loomlogic.utils.Utils;
+import com.loomlogic.utils.ViewUtils;
 
 /**
  * Created by alex on 3/14/17.
@@ -42,35 +39,6 @@ public class LeadDetailsMainFragment extends BaseHomeFragment implements TabLayo
     private LeadItem leadItem;
     private TabLayout mTabLayout;
     private ViewPager viewPager;
-
-    Runnable mTabLayout_config = new Runnable() {
-        @Override
-        public void run() {
-            int widthDiff = Utils.getDisplayWidth(getContext()) - mTabLayout.getWidth();
-            if (widthDiff > 0) {
-                int widthAdd = widthDiff / mTabLayout.getTabCount();
-                for (int i = 0; i < mTabLayout.getTabCount(); i++) {
-                    if (i == mTabLayout.getTabCount() - 1) {
-                        widthAdd = widthAdd + widthDiff % mTabLayout.getTabCount();
-                    }
-                    View tabView = mTabLayout.getTabAt(i).getCustomView();
-                    tabView.setLayoutParams(new LinearLayout.LayoutParams(tabView.getWidth() + widthAdd, LinearLayout.LayoutParams.WRAP_CONTENT));
-                }
-
-            } else {
-                // todo do it only once
-                mTabLayout.fullScroll(HorizontalScrollView.FOCUS_RIGHT);
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        mTabLayout.fullScroll(HorizontalScrollView.FOCUS_LEFT);
-                    }
-                }, 800);
-
-            }
-        }
-    };
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -103,7 +71,7 @@ public class LeadDetailsMainFragment extends BaseHomeFragment implements TabLayo
         mTabLayout.addTab(mTabLayout.newTab().setCustomView(getViewForTab(R.string.lead_details_tab_tasks, 0)));
         mTabLayout.addTab(mTabLayout.newTab().setCustomView(getViewForTab(R.string.lead_details_tab_documents, 0)));
         mTabLayout.addOnTabSelectedListener(this);
-        mTabLayout.post(mTabLayout_config);
+        mTabLayout.post(ViewUtils.configTab(mTabLayout, true));
     }
 
     private View getViewForTab(@StringRes int tabName, int notifCount) {
