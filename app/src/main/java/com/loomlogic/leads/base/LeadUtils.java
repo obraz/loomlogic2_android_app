@@ -104,9 +104,9 @@ public class LeadUtils {
     public static int getLeadSubStagesCount(LeadData leadData) {
         switch (leadData.getStatus()) {
             case LEADS:
-                return 3;
-            case LENDER:
                 return 4;
+            case LENDER:
+                return 5;
             default:
                 return 1;
         }

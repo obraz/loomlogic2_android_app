@@ -5,20 +5,13 @@ import com.loomlogic.network.responses.ResetPasswordData;
 import com.loomlogic.network.responses.ResponseDataWrapper;
 
 import java.lang.reflect.Type;
-import java.util.HashMap;
-import java.util.Map;
 
-public class ResetPasswordRequestBuilder extends BaseLLRequestBuilder {
-
-    public ResetPasswordRequestBuilder(String email) {
+public class ResetPasswordAuthRequestBuilder extends BaseLLRequestBuilder {
+    public ResetPasswordAuthRequestBuilder(String token) {
         Type dataType = new TypeToken<ResponseDataWrapper<ResetPasswordData>>() {
         }.getType();
         this.setResponseClassSpecifier(dataType);
-
-        setLocalPath("auth/password");
-
-        Map<String, String> objectToPost = new HashMap<>();
-        objectToPost.put("email", email);
-        this.setObjectToPost(objectToPost);
+        setLocalPath("auth/password/edit?reset_password_token=" + token);
+        setGetMethod();
     }
 }

@@ -39,6 +39,10 @@
     <string name="forgotPasswordMsg">Enter your e-mail address below to reset your password</string>
     <string name="forgotPasswordCheckEmail">Check your Email.\nWe sent you a new password</string>
 
+    <!-- Reset Password -->
+    <string name="resetPasswordTitle">RESET PASSWORD</string>
+    <string name="resetPasswordMsg">Enter your new password</string>
+
     <!-- Create Account -->
     <string name="createAccountTitle">CREATE ACCOUNT</string>
     <string name="signIn">Sign in</string>

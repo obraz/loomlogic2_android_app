@@ -138,6 +138,7 @@ public class LeadsAdapter extends RecyclerView.Adapter<LeadsAdapter.LeadsHolder>
                 if (leadData.getSubStage() == LeadSubStage.APPOINTMENT) {
                     holder.mDeadLineDateTxt.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(context, R.drawable.ic_lead_appointment_calendar), null, null, null);
                 } else {
+                    setLeadQuality(holder, lead);
                 }
                 setDeadline(holder, lead);
                 holder.mInfoTxt.setText(lead.lenderName);

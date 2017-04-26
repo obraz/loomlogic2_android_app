@@ -8,17 +8,18 @@ import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ResetPasswordRequestBuilder extends BaseLLRequestBuilder {
+public class ResetPasswordCompleteRequestBuilder extends BaseLLRequestBuilder {
 
-    public ResetPasswordRequestBuilder(String email) {
+    public ResetPasswordCompleteRequestBuilder(String password) {
         Type dataType = new TypeToken<ResponseDataWrapper<ResetPasswordData>>() {
         }.getType();
         this.setResponseClassSpecifier(dataType);
 
         setLocalPath("auth/password");
+        setPutMethod();
 
         Map<String, String> objectToPost = new HashMap<>();
-        objectToPost.put("email", email);
+        objectToPost.put("password", password);
         this.setObjectToPost(objectToPost);
     }
 }

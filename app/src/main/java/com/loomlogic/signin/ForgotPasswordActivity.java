@@ -104,17 +104,17 @@ public class ForgotPasswordActivity extends BaseSignInActivity implements View.O
         return true;
     }
 
-    private final BaseItemManager.OnDataFetchCompleteListener<ResetPasswordData, String> completeListener
-            = new BaseItemManager.OnDataFetchCompleteListener<ResetPasswordData, String>() {
+    private final BaseItemManager.OnDataFetchCompleteListener<ResetPasswordData, ResetPasswordAction> completeListener
+            = new BaseItemManager.OnDataFetchCompleteListener<ResetPasswordData, ResetPasswordAction>() {
 
         @Override
-        public void onDataFetchComplete(ResetPasswordData result, ResponseData response, String requestTag) {
+        public void onDataFetchComplete(ResetPasswordData result, ResponseData response, ResetPasswordAction requestTag) {
             hideProgressBar();
             showCheckEmailDialog();
         }
 
         @Override
-        public void onDataFetchFailed(ResetPasswordData result, ResponseData response, String requestTag) {
+        public void onDataFetchFailed(ResetPasswordData result, ResponseData response, ResetPasswordAction requestTag) {
             hideProgressBar();
             if (isValidationError(response)) {
                 ApiError errors = getApiError(response);

@@ -1,9 +1,11 @@
 package com.loomlogic.signin;
 
 import android.animation.LayoutTransition;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.text.InputType;
 import android.view.View;
 import android.view.WindowManager;
@@ -31,6 +33,14 @@ public class SignInActivity extends BaseSignInActivity implements View.OnClickLi
     private EditText signInEmailEt;
     private EditText signInPasswordEt;
 
+    public static void start(@NonNull Activity activity) {
+        Model.instance().performLogout();
+
+        Intent intent = new Intent(activity, SignInActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        activity.startActivity(intent);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +54,6 @@ public class SignInActivity extends BaseSignInActivity implements View.OnClickLi
         if (Model.instance().getLoginManager().canRestoreLogin()) {
             HomeActivity.start(this);
         }
-        //  Model.instance().getRegisterManager().fetchData(null);
     }
 
 
@@ -118,7 +127,11 @@ public class SignInActivity extends BaseSignInActivity implements View.OnClickLi
             signInPasswordEt.setText("5432");
 
             signInEmailEt.setText("alex@tmregroup.com");
+            // signInEmailEt.setText("olegdfgdfg@tmregroup.com");
+            signInEmailEt.setText("sfgdsfg@jfjfjfjfjfj.com");
+
             signInPasswordEt.setText("password");
+            signInPasswordEt.setText("");
         }
     }
 
@@ -183,8 +196,8 @@ public class SignInActivity extends BaseSignInActivity implements View.OnClickLi
                 } else {
                     if (isValidationError(response)) {
                         ApiError errors = getApiError(response);
-                        for (String error:errors.getErrors()) {
-                            if (error.equals(ErrorsConstant.ERROR_CREDENTIALS)){
+                        for (String error : errors.getErrors()) {
+                            if (error.equals(ErrorsConstant.ERROR_CREDENTIALS)) {
                                 showValidationError(signInEmailEt);
                                 showValidationError(signInPasswordEt);
                                 break;
@@ -206,7 +219,7 @@ public class SignInActivity extends BaseSignInActivity implements View.OnClickLi
         }
 
         final String password = signInPasswordEt.getText().toString();
-        if (password.length() < 3) {
+        if (!Utils.isPasswordValid(password)) {
             showValidationError(signInPasswordEt);
             showErrorSnackBar(getString(R.string.password_error));
             return false;

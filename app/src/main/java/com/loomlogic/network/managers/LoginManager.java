@@ -97,6 +97,7 @@ public class LoginManager implements ILoginManager {
 
     @Override
     public Object logout(RequestQueue queue) {
+        ProfileDataStorage.INSTANCE.saveUserData(null);
         return null;
     }
 }
