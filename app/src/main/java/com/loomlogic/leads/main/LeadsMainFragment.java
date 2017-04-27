@@ -9,7 +9,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +20,7 @@ import com.loomlogic.base.MessageEvent;
 import com.loomlogic.home.BaseHomeFragment;
 import com.loomlogic.leads.base.LeadData;
 import com.loomlogic.leads.base.LeadUtils;
+import com.loomlogic.leads.list.LeadsFilterActivity;
 import com.loomlogic.leads.menu.LeadsMenuManager;
 import com.loomlogic.utils.ViewUtils;
 
@@ -95,8 +95,8 @@ public class LeadsMainFragment extends BaseHomeFragment implements TabLayout.OnT
             @Override
             public void onClick(View v) {
                 LeadData leadData = pagerAdapter.getCurrentLeadsFragment(viewPager, viewPager.getCurrentItem()).getLeadData();
-                Log.e(leadData.getOwner() + " : " + leadData.getStatus(), "" + leadData.getSubStage());
-              //  getHomeActivity().startActivity(LeadsFilterActivity.getLeadsFilterActivityIntent(getContext()));
+               // Log.e(leadData.getOwner() + " : " + leadData.getStatus(), "" + leadData.getSubStage());
+                getHomeActivity().startActivity(LeadsFilterActivity.getLeadsFilterActivityIntent(getContext()));
             }
         });
     }

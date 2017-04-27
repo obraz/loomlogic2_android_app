@@ -64,7 +64,7 @@ public class ForgotPasswordActivity extends BaseSignInActivity implements View.O
         findViewById(btn_back).setOnClickListener(this);
 
         if (BuildConfig.FLAVOR.equals("loomlogicDebug")) {
-            forgotPasswordEmailEt.setText("alex@tmregroup.com");
+            forgotPasswordEmailEt.setText("alexandrobraz@gmail.com");
         }
     }
 
@@ -110,22 +110,26 @@ public class ForgotPasswordActivity extends BaseSignInActivity implements View.O
         @Override
         public void onDataFetchComplete(ResetPasswordData result, ResponseData response, ResetPasswordAction requestTag) {
             hideProgressBar();
-            showCheckEmailDialog();
+            if (requestTag == ResetPasswordAction.RESET) {
+                showCheckEmailDialog();
+            }
         }
 
         @Override
         public void onDataFetchFailed(ResetPasswordData result, ResponseData response, ResetPasswordAction requestTag) {
             hideProgressBar();
-            if (isValidationError(response)) {
-                ApiError errors = getApiError(response);
-                for (String error:errors.getErrors()) {
-                    if (error.equals(ErrorsConstant.ERROR_CREDENTIALS)){
-                        showValidationError(forgotPasswordEmailEt);
-                        break;
+            if (requestTag == ResetPasswordAction.RESET) {
+                if (isValidationError(response)) {
+                    ApiError errors = getApiError(response);
+                    for (String error : errors.getErrors()) {
+                        if (error.equals(ErrorsConstant.ERROR_CREDENTIALS)) {
+                            showValidationError(forgotPasswordEmailEt);
+                            break;
+                        }
                     }
                 }
+                showResponseError(response);
             }
-            showResponseError(response);
         }
     };
 

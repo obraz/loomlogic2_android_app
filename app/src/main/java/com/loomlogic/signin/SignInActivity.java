@@ -128,10 +128,9 @@ public class SignInActivity extends BaseSignInActivity implements View.OnClickLi
 
             //signInEmailEt.setText("alex@tmregroup.com");
             // signInEmailEt.setText("olegdfgdfg@tmregroup.com");
-            //signInEmailEt.setText("alexandrobraz@gmail.com");
-
-           // signInPasswordEt.setText("password");
-           // signInPasswordEt.setText("");
+            signInEmailEt.setText("alexandrobraz@gmail.com");
+            signInPasswordEt.setText("qqq");
+            // signInPasswordEt.setText("");
         }
     }
 
