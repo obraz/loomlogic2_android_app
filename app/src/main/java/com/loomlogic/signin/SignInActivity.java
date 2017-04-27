@@ -124,14 +124,14 @@ public class SignInActivity extends BaseSignInActivity implements View.OnClickLi
 
         if (BuildConfig.FLAVOR.equals("loomlogicDebug")) {
             signInEmailEt.setText("loomlogic.agent@gmail.com");
-            signInPasswordEt.setText("5432");
+            signInPasswordEt.setText("54321");
 
-            signInEmailEt.setText("alex@tmregroup.com");
+            //signInEmailEt.setText("alex@tmregroup.com");
             // signInEmailEt.setText("olegdfgdfg@tmregroup.com");
-            signInEmailEt.setText("sfgdsfg@jfjfjfjfjfj.com");
+            //signInEmailEt.setText("alexandrobraz@gmail.com");
 
-            signInPasswordEt.setText("password");
-            signInPasswordEt.setText("");
+           // signInPasswordEt.setText("password");
+           // signInPasswordEt.setText("");
         }
     }
 

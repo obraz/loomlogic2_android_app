@@ -114,6 +114,9 @@
             android:windowSoftInputMode="adjustPan" />
 
 
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="58fec32b72883b48a2ae92b0a1dc886eb91f7e22" />
     </application>
 
 </manifest>
