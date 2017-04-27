@@ -57,6 +57,23 @@ public class LeadUtils {
         }
     }
 
+    public static String getLeadSubStageTitle(LeadSubStage stage) {
+        switch (stage) {
+            case NEW:
+                return LoomLogicApp.getSharedContext().getString(R.string.lead_tab_name_new);
+            case ENGAGED:
+                return LoomLogicApp.getSharedContext().getString(R.string.lead_tab_name_engaged);
+            case FUTURE:
+                return LoomLogicApp.getSharedContext().getString(R.string.lead_tab_name_future);
+            case APPLICATION:
+                return LoomLogicApp.getSharedContext().getString(R.string.lead_tab_name_application);
+            case APPOINTMENT:
+                return LoomLogicApp.getSharedContext().getString(R.string.lead_tab_name_appointment);
+            default:
+                return "Unspecified";
+        }
+    }
+
     public static Drawable getLeadStatusIcon(LeadStatus status, LeadType type) {
         int drawableRes;
         switch (status) {

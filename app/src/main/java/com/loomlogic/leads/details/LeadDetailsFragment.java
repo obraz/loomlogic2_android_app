@@ -16,6 +16,8 @@ import com.loomlogic.leads.details.view.LeadDetailsContractView;
 import com.loomlogic.leads.details.view.LeadDetailsDatesView;
 import com.loomlogic.leads.details.view.LeadDetailsInfoView;
 import com.loomlogic.leads.details.view.LeadDetailsParticipantsView;
+import com.loomlogic.leads.details.view.LeadDetailsPreApprovalView;
+import com.loomlogic.leads.details.view.LeadDetailsSearchCriteriaView;
 import com.loomlogic.leads.details.view.LeadDetailsTransactionView;
 import com.loomlogic.leads.entity.LeadItem;
 
@@ -56,12 +58,29 @@ public class LeadDetailsFragment extends BaseHomeFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        initActionButtons(view);
         initInfoView(view);
         initParticipantsView(view);
-        initContractView(view);
-        initTransactionsView(view);
-        initDatesView(view);
+        initActionButtons(view);
+
+        switch (lead.leadData.getStatus()) {
+            case LEADS:
+            case LENDER:
+                initSearchCriteriaView(view);
+                break;
+            case SHOPPING:
+                initPreApprovalView(view);
+                break;
+            case CONTRACT:
+                initContractView(view);
+                initTransactionsView(view);
+                initDatesView(view);
+                break;
+            case CLOSED:
+                initContractView(view);
+                initDatesView(view);
+                break;
+        }
+
         setupScrollViewBehaviour(view);
     }
 
@@ -110,6 +129,7 @@ public class LeadDetailsFragment extends BaseHomeFragment {
 
     private void initParticipantsView(View view) {
         LeadDetailsParticipantsView participantsView = (LeadDetailsParticipantsView) view.findViewById(R.id.view_leadDetailsParticipants);
+        participantsView.setVisibility(View.VISIBLE);
         participantsView.setParticipants(lead.participantList);
         participantsView.setButtonsListener(new LeadDetailsParticipantsView.OnLeadParticipantsClickListener() {
 
@@ -121,18 +141,33 @@ public class LeadDetailsFragment extends BaseHomeFragment {
         });
     }
 
+    private void initSearchCriteriaView(View view) {
+        LeadDetailsSearchCriteriaView searchCriteriaView = (LeadDetailsSearchCriteriaView) view.findViewById(R.id.view_leadDetailsSearchCriteria);
+        searchCriteriaView.setVisibility(View.VISIBLE);
+        searchCriteriaView.setSearchCriteria(lead.leadContract);
+    }
+
+    private void initPreApprovalView(View view) {
+        LeadDetailsPreApprovalView preApprovalView = (LeadDetailsPreApprovalView) view.findViewById(R.id.view_leadDetailsPreApproval);
+        preApprovalView.setVisibility(View.VISIBLE);
+        preApprovalView.setPreApproval(lead.leadContract);
+    }
+
     private void initContractView(View view) {
         LeadDetailsContractView contractView = (LeadDetailsContractView) view.findViewById(R.id.view_leadDetailsContract);
+        contractView.setVisibility(View.VISIBLE);
         contractView.setContract(lead.leadContract);
     }
 
     private void initTransactionsView(View view) {
         LeadDetailsTransactionView transactionView = (LeadDetailsTransactionView) view.findViewById(R.id.view_leadDetailsTransaction);
+        transactionView.setVisibility(View.VISIBLE);
         transactionView.setTransactions(lead.transactionList);
     }
 
     private void initDatesView(View view) {
         LeadDetailsDatesView datesView = (LeadDetailsDatesView) view.findViewById(R.id.view_leadDetailsDates);
+        datesView.setVisibility(View.VISIBLE);
     }
 
     private void setupScrollViewBehaviour(View view) {

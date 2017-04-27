@@ -4,14 +4,15 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/ll_leadDetailsEscrowStatusContainer"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:background="@color/lead_detail_escrow_status_future_bg_color"
-        android:orientation="horizontal" ></LinearLayout>
+        android:orientation="horizontal"
+        android:visibility="gone"></LinearLayout>
 
     <RelativeLayout
         android:id="@+id/rl_headerContainer"
@@ -19,21 +20,40 @@
         android:layout_height="80dp"
         android:background="?attr/selectableItemBackground">
 
-        <com.loomlogic.leads.base.LeadAvatarView
-            android:id="@+id/view_leadAvatar"
+        <FrameLayout
+            android:id="@+id/view_leadAvatarContainer"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp" />
+            android:layout_margin="10dp">
+
+            <com.loomlogic.leads.base.LeadAvatarView
+                android:id="@+id/view_leadAvatar"
+                android:layout_width="60dp"
+                android:layout_height="60dp" />
+
+            <TextView
+                android:id="@+id/tv_leadQuality"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_gravity="bottom|right"
+                android:layout_marginBottom="5dp"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/circle"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:visibility="gone"
+                tools:text="A"
+                tools:visibility="visible" />
+        </FrameLayout>
 
         <LinearLayout
             android:id="@+id/ll_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:layout_toRightOf="@+id/view_leadAvatar"
+            android:layout_toRightOf="@+id/view_leadAvatarContainer"
             android:orientation="horizontal">
 
             <TextView
@@ -61,7 +81,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/ll_name"
             android:layout_marginTop="7dp"
-            android:layout_toRightOf="@+id/view_leadAvatar"
+            android:layout_toRightOf="@+id/view_leadAvatarContainer"
             android:orientation="horizontal">
 
             <TextView
@@ -69,7 +89,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:drawableLeft="@drawable/ic_buyer_financing"
                 android:drawablePadding="5dp"
                 android:ellipsize="marquee"
                 android:maxLines="1"
@@ -87,7 +106,8 @@
                 android:drawablePadding="5dp"
                 android:text="2"
                 android:textColor="#2C2E30"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                android:visibility="gone"/>
         </LinearLayout>
     </RelativeLayout>
 

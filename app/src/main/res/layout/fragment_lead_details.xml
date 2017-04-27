@@ -35,6 +35,7 @@
                 android:layout_marginBottom="15dp"
                 android:background="@color/main_bg_color"
                 android:elevation="2dp"
+                android:visibility="gone"
                 tools:visibility="gone" />
 
             <com.loomlogic.leads.details.view.LeadDetailsContractView
@@ -44,7 +45,28 @@
                 android:layout_below="@+id/view_leadDetailsParticipants"
                 android:layout_marginBottom="15dp"
                 android:background="@color/main_bg_color"
-                android:elevation="2dp" />
+                android:elevation="2dp"
+                android:visibility="gone" />
+
+            <com.loomlogic.leads.details.view.LeadDetailsSearchCriteriaView
+                android:id="@+id/view_leadDetailsSearchCriteria"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/view_leadDetailsParticipants"
+                android:layout_marginBottom="70dp"
+                android:background="@color/main_bg_color"
+                android:elevation="2dp"
+                android:visibility="gone" />
+
+            <com.loomlogic.leads.details.view.LeadDetailsPreApprovalView
+                android:id="@+id/view_leadDetailsPreApproval"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/view_leadDetailsParticipants"
+                android:layout_marginBottom="70dp"
+                android:background="@color/main_bg_color"
+                android:elevation="2dp"
+                android:visibility="gone" />
 
             <com.loomlogic.leads.details.view.LeadDetailsTransactionView
                 android:id="@+id/view_leadDetailsTransaction"
@@ -53,16 +75,18 @@
                 android:layout_below="@+id/view_leadDetailsContract"
                 android:layout_marginBottom="15dp"
                 android:background="@color/main_bg_color"
-                android:elevation="2dp" />
+                android:elevation="2dp"
+                android:visibility="gone" />
 
             <com.loomlogic.leads.details.view.LeadDetailsDatesView
                 android:id="@+id/view_leadDetailsDates"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/view_leadDetailsTransaction"
-                android:layout_marginBottom="15dp"
+                android:layout_marginBottom="70dp"
                 android:background="@color/main_bg_color"
-                android:elevation="2dp" />
+                android:elevation="2dp"
+                android:visibility="gone" />
 
         </RelativeLayout>
     </android.support.v4.widget.NestedScrollView>

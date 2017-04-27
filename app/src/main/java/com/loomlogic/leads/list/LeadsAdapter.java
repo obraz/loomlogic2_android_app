@@ -194,6 +194,7 @@ public class LeadsAdapter extends RecyclerView.Adapter<LeadsAdapter.LeadsHolder>
 
     private void setCallbacks(final LeadsHolder holder, final int position) {
         final LeadItem lead = leads.get(position);
+        lead.leadData = leadData;
 
         setClickListenerToView(holder.mContainer, lead);
         setClickListenerToView(holder.mCallSystemIv, lead);

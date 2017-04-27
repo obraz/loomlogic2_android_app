@@ -13,6 +13,8 @@ import android.widget.TextView;
 import com.loomlogic.R;
 import com.loomlogic.home.HomeActivity;
 import com.loomlogic.leads.base.LeadAvatarView;
+import com.loomlogic.leads.base.LeadStatus;
+import com.loomlogic.leads.base.LeadUtils;
 import com.loomlogic.leads.details.LeadEscrowStatusItem;
 import com.loomlogic.leads.details.LeadEscrowStatusState;
 import com.loomlogic.leads.details.LeadEscrowStatusUtils;
@@ -109,12 +111,16 @@ public class LeadDetailsInfoView extends LinearLayout {
     }
 
     private void updateData() {
-        setLeadEscrowStatus();
+        if (leadItem.leadData.getStatus() == LeadStatus.CONTRACT) {
+            setLeadEscrowStatus();
+        }
+
         setLeadInfo();
     }
 
     private void setLeadEscrowStatus() {
         LinearLayout leadDetailsEscrowStatusContainer = (LinearLayout) findViewById(R.id.ll_leadDetailsEscrowStatusContainer);
+        leadDetailsEscrowStatusContainer.setVisibility(VISIBLE);
 
         ArrayList<LeadEscrowStatusItem> list = LeadEscrowStatusUtils.getEscrowStatusItemList(leadItem);
         LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT, 1.0f);
@@ -136,6 +142,17 @@ public class LeadDetailsInfoView extends LinearLayout {
         }
     }
 
+    private void setLeadQuality() {
+        TextView leadQualityTxt = (TextView) findViewById(R.id.tv_leadQuality);
+        if (leadItem.quality != null) {
+            leadQualityTxt.setVisibility(View.VISIBLE);
+            leadQualityTxt.setText(leadItem.quality);
+            leadQualityTxt.setBackground(LeadUtils.getLeadQuality(leadItem.quality));
+        } else {
+            leadQualityTxt.setVisibility(View.GONE);
+        }
+    }
+
     private void setLeadInfo() {
         LeadAvatarView avatarV = (LeadAvatarView) findViewById(R.id.view_leadAvatar);
         avatarV.setLeadAvatar(leadItem);
@@ -143,9 +160,39 @@ public class LeadDetailsInfoView extends LinearLayout {
         TextView nameTv = (TextView) findViewById(R.id.tv_leadName);
         nameTv.setText(leadItem.getFullFormattedName());
 
-        TextView addressTv = (TextView) findViewById(R.id.tv_leadInfo);
-        addressTv.setText(leadItem.address);
-        addressTv.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(getContext(), leadItem.isFinancing ? R.drawable.ic_buyer_financing : R.drawable.ic_buyer_cash), null, null, null);
+        TextView infoTv = (TextView) findViewById(R.id.tv_leadInfo);
+
+        TextView escrowCountTv = (TextView) findViewById(R.id.tv_leadEscrowStatusCount);
+
+        switch (leadItem.leadData.getStatus()) {
+            case LEADS:
+                setLeadQuality();
+                infoTv.setText(LeadUtils.getLeadStatusTitle(leadItem.leadData.getStatus()) + " - " + LeadUtils.getLeadSubStageTitle(leadItem.leadData.getSubStage()));
+
+                break;
+            case LENDER:
+                setLeadQuality();
+                infoTv.setText(LeadUtils.getLeadStatusTitle(leadItem.leadData.getStatus()) + " - " + LeadUtils.getLeadSubStageTitle(leadItem.leadData.getSubStage()));
+                infoTv.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(getContext(), leadItem.isFinancing ? R.drawable.ic_buyer_financing : R.drawable.ic_buyer_cash), null, null, null);
+
+                break;
+            case SHOPPING:
+                infoTv.setText(leadItem.isFinancing ? "Shopping - Approved" : "Cash Buyer");
+                infoTv.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(getContext(), leadItem.isFinancing ? R.drawable.ic_buyer_financing : R.drawable.ic_buyer_cash), null, null, null);
+
+                break;
+            case CONTRACT:
+                infoTv.setText(leadItem.address);
+                infoTv.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(getContext(), leadItem.isFinancing ? R.drawable.ic_buyer_financing : R.drawable.ic_buyer_cash), null, null, null);
+
+                escrowCountTv.setVisibility(VISIBLE);
+                break;
+            case CLOSED:
+                infoTv.setText(LeadUtils.getLeadStatusTitle(leadItem.leadData.getStatus()));
+                infoTv.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(getContext(), leadItem.isFinancing ? R.drawable.ic_buyer_financing : R.drawable.ic_buyer_cash), null, null, null);
+
+                break;
+        }
 
         final LinearLayout infoLayout = (LinearLayout) findViewById(R.id.ll_leadDetailsInfoContainer);
 
@@ -160,9 +207,9 @@ public class LeadDetailsInfoView extends LinearLayout {
                 } else {
                     showMoreIcon.setRotation(180);
                     expand(infoLayout);
-                    if (fullViewHeight==0){
+                    if (fullViewHeight == 0) {
                         calculateFullHeight();
-                    }else {
+                    } else {
                         callback.onDetailsViewShow();
                     }
                 }

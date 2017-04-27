@@ -61,14 +61,18 @@ public class LeadsMainFragment extends BaseHomeFragment implements TabLayout.OnT
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        LeadData leadData = new Gson().fromJson(getArguments().getString(KEY_LEAD_DATA), LeadData.class);
-
         initViews(view);
-        updateTabLayout(leadData);
+        updateTabLayout();
         initViewPager(view);
-        updateViewPager(leadData);
+        updateViewPager();
 
-        onTabSelected(mTabLayout.getTabAt(0));
+        if (mTabLayout.getTabCount() > 0) {
+            onTabSelected(mTabLayout.getTabAt(0));
+        }
+    }
+
+    private LeadData getLeadData(){
+        return new Gson().fromJson(getArguments().getString(KEY_LEAD_DATA), LeadData.class);
     }
 
     private void initViews(View view) {
@@ -95,7 +99,7 @@ public class LeadsMainFragment extends BaseHomeFragment implements TabLayout.OnT
             @Override
             public void onClick(View v) {
                 LeadData leadData = pagerAdapter.getCurrentLeadsFragment(viewPager, viewPager.getCurrentItem()).getLeadData();
-               // Log.e(leadData.getOwner() + " : " + leadData.getStatus(), "" + leadData.getSubStage());
+                // Log.e(leadData.getOwner() + " : " + leadData.getStatus(), "" + leadData.getSubStage());
                 getHomeActivity().startActivity(LeadsFilterActivity.getLeadsFilterActivityIntent(getContext()));
             }
         });
@@ -107,8 +111,9 @@ public class LeadsMainFragment extends BaseHomeFragment implements TabLayout.OnT
             case LEADS_MENU_SELECT:
                 leadsMenuManager.closeDrawer();
                 LeadData leadData = (LeadData) (event.getObject());
-                updateTabLayout(leadData);
-                updateViewPager(leadData);
+                getArguments().putSerializable(KEY_LEAD_DATA, new Gson().toJson(leadData));
+                updateTabLayout();
+                updateViewPager();
                 break;
             case NAVIGATION_BAR_SHOW:
                 animateViewAboveNavBar(controlBtnContainer, true);
@@ -144,21 +149,22 @@ public class LeadsMainFragment extends BaseHomeFragment implements TabLayout.OnT
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayout));
     }
 
-    private void updateViewPager(LeadData leadData) {
-        pagerAdapter = new LeadsMainPagerAdapter(getChildFragmentManager(), leadData);
+    private void updateViewPager() {
+        pagerAdapter = new LeadsMainPagerAdapter(getChildFragmentManager(), getLeadData());
         viewPager.setAdapter(pagerAdapter);
     }
 
-    private void updateTabLayout(LeadData leadData) {
+    private void updateTabLayout() {
         mTabLayout.removeAllTabs();
 
-        switch (leadData.getStatus()) {
+        switch (getLeadData().getStatus()) {
             case LEADS:
                 mTabLayout.addTab(mTabLayout.newTab().setCustomView(getViewForTab(R.string.lead_tab_name_all, 24)));
                 mTabLayout.addTab(mTabLayout.newTab().setCustomView(getViewForTab(R.string.lead_tab_name_new, 10)));
                 mTabLayout.addTab(mTabLayout.newTab().setCustomView(getViewForTab(R.string.lead_tab_name_engaged, 2)));
                 mTabLayout.addTab(mTabLayout.newTab().setCustomView(getViewForTab(R.string.lead_tab_name_future, 10)));
-                mTabLayout.setVisibility(View.VISIBLE);
+
+                setUpTabLayout();
                 break;
             case LENDER:
                 mTabLayout.addTab(mTabLayout.newTab().setCustomView(getViewForTab(R.string.lead_tab_name_all, 44)));
@@ -166,15 +172,20 @@ public class LeadsMainFragment extends BaseHomeFragment implements TabLayout.OnT
                 mTabLayout.addTab(mTabLayout.newTab().setCustomView(getViewForTab(R.string.lead_tab_name_engaged, 2)));
                 mTabLayout.addTab(mTabLayout.newTab().setCustomView(getViewForTab(R.string.lead_tab_name_appointment, 10)));
                 mTabLayout.addTab(mTabLayout.newTab().setCustomView(getViewForTab(R.string.lead_tab_name_application, 10)));
-                mTabLayout.setVisibility(View.VISIBLE);
+
+                setUpTabLayout();
                 break;
             default:
                 mTabLayout.setVisibility(View.GONE);
         }
+
+        toolbar.setTitle(LeadUtils.getLeadStatusTitle(getLeadData().getStatus()));
+    }
+
+    private void setUpTabLayout() {
+        mTabLayout.setVisibility(View.VISIBLE);
         mTabLayout.addOnTabSelectedListener(this);
         mTabLayout.post(ViewUtils.configTab(mTabLayout, false));
-
-        toolbar.setTitle(LeadUtils.getLeadStatusTitle(leadData.getStatus()));
     }
 
     private View getViewForTab(@StringRes int tabName, int notifCount) {

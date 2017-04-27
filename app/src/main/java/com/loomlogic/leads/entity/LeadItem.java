@@ -1,6 +1,7 @@
 package com.loomlogic.leads.entity;
 
 import com.loomlogic.base.SwipeData;
+import com.loomlogic.leads.base.LeadData;
 
 import java.util.ArrayList;
 
@@ -40,6 +41,8 @@ public class LeadItem extends SwipeData {
     ////
     public LeadContractItem leadContract;
     public ArrayList<LeadTransactionItem> transactionList;
+
+    public LeadData leadData;
 
     public LeadItem(int id, int unreadNotificationCount, int deadlineDate, String avatarUrl, String firstName, String lastName, Gender gender, String address, boolean isFinancing, int escrowStatusDoneCount, String quality) {
         this.id = id;

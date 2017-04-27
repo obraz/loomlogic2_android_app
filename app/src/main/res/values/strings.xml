@@ -145,6 +145,7 @@
     <string name="btn_send">Send</string>
     <string name="btn_confirm">Confirm</string>
 
+
     <string name="lead_details_participants">Participants</string>
     <string name="lead_details_contract_details">Contract Details</string>
     <string name="lead_details_transactions">Transactions (%d)</string>
@@ -161,6 +162,18 @@
     <string name="lead_contract_gross">Gross</string>
 
     <string name="lead_transaction_address">Address</string>
+
+    <string name="lead_searching_criteria">Searching Criteria</string>
+    <string name="lead_searching_criteria_bedrooms">Bedrooms</string>
+    <string name="lead_searching_criteria_bathroom">Bathroom</string>
+    <string name="lead_searching_criteria_area">Area</string>
+    <string name="lead_searching_criteria_purchase">Purchase</string>
+
+    <string name="lead_searching_pre_approval_details">Pre-Approval Details</string>
+    <string name="lead_searching_pre_approval_purchase">Purchase Power</string>
+    <string name="lead_searching_pre_approval_downpayment">Downpayment</string>
+    <string name="lead_searching_pre_approval_loan">Loan Type</string>
+    <string name="lead_searching_pre_approval_interest">Interest Rate</string>
 
     <!-- Lead Settings -->
     <string name="lead_settings_title">Lead Settings</string>
