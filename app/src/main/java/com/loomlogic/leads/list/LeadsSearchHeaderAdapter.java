@@ -1,5 +1,7 @@
 package com.loomlogic.leads.list;
 
+import android.graphics.PorterDuff;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
@@ -49,6 +51,13 @@ public class LeadsSearchHeaderAdapter extends AbstractHeaderFooterWrapperAdapter
         vh.searchView.setIconifiedByDefault(false);
         vh.searchView.setOnQueryTextListener(onQueryTextListener);
         vh.searchView.clearFocus();
+
+        try {
+            View searchPlate = (View) vh.searchView.findViewById(android.support.v7.appcompat.R.id.search_plate);
+            searchPlate.getBackground().setColorFilter(ContextCompat.getColor(parent.getContext(), R.color.main_bg_color), PorterDuff.Mode.MULTIPLY);
+        } catch (Exception e) {
+
+        }
         return vh;
     }
 

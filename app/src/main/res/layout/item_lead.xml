@@ -176,7 +176,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp">
+                android:layout_marginRight="10dp">
 
                 <com.loomlogic.leads.base.LeadAvatarView
                     android:id="@+id/view_leadAvatar"
@@ -192,11 +192,13 @@
                     android:layout_marginRight="4dp"
                     android:background="@drawable/circle"
                     android:gravity="center"
+                    android:paddingBottom="1dp"
                     android:textColor="@color/white"
                     android:textSize="10sp"
                     android:textStyle="bold"
                     android:visibility="gone"
-                    tools:text="A" />
+                    tools:text="A"
+                    tools:visibility="visible" />
             </FrameLayout>
 
             <LinearLayout

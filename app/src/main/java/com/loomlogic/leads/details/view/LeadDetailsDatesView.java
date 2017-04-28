@@ -46,6 +46,7 @@ public class LeadDetailsDatesView extends LinearLayout {
 
 
     private void setShowMoreBtn() {
+        final View divider = findViewById(R.id.divider);
         final LinearLayout infoLayout = (LinearLayout) findViewById(R.id.ll_leadDetailsDatesContainer);
 
         final ImageView showMoreIcon = (ImageView) findViewById(R.id.iv_showMore);
@@ -54,9 +55,11 @@ public class LeadDetailsDatesView extends LinearLayout {
             public void onClick(View v) {
                 if (isVisible) {
                     showMoreIcon.setRotation(0);
+                    divider.setVisibility(GONE);
                     collapse(infoLayout);
                 } else {
                     showMoreIcon.setRotation(180);
+                    divider.setVisibility(VISIBLE);
                     expand(infoLayout);
                 }
                 isVisible = !isVisible;

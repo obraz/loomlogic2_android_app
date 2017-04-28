@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
+    android:background="@drawable/bg_shadow"
     android:orientation="vertical">
 
     <LinearLayout
@@ -52,7 +52,7 @@
             android:id="@+id/ll_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="19dp"
             android:layout_toRightOf="@+id/view_leadAvatarContainer"
             android:orientation="horizontal">
 
@@ -80,7 +80,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/ll_name"
-            android:layout_marginTop="7dp"
+            android:layout_marginTop="5dp"
             android:layout_toRightOf="@+id/view_leadAvatarContainer"
             android:orientation="horizontal">
 
@@ -107,7 +107,7 @@
                 android:text="2"
                 android:textColor="#2C2E30"
                 android:textSize="12sp"
-                android:visibility="gone"/>
+                android:visibility="gone" />
         </LinearLayout>
     </RelativeLayout>
 
@@ -231,6 +231,7 @@
             android:layout_marginRight="15dp"
             android:layout_weight="2"
             android:background="@drawable/selector_blue_btn"
+            android:stateListAnimator="@null"
             android:text="@string/btn_change_status"
             android:textColor="@color/white"
             android:textSize="15sp"
@@ -243,6 +244,7 @@
             android:layout_marginRight="15dp"
             android:layout_weight="1"
             android:background="@drawable/selector_blue_btn"
+            android:stateListAnimator="@null"
             android:text="@string/btn_send"
             android:textColor="@color/white"
             android:textSize="15sp"

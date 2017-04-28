@@ -126,13 +126,19 @@ public class LeadsAdapter extends RecyclerView.Adapter<LeadsAdapter.LeadsHolder>
 
         switch (leadData.getStatus()) {
             case LEADS:
-                if (leadData.getSubStage() == LeadSubStage.NEW || leadData.getSubStage() == LeadSubStage.ENGAGED) {
-                    setLeadQuality(holder, lead);
-                } else {
-                    holder.mDeadLineDateTxt.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(context, R.drawable.ic_lead_future_call), null, null, null);
-                }
                 setDeadline(holder, lead);
                 holder.mInfoTxt.setText(lead.source);
+
+                if (leadData.getSubStage() == LeadSubStage.ALL || leadData.getSubStage() == LeadSubStage.NEW || leadData.getSubStage() == LeadSubStage.ENGAGED) {
+                    setLeadQuality(holder, lead);
+                    if (position == 3) {
+                        holder.mInfoTxt.setText("Gilbert Patterson");
+                        holder.mInfoTxt.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(context, R.drawable.ic_buyer_financing), null, ContextCompat.getDrawable(context, R.drawable.ic_lead_new_pre_approved), null);
+                    }
+                } else if (leadData.getSubStage() == LeadSubStage.FUTURE) {
+                    holder.mDeadLineDateTxt.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(context, R.drawable.ic_lead_future_call), null, null, null);
+                }
+
                 break;
             case LENDER:
                 if (leadData.getSubStage() == LeadSubStage.APPOINTMENT) {
@@ -283,7 +289,6 @@ public class LeadsAdapter extends RecyclerView.Adapter<LeadsAdapter.LeadsHolder>
         String deadlineText = String.format("%s days", Math.abs(lead.deadlineDate));
         int deadlineColor = ContextCompat.getColor(context, R.color.lead_deadline_upnext_color);
         if (lead.deadlineDate < 0) {
-            typeStyle = Typeface.BOLD;
             deadlineColor = ContextCompat.getColor(context, R.color.lead_deadline_expired_color);
         } else if (lead.deadlineDate < 2) {
             deadlineText = "Due today";

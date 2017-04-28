@@ -13,7 +13,6 @@ import android.widget.TextView;
 import com.loomlogic.R;
 import com.loomlogic.home.HomeActivity;
 import com.loomlogic.leads.base.LeadAvatarView;
-import com.loomlogic.leads.base.LeadStatus;
 import com.loomlogic.leads.base.LeadUtils;
 import com.loomlogic.leads.details.LeadEscrowStatusItem;
 import com.loomlogic.leads.details.LeadEscrowStatusState;
@@ -76,7 +75,7 @@ public class LeadDetailsInfoView extends LinearLayout {
 
     public void setLead(LeadItem lead) {
         this.leadItem = lead;
-        updateData();
+        setLeadInfo();
     }
 
     public void setCallbacks(final OnLeadInfoClickListener callback) {
@@ -108,14 +107,6 @@ public class LeadDetailsInfoView extends LinearLayout {
                 callback.onMessageClick();
             }
         });
-    }
-
-    private void updateData() {
-        if (leadItem.leadData.getStatus() == LeadStatus.CONTRACT) {
-            setLeadEscrowStatus();
-        }
-
-        setLeadInfo();
     }
 
     private void setLeadEscrowStatus() {
@@ -182,9 +173,11 @@ public class LeadDetailsInfoView extends LinearLayout {
 
                 break;
             case CONTRACT:
-                infoTv.setText(leadItem.address);
+                infoTv.setText(LeadUtils.getLeadStatusTitle(leadItem.leadData.getStatus()));
                 infoTv.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(getContext(), leadItem.isFinancing ? R.drawable.ic_buyer_financing : R.drawable.ic_buyer_cash), null, null, null);
 
+                avatarV.setEscrowStatus(leadItem);
+                setLeadEscrowStatus();
                 escrowCountTv.setVisibility(VISIBLE);
                 break;
             case CLOSED:

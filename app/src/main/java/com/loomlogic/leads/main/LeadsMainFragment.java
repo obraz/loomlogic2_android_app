@@ -198,6 +198,7 @@ public class LeadsMainFragment extends BaseHomeFragment implements TabLayout.OnT
             TextView counter = (TextView) customTabView.findViewById(R.id.tv_bageCounter);
             counter.setVisibility(View.VISIBLE);
             counter.setText(String.valueOf(notifCount));
+            counter.getBackground().mutate();
             counter.getBackground().setTint(ContextCompat.getColor(getContext(), R.color.leads_substage_counter_bg_color));
             counter.setTextColor(ContextCompat.getColor(getContext(), R.color.lead_detail_tabText_color));
             name.setPadding(name.getPaddingLeft(), name.getPaddingTop(), 0, name.getPaddingBottom());
