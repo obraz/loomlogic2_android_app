@@ -25,7 +25,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_margin="20dp"
                 android:adjustViewBounds="true"
-                android:background="#A0A9B1"
+                android:background="#B7C3CF"
                 android:scaleType="centerCrop"
                 android:src="@drawable/create_lead_placeholder"
                 app:riv_mutate_background="true"
@@ -36,8 +36,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/margins15"
-                android:background="@color/white"
-                android:elevation="2dp"
+                android:background="@drawable/bg_shadow"
                 android:orientation="vertical">
 
                 <com.loomlogic.view.LLEditTextWithHint
@@ -98,53 +97,59 @@
                         android:clickable="true" />
                 </FrameLayout>
 
-                <View style="@style/MainLeadDivider" />
-
                 <LinearLayout
                     android:id="@+id/ll_createLead_typeContainer"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="wrap_content"
                     android:background="@color/white"
-                    android:orientation="horizontal">
+                    android:orientation="vertical"
+                    tools:visibility="gone">
+
+                    <View style="@style/MainLeadDivider" />
 
                     <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center">
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:background="@color/white"
+                        android:orientation="horizontal">
 
-                        <RadioButton
-                            android:id="@+id/rb_createLead_buyer"
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:button="@drawable/radio_btn"
-                            android:checked="true"
-                            android:paddingLeft="10dp"
-                            android:text="@string/buyer"
-                            android:textColor="@color/lead_create_new_black_text_color"
-                            android:textSize="14sp" />
-                    </LinearLayout>
+                            android:layout_weight="1"
+                            android:gravity="center">
 
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center">
+                            <RadioButton
+                                android:id="@+id/rb_createLead_buyer"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:button="@drawable/radio_btn"
+                                android:checked="true"
+                                android:paddingLeft="10dp"
+                                android:text="@string/buyer"
+                                android:textColor="@color/lead_create_new_black_text_color"
+                                android:textSize="14sp" />
+                        </LinearLayout>
 
-                        <RadioButton
-                            android:id="@+id/rb_createLead_seller"
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:button="@drawable/radio_btn"
-                            android:checked="false"
-                            android:paddingLeft="10dp"
-                            android:text="@string/seller"
-                            android:textColor="@color/lead_create_new_grey_text_color"
-                            android:textSize="14sp" />
+                            android:layout_weight="1"
+                            android:gravity="center">
+
+                            <RadioButton
+                                android:id="@+id/rb_createLead_seller"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:button="@drawable/radio_btn"
+                                android:checked="false"
+                                android:paddingLeft="10dp"
+                                android:text="@string/seller"
+                                android:textColor="@color/lead_create_new_grey_text_color"
+                                android:textSize="14sp" />
+                        </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
-
-                <View style="@style/MainLeadDivider" />
             </LinearLayout>
 
             <LinearLayout
@@ -152,11 +157,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/margins15"
-                android:background="@color/main_bg_color"
-                android:elevation="2dp"
+                android:background="@drawable/bg_shadow"
                 android:orientation="vertical"
                 android:visibility="gone"
                 tools:visibility="visible">
+
+                <TextView
+                    android:id="@+id/tv_createLead_addressTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="15dp"
+                    android:background="@color/main_bg_color"
+                    android:text="@string/create_new_lead_address_title"
+                    android:textColor="#798591"
+                    android:textSize="15sp" />
 
                 <com.loomlogic.view.LLEditTextWithHint
                     android:id="@+id/et_createLead_address"
@@ -225,15 +240,13 @@
                         android:inputType="number" />
                 </LinearLayout>
 
-                <View style="@style/MainLeadDivider" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="30dp"
-                android:background="@color/white"
-                android:elevation="2dp"
+                android:background="@drawable/bg_shadow"
                 android:orientation="vertical">
 
                 <com.loomlogic.view.LLEditTextWithHint
@@ -255,9 +268,8 @@
                     android:text="@string/create_new_lead_enableDripCompaigns"
                     android:textColor="#28323C"
                     android:textSize="14sp"
-                    android:theme="@style/ColorSwitchStyle"/>
+                    android:theme="@style/ColorSwitchStyle" />
 
-                <View style="@style/MainLeadDivider" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

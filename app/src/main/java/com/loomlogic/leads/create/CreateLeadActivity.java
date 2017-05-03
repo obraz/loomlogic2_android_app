@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.loomlogic.R;
@@ -136,6 +137,11 @@ public class CreateLeadActivity extends BaseActivity implements View.OnClickList
         );
         params.setMargins(0, 0, 0, margin);
         addressContainer.setLayoutParams(params);
+    }
+
+    public void setAddressContainerTitle(String text) {
+        TextView addressTitle = (TextView) findViewById(R.id.tv_createLead_addressTitle);
+        addressTitle.setText(text);
     }
 
     private void openContactPickerIfNeed() {

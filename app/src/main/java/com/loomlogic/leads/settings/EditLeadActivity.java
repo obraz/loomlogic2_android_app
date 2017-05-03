@@ -30,6 +30,7 @@ public class EditLeadActivity extends CreateLeadActivity {
 
         findViewById(R.id.ll_createLead_typeContainer).setVisibility(View.GONE);
         findViewById(R.id.ll_createLead_addressContainer).setVisibility(View.VISIBLE);
+        setAddressContainerTitle(getString(R.string.edit_lead_address_title));
     }
 
     @Override

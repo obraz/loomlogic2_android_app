@@ -66,8 +66,7 @@
             android:name=".leads.settings.EditLeadActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="sensorPortrait"
-            android:theme="@style/AppLighterTheme"
-            android:windowSoftInputMode="adjustPan" />
+            android:theme="@style/AppLighterTheme" />
         <activity
             android:name=".leads.create.SourceListActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -95,8 +94,7 @@
             android:name=".leads.settings.EditLeadContractActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="sensorPortrait"
-            android:theme="@style/AppLighterTheme"
-            android:windowSoftInputMode="adjustPan" />
+            android:theme="@style/AppLighterTheme"/>
         <activity
             android:name=".leads.settings.FinancingTypesListActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"

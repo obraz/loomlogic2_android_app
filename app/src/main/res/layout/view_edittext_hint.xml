@@ -6,7 +6,7 @@
     android:background="@color/white"
     android:minHeight="55dp"
     android:paddingTop="8dp"
-    android:textColorHint="#798591"
+    android:textColorHint="#ADB5BC"
     android:theme="@style/LLTextInputLabel">
 
     <com.loomlogic.view.LLEditText

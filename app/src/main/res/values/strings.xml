@@ -201,6 +201,7 @@
 
     <!-- Leads Create New -->
     <string name="create_new_lead_title">Add Contact</string>
+    <string name="create_new_lead_address_title">Property Address</string>
     <string name="create_new_lead_hint_name">Name</string>
     <string name="create_new_lead_hint_additionalName">Additional Name</string>
     <string name="create_new_lead_hint_phone">Phone</string>
@@ -225,4 +226,6 @@
         <item>Send to Agent</item>
         <item>Send to Team</item>
     </array>
+
+    <string name="edit_lead_address_title">Mailing Address</string>
 </resources>

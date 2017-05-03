@@ -53,6 +53,7 @@ public class SignInActivity extends BaseSignInActivity implements View.OnClickLi
         }
         if (Model.instance().getLoginManager().canRestoreLogin()) {
             HomeActivity.start(this);
+         //   startActivity(CreateLeadActivity.getCreateLeadActivityIntent(this, false));
         }
     }
 
@@ -128,8 +129,8 @@ public class SignInActivity extends BaseSignInActivity implements View.OnClickLi
 
             //signInEmailEt.setText("alex@tmregroup.com");
             // signInEmailEt.setText("olegdfgdfg@tmregroup.com");
-            signInEmailEt.setText("alexandrobraz@gmail.com");
-            signInPasswordEt.setText("qqq");
+           // signInEmailEt.setText("alexandrobraz@gmail.com");
+           // signInPasswordEt.setText("qqq");
             // signInPasswordEt.setText("");
         }
     }
