@@ -2,13 +2,9 @@ package com.loomlogic.network.requests;
 
 import android.text.TextUtils;
 
-import com.google.gson.reflect.TypeToken;
 import com.kt.http.base.BaseRequest;
 import com.kt.http.base.BaseRequestBuilder;
 import com.loomlogic.network.ApplicationConfig;
-import com.loomlogic.network.responses.errors.ApiError;
-
-import java.lang.reflect.Type;
 
 
 public class BaseLLRequestBuilder extends BaseRequestBuilder {
@@ -17,9 +13,9 @@ public class BaseLLRequestBuilder extends BaseRequestBuilder {
         this.setResponseFormat(BaseRequest.ResponseFormat.JSON);
         this.setRequestFormat(BaseRequest.RequestFormat.JSON);
 
-        Type errorType = new TypeToken<ApiError>() {
-        }.getType();
-        this.setErrorResponseClassSpecifier(errorType);
+//        Type errorType = new TypeToken<ApiError>() {
+//        }.getType();
+//        this.setErrorResponseClassSpecifier(errorType);
     }
 
     public void setGetMethod() {

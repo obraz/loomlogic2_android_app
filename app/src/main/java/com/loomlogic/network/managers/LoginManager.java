@@ -20,14 +20,16 @@ public class LoginManager implements ILoginManager {
         ResponseData loginResponseData = loginRequest.performRequest(true, queue);
 
         if (loginResponseData != null && loginResponseData.getData() != null) {
-            ResponseDataWrapper<UserData> dataWrapper = (ResponseDataWrapper<UserData>) loginResponseData.getData();
-            UserData data = dataWrapper.data;
+            ResponseDataWrapper dataWrapper = (ResponseDataWrapper) loginResponseData.getData();
+            UserData data = (UserData) dataWrapper.getData();
+            if (dataWrapper.isSuccess() && data != null) {
 
-            Map<String, String> headers = loginResponseData.getHeaders();
-            data.setAccessToken(headers.get("access-token"));
-            data.setUid(headers.get("uid"));
-            data.setClient(headers.get("client"));
-            this.applyLoginResponse(data);
+                Map<String, String> headers = loginResponseData.getHeaders();
+                data.setAccessToken(headers.get("access-token"));
+                data.setUid(headers.get("uid"));
+                data.setClient(headers.get("client"));
+                this.applyLoginResponse(data);
+            }
         }
 
         return loginResponseData;

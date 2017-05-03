@@ -15,9 +15,11 @@ import com.loomlogic.network.Model;
 import com.loomlogic.network.managers.BaseItemManager;
 import com.loomlogic.network.managers.ResetPasswordManager;
 import com.loomlogic.network.responses.ResetPasswordData;
-import com.loomlogic.network.responses.errors.ApiError;
+import com.loomlogic.network.responses.ResponseDataWrapper;
 import com.loomlogic.network.responses.errors.ErrorsConstant;
 import com.loomlogic.utils.Utils;
+
+import java.util.List;
 
 import static com.loomlogic.R.anim.anim_activity_left_in;
 import static com.loomlogic.R.anim.anim_activity_left_out;
@@ -109,22 +111,27 @@ public class ForgotPasswordActivity extends BaseSignInActivity implements View.O
 
         @Override
         public void onDataFetchComplete(ResetPasswordData result, ResponseData response, ResetPasswordAction requestTag) {
-            hideProgressBar();
             if (requestTag == ResetPasswordAction.RESET) {
+                hideProgressBar();
                 showCheckEmailDialog();
             }
         }
 
         @Override
         public void onDataFetchFailed(ResetPasswordData result, ResponseData response, ResetPasswordAction requestTag) {
-            hideProgressBar();
             if (requestTag == ResetPasswordAction.RESET) {
-                if (isValidationError(response)) {
-                    ApiError errors = getApiError(response);
-                    for (String error : errors.getErrors()) {
-                        if (error.equals(ErrorsConstant.ERROR_CREDENTIALS)) {
-                            showValidationError(forgotPasswordEmailEt);
-                            break;
+                hideProgressBar();
+
+                if (response != null && response.getData() != null) {
+                    ResponseDataWrapper dataWrapper = (ResponseDataWrapper) response.getData();
+
+                    if (isValidationError(response)) {
+                        List<String> errors = dataWrapper.getErrors();
+                        for (String error : errors) {
+                            if (error.equals(ErrorsConstant.ERROR_CREDENTIALS)) {
+                                showValidationError(forgotPasswordEmailEt);
+                                break;
+                            }
                         }
                     }
                 }

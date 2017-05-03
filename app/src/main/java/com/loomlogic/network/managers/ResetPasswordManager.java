@@ -58,10 +58,12 @@ public class ResetPasswordManager extends BaseItemManager<ResetPasswordData, Bun
         ResponseDataWrapper<ResetPasswordData> dataWrapper = (ResponseDataWrapper<ResetPasswordData>) response.getData();
         switch (tag) {
             case AUTH:
-                saveUserTokens(response);
+                if (dataWrapper.isSuccess()) {
+                    saveUserTokens(response);
+                }
                 break;
         }
-        return dataWrapper.data;
+        return dataWrapper.getData();
     }
 
     @Override
@@ -81,7 +83,7 @@ public class ResetPasswordManager extends BaseItemManager<ResetPasswordData, Bun
         userData.setUid(headers.get("uid"));
         userData.setClient(headers.get("client"));
         ProfileDataStorage.INSTANCE.saveUserData(userData);
-        Log.e( "saveUserTokens: ",""+userData.toString() );
+        Log.e("saveUserTokens: ", "" + userData.toString());
     }
 
     public void resetPassword(String email) {

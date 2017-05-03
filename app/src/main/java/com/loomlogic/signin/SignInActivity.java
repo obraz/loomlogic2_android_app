@@ -21,10 +21,13 @@ import com.loomlogic.BuildConfig;
 import com.loomlogic.R;
 import com.loomlogic.home.HomeActivity;
 import com.loomlogic.network.Model;
-import com.loomlogic.network.responses.errors.ApiError;
+import com.loomlogic.network.responses.ResponseDataWrapper;
+import com.loomlogic.network.responses.UserData;
 import com.loomlogic.network.responses.errors.ErrorsConstant;
 import com.loomlogic.signin.signup.SignUpActivity;
 import com.loomlogic.utils.Utils;
+
+import java.util.List;
 
 import static com.loomlogic.R.id.btn_signIn;
 
@@ -52,8 +55,8 @@ public class SignInActivity extends BaseSignInActivity implements View.OnClickLi
             // startActivity(CreateLeadActivity.getCreateLeadActivityIntent(this, false));
         }
         if (Model.instance().getLoginManager().canRestoreLogin()) {
-            HomeActivity.start(this);
-         //   startActivity(CreateLeadActivity.getCreateLeadActivityIntent(this, false));
+            // HomeActivity.start(this);
+            //   startActivity(CreateLeadActivity.getCreateLeadActivityIntent(this, false));
         }
     }
 
@@ -129,8 +132,8 @@ public class SignInActivity extends BaseSignInActivity implements View.OnClickLi
 
             //signInEmailEt.setText("alex@tmregroup.com");
             // signInEmailEt.setText("olegdfgdfg@tmregroup.com");
-           // signInEmailEt.setText("alexandrobraz@gmail.com");
-           // signInPasswordEt.setText("qqq");
+            // signInEmailEt.setText("alexandrobraz@gmail.com");
+            signInPasswordEt.setText("qqq");
             // signInPasswordEt.setText("");
         }
     }
@@ -192,18 +195,25 @@ public class SignInActivity extends BaseSignInActivity implements View.OnClickLi
                 hideProgressBar();
 
                 if (response != null && response.getData() != null) {
-                    HomeActivity.start(SignInActivity.this);
-                } else {
-                    if (isValidationError(response)) {
-                        ApiError errors = getApiError(response);
-                        for (String error : errors.getErrors()) {
-                            if (error.equals(ErrorsConstant.ERROR_CREDENTIALS)) {
-                                showValidationError(signInEmailEt);
-                                showValidationError(signInPasswordEt);
-                                break;
+                    ResponseDataWrapper dataWrapper = (ResponseDataWrapper) response.getData();
+                    UserData userData = (UserData) dataWrapper.getData();
+                    if (dataWrapper.isSuccess() && userData != null) {
+                        HomeActivity.start(SignInActivity.this);
+                    } else {
+                        if (isValidationError(response)) {
+                            List<String> errors = dataWrapper.getErrors();
+                            for (String error : errors) {
+                                if (error.equals(ErrorsConstant.ERROR_CREDENTIALS)) {
+                                    showValidationError(signInEmailEt);
+                                    showValidationError(signInPasswordEt);
+                                    break;
+                                }
                             }
                         }
+                        showResponseError(response);
                     }
+
+                } else {
                     showResponseError(response);
                 }
             }

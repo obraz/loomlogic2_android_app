@@ -97,7 +97,7 @@ public class Model {
         client = new KTClient.Builder(context)
                 .setRequestQueue(queue)
                 .setLoginManager(loginManager)
-                .setRequestTimeout(60000)
+                .setRequestTimeout(20000)
                 .build();
 
         registerManager = new RegisterManager(client);

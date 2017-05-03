@@ -21,9 +21,8 @@ import com.github.pwittchen.networkevents.library.event.ConnectivityChanged;
 import com.kt.http.base.ResponseData;
 import com.loomlogic.R;
 import com.loomlogic.base.resultfix.ActivityResultFixActivity;
-import com.loomlogic.network.ApplicationConfig;
 import com.loomlogic.network.RetryRequestCallback;
-import com.loomlogic.network.responses.errors.ApiError;
+import com.loomlogic.network.responses.ResponseDataWrapper;
 import com.loomlogic.utils.IntentUtils;
 import com.loomlogic.utils.InternetConnectionManager;
 import com.loomlogic.utils.Utils;
@@ -213,12 +212,12 @@ public class BaseActivity extends ActivityResultFixActivity {
 //                Toast.makeText(this, R.string.response401, Toast.LENGTH_LONG).show();
 //                logout();
             } else {
-                ApiError errors = getApiError(data);
-                if (errors != null && errors.getAlert() != null) {
+                ResponseDataWrapper dataWrapper = (ResponseDataWrapper) data.getData();
+                if (dataWrapper != null) {
                     if (isValidationError(data)) {
-                        showErrorSnackBar(errors.getHumanizedAlert());
+                        showErrorSnackBar(dataWrapper.getHumanizedAlert());
                     } else {
-                        showAlertSnackBar(errors.getHumanizedAlert(), callback);
+                        showAlertSnackBar(dataWrapper.getHumanizedAlert(), callback);
                     }
                 } else {
                     showGeneralAlertSnackBar(callback);
@@ -230,23 +229,11 @@ public class BaseActivity extends ActivityResultFixActivity {
     }
 
     public boolean isValidationError(ResponseData data) {
-        ApiError errors = getApiError(data);
-        if (errors != null && data.getStatusCode() == ApplicationConfig.HTTP_VALIDATION_ERROR && !errors.getErrors().isEmpty()) {
+        ResponseDataWrapper dataWrapper = (ResponseDataWrapper) data.getData();
+        if (dataWrapper != null && dataWrapper.getErrors() != null && !dataWrapper.getErrors().isEmpty()) {
             return true;
         }
         return false;
-    }
-
-    @Nullable
-    public ApiError getApiError(ResponseData data) {
-        if (data != null && data.getParsedErrorResponse() != null) {
-            ResponseData dataWrapper = (ResponseData) data.getParsedErrorResponse();
-            ApiError errors = (ApiError) dataWrapper.getData();
-            if (errors != null && errors.getErrors() != null && errors.getAlert() != null) {
-                return errors;
-            }
-        }
-        return null;
     }
 
     public void showAlertSnackBar(String errorMsg, RetryRequestCallback callback) {
