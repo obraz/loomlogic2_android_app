@@ -32,133 +32,174 @@
             android:src="@drawable/ic_arrow_down" />
     </LinearLayout>
 
-    <View
-        android:id="@+id/divider"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#EBEEF2"
-        android:visibility="gone"
-        tools:visibility="visible" />
-
     <LinearLayout
         android:id="@+id/ll_leadDetailsContractContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingBottom="20dp"
-        android:paddingTop="20dp"
+        android:orientation="vertical"
         android:visibility="gone"
         tools:visibility="visible">
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#EBEEF2" />
+
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:paddingLeft="20dp">
+            android:orientation="horizontal"
+            android:paddingBottom="20dp"
+            android:paddingTop="20dp">
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:paddingLeft="20dp">
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_lead_search_bedroom" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_lead_search_bedroom" />
+
+                    <TextView
+                        android:id="@+id/tv_leadDetailsSearch_bedrooms"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="7dp"
+                        android:textColor="#2C2E30"
+                        android:textSize="17sp"
+                        android:textStyle="bold"
+                        tools:text="3" />
+                </LinearLayout>
+
 
                 <TextView
-                    android:id="@+id/tv_leadDetailsSearch_bedrooms"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="7dp"
+                    android:layout_marginBottom="25dp"
+                    android:layout_marginTop="7dp"
+                    android:text="@string/lead_searching_criteria_bedrooms"
+                    android:textColor="#798591"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/tv_leadDetailsSearch_purchase"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:textColor="#2C2E30"
                     android:textSize="17sp"
                     android:textStyle="bold"
-                    tools:text="3" />
-            </LinearLayout>
-
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="25dp"
-                android:layout_marginTop="7dp"
-                android:text="@string/lead_searching_criteria_bedrooms"
-                android:textColor="#798591"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/tv_leadDetailsSearch_purchase"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="#2C2E30"
-                android:textSize="17sp"
-                android:textStyle="bold"
-                tools:text="$350,000" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/lead_searching_criteria_purchase"
-                android:textColor="#798591"
-                android:textSize="14sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:paddingLeft="20dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_lead_search_bathroom" />
+                    tools:text="$350,000" />
 
                 <TextView
-                    android:id="@+id/tv_leadDetailsSearch_bathroom"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="7dp"
+                    android:text="@string/lead_searching_criteria_purchase"
+                    android:textColor="#798591"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:paddingLeft="20dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_lead_search_bathroom" />
+
+                    <TextView
+                        android:id="@+id/tv_leadDetailsSearch_bathroom"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="7dp"
+                        android:textColor="#2C2E30"
+                        android:textSize="17sp"
+                        android:textStyle="bold"
+                        tools:text="3" />
+                </LinearLayout>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="25dp"
+                    android:layout_marginTop="7dp"
+                    android:text="@string/lead_searching_criteria_bathroom"
+                    android:textColor="#798591"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/tv_leadDetailsSearch_area"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:textColor="#2C2E30"
                     android:textSize="17sp"
                     android:textStyle="bold"
-                    tools:text="3" />
+                    tools:text="125 ft²" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lead_searching_criteria_area"
+                    android:textColor="#798591"
+                    android:textSize="14sp" />
             </LinearLayout>
-
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="25dp"
-                android:layout_marginTop="7dp"
-                android:text="@string/lead_searching_criteria_bathroom"
-                android:textColor="#798591"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/tv_leadDetailsSearch_area"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="#2C2E30"
-                android:textSize="17sp"
-                android:textStyle="bold"
-                tools:text="125 ft²" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/lead_searching_criteria_area"
-                android:textColor="#798591"
-                android:textSize="14sp" />
         </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#EBEEF2" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="25dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="25dp">
+
+            <ImageView
+                android:id="@+id/iv_leadSearch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="8dp"
+                android:src="@drawable/ic_lead_search_in" />
+
+            <TextView
+                android:id="@+id/tv_leadDetailsSearch_lookingTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/iv_leadSearch"
+                android:text="@string/lead_searching_looking_area"
+                android:textColor="#798591" />
+
+            <TextView
+                android:id="@+id/tv_leadDetailsSearch_looking"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_leadDetailsSearch_lookingTitle"
+                android:layout_marginTop="5dp"
+                android:layout_toRightOf="@+id/iv_leadSearch"
+                android:textColor="#28323C"
+                tools:text="Antelope, Roseville, Sacramento, Citrus Heights" />
+        </RelativeLayout>
     </LinearLayout>
-
 </LinearLayout>

@@ -182,12 +182,26 @@
             tools:text="Zillow" />
 
         <LinearLayout
+            android:id="@+id/ll_leadDetailsSocial"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="17dp"
-            android:layout_marginTop="8dp"
+            android:layout_height="45dp"
+            android:background="?attr/selectableItemBackground"
+            android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingLeft="5dp">
+
+            <TextView
+                android:id="@+id/tv_leadDetailsNoSocial"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_lead_no_social"
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="11dp"
+                android:text="@string/lead_details_no_social"
+                android:textColor="#798591"
+                android:textSize="15sp"
+                android:visibility="gone" />
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -212,13 +226,138 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:src="@drawable/ic_lead_detail_instagram" />
-        </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#EBEEF2" />
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:id="@+id/iv_showMoreSocialInfo"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_marginRight="15dp"
+                android:src="@drawable/ic_arrow_down" />
+        </LinearLayout>
     </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_leadDetailsSocialContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone"
+        tools:visibility="gone">
+
+        <RelativeLayout
+            android:id="@+id/layout_leadDetailsSocial_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="15dp">
+
+            <ImageView
+                android:id="@+id/iv_leadDetailsSocial_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp"
+                android:src="@drawable/ic_lead_social_info" />
+
+            <TextView
+                android:id="@+id/tv_leadDetailsSocial_infoTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/iv_leadDetailsSocial_info"
+                android:text="@string/lead_details_social_info"
+                android:textColor="#798591"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/tv_leadDetailsSocial_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_leadDetailsSocial_infoTitle"
+                android:layout_toRightOf="@+id/iv_leadDetailsSocial_info"
+                android:textColor="#2C2E30"
+                android:textSize="17sp"
+                tools:text="36 years, Male" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout_leadDetailsSocial_lives"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="15dp">
+
+            <ImageView
+                android:id="@+id/iv_leadDetailsSocial_lives"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="19dp"
+                android:src="@drawable/ic_lead_social_lives" />
+
+            <TextView
+                android:id="@+id/tv_leadDetailsSocial_livesTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/iv_leadDetailsSocial_lives"
+                android:text="@string/lead_details_social_lives"
+                android:textColor="#798591"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/tv_leadDetailsSocial_lives"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_leadDetailsSocial_livesTitle"
+                android:layout_toRightOf="@+id/iv_leadDetailsSocial_lives"
+                android:textColor="#2C2E30"
+                android:textSize="17sp"
+                tools:text="Pasadena California" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout_leadDetailsSocial_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="15dp">
+
+            <ImageView
+                android:id="@+id/iv_leadDetailsSocial_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp"
+                android:src="@drawable/ic_lead_social_title" />
+
+            <TextView
+                android:id="@+id/tv_leadDetailsSocial_titleTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/iv_leadDetailsSocial_title"
+                android:text="@string/lead_details_social_title"
+                android:textColor="#798591"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/tv_leadDetailsSocial_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_leadDetailsSocial_titleTitle"
+                android:layout_toRightOf="@+id/iv_leadDetailsSocial_title"
+                android:textColor="#2C2E30"
+                android:textSize="17sp"
+                tools:text="Developer" />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:background="#EBEEF2"
+        android:visibility="gone" />
 
     <LinearLayout
         android:layout_width="match_parent"

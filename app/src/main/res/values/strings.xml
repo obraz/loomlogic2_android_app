@@ -126,6 +126,11 @@
     <string name="lead_details_tab_tasks">Tasks</string>
     <string name="lead_details_tab_documents">Documents</string>
 
+    <string name="lead_details_no_social">Social Media Profile</string>
+    <string name="lead_details_social_info">Age and Gender</string>
+    <string name="lead_details_social_lives">Lives in</string>
+    <string name="lead_details_social_title">Title</string>
+
     <array name="lead_details_escrow_statuses_financing_list_abbreviation">
         <item>SD</item>
         <item>AO</item>
@@ -174,6 +179,8 @@
     <string name="lead_searching_pre_approval_downpayment">Downpayment</string>
     <string name="lead_searching_pre_approval_loan">Loan Type</string>
     <string name="lead_searching_pre_approval_interest">Interest Rate</string>
+
+    <string name="lead_searching_looking_area">Looking for property in</string>
 
     <!-- Lead Settings -->
     <string name="lead_settings_title">Lead Settings</string>

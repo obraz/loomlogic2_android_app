@@ -30,6 +30,7 @@ import static com.loomlogic.utils.AnimationUtils.expand;
 
 public class LeadDetailsInfoView extends LinearLayout {
     private boolean isVisible = false;
+    private boolean isSocialVisible = false;
 
     public interface OnLeadInfoClickListener {
         void onChangeStatusClick();
@@ -76,6 +77,7 @@ public class LeadDetailsInfoView extends LinearLayout {
     public void setLead(LeadItem lead) {
         this.leadItem = lead;
         setLeadInfo();
+        setLeadSocial();
     }
 
     public void setCallbacks(final OnLeadInfoClickListener callback) {
@@ -186,20 +188,30 @@ public class LeadDetailsInfoView extends LinearLayout {
 
                 break;
         }
+        final View divider = findViewById(R.id.divider);
 
         final LinearLayout infoLayout = (LinearLayout) findViewById(R.id.ll_leadDetailsInfoContainer);
+        final LinearLayout socialLayout = (LinearLayout) findViewById(R.id.ll_leadDetailsSocialContainer);
 
         final ImageView showMoreIcon = (ImageView) findViewById(R.id.iv_showMore);
+        final ImageView showMoreSocialIcon = (ImageView) findViewById(R.id.iv_showMoreSocialInfo);
         findViewById(R.id.rl_headerContainer).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (isVisible) {
+                    if (isSocialVisible) {
+                        showMoreSocialIcon.setRotation(0);
+                        collapse(socialLayout);
+                        isSocialVisible = !isSocialVisible;
+                    }
                     showMoreIcon.setRotation(0);
                     collapse(infoLayout);
+                    divider.setVisibility(GONE);
                     callback.onDetailsViewHide();
                 } else {
                     showMoreIcon.setRotation(180);
                     expand(infoLayout);
+                    divider.setVisibility(VISIBLE);
                     if (fullViewHeight == 0) {
                         calculateFullHeight();
                     } else {
@@ -219,7 +231,6 @@ public class LeadDetailsInfoView extends LinearLayout {
                 return true;
             }
         });
-
 
         TextView infoAddressTv = (TextView) findViewById(R.id.tv_leadDetailsAddress);
         infoAddressTv.setText(leadItem.address);
@@ -242,6 +253,40 @@ public class LeadDetailsInfoView extends LinearLayout {
 
         TextView infoSourceTv = (TextView) findViewById(R.id.tv_leadDetailsSource);
         infoSourceTv.setText(leadItem.source);
+    }
+
+    private void setLeadSocial() {
+        final LinearLayout socialLayout = (LinearLayout) findViewById(R.id.ll_leadDetailsSocialContainer);
+
+        final ImageView showMoreIcon = (ImageView) findViewById(R.id.iv_showMoreSocialInfo);
+        findViewById(R.id.ll_leadDetailsSocial).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isSocialVisible) {
+                    showMoreIcon.setRotation(0);
+                    collapse(socialLayout);
+                    //   callback.onDetailsViewHide();
+                } else {
+                    showMoreIcon.setRotation(180);
+                    expand(socialLayout);
+                    // if (fullViewHeight == 0) {
+                    // calculateFullHeight();
+//                    } else {
+//                        callback.onDetailsViewShow();
+//                    }
+                }
+                isSocialVisible = !isSocialVisible;
+            }
+        });
+
+        TextView socialInfoTv = (TextView) findViewById(R.id.tv_leadDetailsSocial_info);
+        socialInfoTv.setText("36 years, Male");
+
+        TextView socialLivesTv = (TextView) findViewById(R.id.tv_leadDetailsSocial_lives);
+        socialLivesTv.setText("Pasadena California");
+
+        TextView socialTitleTv = (TextView) findViewById(R.id.tv_leadDetailsSocial_title);
+        socialTitleTv.setText("Developer");
     }
 
     private void calculateFullHeight() {
