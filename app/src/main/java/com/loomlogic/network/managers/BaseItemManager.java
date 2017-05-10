@@ -14,6 +14,7 @@ import java.net.HttpURLConnection;
 
 public abstract class BaseItemManager<ClassToManage, ParametersClass, TagClass> {
     protected static final String VOID_TAG = "void_tag";
+    protected static final String KEY_TAG = "KEY_TAG";
 
     @NonNull
     private final KTClient client;

@@ -150,8 +150,6 @@ public class LeadUtils {
             color = R.color.lead_quality_bg_color_B;
         } else if (quality.equals("C")) {
             color = R.color.lead_quality_bg_color_C;
-        } else if (quality.equals("D")) {
-            color = R.color.lead_quality_bg_color_D;
         }
         Drawable circleDrawable = ContextCompat.getDrawable(LoomLogicApp.getSharedContext(), R.drawable.circle);
         Drawable bg = circleDrawable.getConstantState().newDrawable();

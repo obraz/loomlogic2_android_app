@@ -29,6 +29,10 @@
 
     <color name="main_bg_color">#F3F5F7</color>
 
+    <color name="colorMainEditTextHint">#ADB5BC</color>
+    <color name="colorMainEditTextError">#FF162F</color>
+    <color name="colorMainEditTextDivider">#D7DDE4</color>
+
     <color name="white">#FFFFFF</color>
     <color name="white_transparent_10">#1AFFFFFF</color>
     <color name="white_transparent_20">#33FFFFFF</color>
@@ -43,7 +47,6 @@
     <color name="lead_quality_bg_color_A">#7FD23B</color>
     <color name="lead_quality_bg_color_B">#FCB322</color>
     <color name="lead_quality_bg_color_C">#FC6D64</color>
-    <color name="lead_quality_bg_color_D">#552D16</color>
 
     <color name="lead_gender_male_color">#4990E2</color>
     <color name="lead_gender_female_color">#BD0FE1</color>

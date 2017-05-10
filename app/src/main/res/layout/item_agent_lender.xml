@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="66dp"
+    android:background="@color/white"
+    android:foreground="?selectableItemBackground"
+    android:orientation="vertical">
+
+    <com.loomlogic.leads.base.LeadAvatarView
+        android:id="@+id/avatar"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="10dp" />
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/avatar"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="-4dp"
+        android:layout_toRightOf="@+id/avatar"
+        android:ellipsize="marquee"
+        android:lines="1"
+        android:textColor="#2B2E30"
+        android:textSize="17sp"
+        tools:text="Hiugiu yioknoihi" />
+
+    <TextView
+        android:id="@+id/tv_phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_name"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="2dp"
+        android:layout_toLeftOf="@+id/ratingBar"
+        android:layout_toRightOf="@+id/avatar"
+        android:ellipsize="marquee"
+        android:lines="1"
+        android:textColor="#798591"
+        android:textSize="13sp"
+        tools:text="000-856-0986" />
+
+    <RatingBar
+        android:id="@+id/ratingBar"
+        style="?android:attr/ratingBarStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/tv_name"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="2dp"
+        android:isIndicator="true"
+        android:numStars="5"
+        android:rating="1"
+        android:theme="@style/RatingBar" />
+
+    <View
+        style="@style/MainEditTextDivider"
+        android:layout_alignParentBottom="true" />
+</RelativeLayout>

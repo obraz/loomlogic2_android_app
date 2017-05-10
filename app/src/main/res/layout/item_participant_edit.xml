@@ -36,6 +36,6 @@
         android:visibility="gone" />
 
     <View
-        style="@style/MainLeadDivider"
+        style="@style/MainEditTextDivider"
         android:layout_alignParentBottom="true" />
 </RelativeLayout>

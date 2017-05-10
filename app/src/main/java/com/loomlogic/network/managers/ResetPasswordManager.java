@@ -25,7 +25,6 @@ import static com.loomlogic.signin.ResetPasswordAction.AUTH;
 
 public class ResetPasswordManager extends BaseItemManager<ResetPasswordData, Bundle, ResetPasswordAction> {
 
-    private static final String KEY_TAG = "KEY_TAG";
     private static final String KEY_EMAIL = "KEY_EMAIL";
     private static final String KEY_TOKEN = "KEY_TOKEN";
     private static final String KEY_PASSWORD = "KEY_PASSWORD";

@@ -1,6 +1,7 @@
 package com.loomlogic.leads.base;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.support.annotation.AttrRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 
 import com.loomlogic.R;
 import com.loomlogic.leads.details.LeadEscrowStatusUtils;
+import com.loomlogic.leads.entity.Gender;
 import com.loomlogic.leads.entity.LeadItem;
 import com.loomlogic.utils.Utils;
 import com.squareup.picasso.Callback;
@@ -25,38 +27,58 @@ import com.squareup.picasso.Picasso;
  */
 
 public class LeadAvatarView extends FrameLayout {
+    private ImageView avatarIV;
+    private TextView initialsTV;
 
     public LeadAvatarView(@NonNull Context context) {
         super(context);
-        initViews();
     }
 
     public LeadAvatarView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        initViews();
+        initViews(attrs);
     }
 
     public LeadAvatarView(@NonNull Context context, @Nullable AttributeSet attrs, @AttrRes int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        initViews();
+        initViews(attrs);
     }
 
     public LeadAvatarView(@NonNull Context context, @Nullable AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-        initViews();
+        initViews(attrs);
     }
 
-    private void initViews() {
+    private void initViews(AttributeSet attrs) {
         inflate(getContext(), R.layout.view_lead_avatar, this);
+        avatarIV = (ImageView) findViewById(R.id.iv_leadAvatar);
+        initialsTV = (TextView) findViewById(R.id.tv_leadInitials);
+
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.AvatarView);
+
+        boolean needEscrowMargin = a.getBoolean(R.styleable.AvatarView_needEscrowMargin, false);
+        a.recycle();
+
+        if (needEscrowMargin){
+            int margin = (int)getResources().getDimension(R.dimen.lead_escrow_default_margins);
+            FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) avatarIV.getLayoutParams();
+            params.setMargins(margin, margin, margin, margin);
+            avatarIV.setLayoutParams(params);
+        }
     }
 
-    public void setLeadAvatar(final LeadItem lead) {
-        ImageView avatarIV = (ImageView) findViewById(R.id.iv_leadAvatar);
-        final TextView initialsTV = (TextView) findViewById(R.id.tv_leadInitials);
+    public void setLeadAvatar(LeadItem lead) {
+        setAvatar(lead.avatarUrl, lead.firstName, lead.lastName, lead.gender);
+    }
 
-        if (Utils.isUrlValid(lead.avatarUrl)) {
+    public void setAvatar(String url, final String firstName, final String lastName) {
+        setAvatar(url, firstName, lastName, Gender.NONE);
+    }
+
+    public void setAvatar(final String url, final String firstName, final String lastName, final Gender gender) {
+        if (Utils.isUrlValid(url)) {
             Picasso.with(getContext())
-                    .load(lead.avatarUrl)
+                    .load(url)
                     .into(avatarIV, new Callback() {
                         @Override
                         public void onSuccess() {
@@ -65,23 +87,20 @@ public class LeadAvatarView extends FrameLayout {
 
                         @Override
                         public void onError() {
-                            setLeadDefaultAvatar(lead);
+                            setDefaultAvatar(firstName, lastName, gender);
                         }
                     });
 
         } else {
-            setLeadDefaultAvatar(lead);
+            setDefaultAvatar(firstName, lastName, gender);
         }
     }
 
-    private void setLeadDefaultAvatar(LeadItem lead) {
-        ImageView avatarIV = (ImageView) findViewById(R.id.iv_leadAvatar);
-        TextView initialsTV = (TextView) findViewById(R.id.tv_leadInitials);
-
+    private void setDefaultAvatar(String firstName, String lastName, Gender gender) {
         initialsTV.setVisibility(View.VISIBLE);
-        initialsTV.setText(String.format("%s%s", !TextUtils.isEmpty(lead.firstName) ? lead.firstName.charAt(0) : "", !TextUtils.isEmpty(lead.lastName) ? lead.lastName.charAt(0) : ""));
+        initialsTV.setText(String.format("%s%s", !TextUtils.isEmpty(firstName) ? firstName.charAt(0) : "", !TextUtils.isEmpty(lastName) ? lastName.charAt(0) : ""));
         int color;
-        switch (lead.gender) {
+        switch (gender) {
             case MALE:
                 color = ContextCompat.getColor(getContext(), R.color.lead_gender_male_color);
                 break;
@@ -105,4 +124,6 @@ public class LeadAvatarView extends FrameLayout {
         escrowStatusView.setMax(LeadEscrowStatusUtils.getMaxEscrowStatusCount(lead));
         escrowStatusView.setProgress(lead.escrowStatusDoneCount);
     }
+
+
 }

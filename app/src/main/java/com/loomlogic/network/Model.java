@@ -12,6 +12,7 @@ import com.android.volley.toolbox.HttpStack;
 import com.kt.http.base.ResponseData;
 import com.kt.http.base.client.KTClient;
 import com.kt.util.internal.VolleyHelperFactory;
+import com.loomlogic.network.managers.LeadManager;
 import com.loomlogic.network.managers.LoginManager;
 import com.loomlogic.network.managers.OkHttpStack;
 import com.loomlogic.network.managers.RegisterManager;
@@ -54,6 +55,7 @@ public class Model {
     //Managers
     private RegisterManager registerManager;
     private ResetPasswordManager resetPasswordManager;
+    private LeadManager leadManager;
 
     public KTClient getClient() {
         return client;
@@ -79,6 +81,10 @@ public class Model {
         return resetPasswordManager;
     }
 
+    public LeadManager getLeadManager() {
+        return leadManager;
+    }
+
     /**
      * NOTE: login is performed in synchroneus way so you must never call it from UI thread.
      */
@@ -102,6 +108,7 @@ public class Model {
 
         registerManager = new RegisterManager(client);
         resetPasswordManager = new ResetPasswordManager(client);
+        leadManager = new LeadManager(client);
     }
 
     //Initialization

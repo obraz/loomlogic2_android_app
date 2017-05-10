@@ -2,17 +2,17 @@
 <android.support.design.widget.TextInputLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/ti_textInput"
     android:layout_width="match_parent"
-    android:layout_height="55dp"
+    android:layout_height="56dp"
     android:background="@color/white"
-    android:minHeight="55dp"
+    android:minHeight="56dp"
     android:paddingTop="8dp"
-    android:textColorHint="#ADB5BC"
-    android:theme="@style/LLTextInputLabel">
+    android:textColorHint="@color/colorMainEditTextHint">
 
     <com.loomlogic.view.LLEditText
         android:id="@+id/et_editText"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_weight="1"
         android:background="@color/white"
         android:paddingBottom="10dp"
         android:paddingLeft="20dp"
@@ -20,4 +20,9 @@
         android:textColor="#28323C"
         android:textSize="15sp" />
 
+    <View
+        android:id="@+id/editTextDivider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorMainEditTextDivider" />
 </android.support.design.widget.TextInputLayout>

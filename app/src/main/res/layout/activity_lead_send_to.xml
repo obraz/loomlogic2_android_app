@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    android:background="@color/main_bg_color"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar_light" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="61dp"
+        android:layout_marginBottom="@dimen/margins15"
+        android:background="@drawable/bg_shadow">
+
+        <com.loomlogic.view.LLEditTextWithHint
+            android:id="@+id/et_createLead_sendTo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableRight="@drawable/ic_arrow_right"
+            android:enabled="false" />
+
+        <View
+            android:id="@+id/view_createLead_sendTo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="?selectableItemBackground"
+            android:clickable="true" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_shadow"
+        android:orientation="vertical">
+
+        <Switch
+            android:id="@+id/sw_createLead_sendFuture"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:checked="false"
+            android:paddingLeft="15dp"
+            android:paddingRight="20dp"
+            android:text="@string/create_new_lead_send_future"
+            android:textColor="#28323C"
+            android:textSize="14sp"
+            android:theme="@style/ColorSwitchStyle" />
+
+        <RelativeLayout
+            android:id="@+id/createLeadSpecifyTimeContainer"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <View style="@style/MainEditTextDivider" />
+
+            <TextView
+                android:id="@+id/tv_createLead_sendFutureTimeTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="10dp"
+                android:text="@string/create_new_lead_send_to_specify_ime"
+                android:textColor="#28323C"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tv_createLead_sendFutureDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/tv_createLead_sendFutureTime"
+                android:background="?selectableItemBackground"
+                android:clickable="true"
+                android:padding="5dp"
+                android:textColor="#28323C"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                tools:text="Apr 15, 2017" />
+
+            <TextView
+                android:id="@+id/tv_createLead_sendFutureTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="10dp"
+                android:background="?selectableItemBackground"
+                android:clickable="true"
+                android:padding="5dp"
+                android:textColor="#28323C"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                tools:text="10:00 AM" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_createLead_sendFutureDefaultTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="5dp"
+        android:text="@string/create_new_lead_send_to_time"
+        android:textColor="#798591"
+        android:textSize="13sp" />
+
+    <Switch
+        android:id="@+id/sw_createLead_sendToClaim"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/bg_shadow"
+        android:checked="false"
+        android:paddingLeft="15dp"
+        android:paddingRight="20dp"
+        android:text="@string/create_new_lead_send_to_claim"
+        android:textColor="#28323C"
+        android:textSize="14sp"
+        android:theme="@style/ColorSwitchStyle" />
+</LinearLayout>

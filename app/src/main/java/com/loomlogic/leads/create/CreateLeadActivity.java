@@ -10,21 +10,37 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.telephony.PhoneNumberFormattingTextWatcher;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RadioButton;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.kt.http.base.ResponseData;
 import com.loomlogic.R;
 import com.loomlogic.base.BaseActivity;
 import com.loomlogic.leads.entity.LeadSourceItem;
 import com.loomlogic.leads.entity.State;
+import com.loomlogic.network.Model;
+import com.loomlogic.network.managers.BaseItemManager;
+import com.loomlogic.network.managers.LeadManager;
+import com.loomlogic.network.requests.data.LeadRequestData;
+import com.loomlogic.network.responses.ResponseDataWrapper;
+import com.loomlogic.network.responses.UserData;
+import com.loomlogic.network.responses.errors.ErrorsConstant;
+import com.loomlogic.utils.Utils;
 import com.loomlogic.utils.ViewUtils;
 import com.loomlogic.view.LLEditTextWithHint;
+
+import java.util.List;
 
 import static com.loomlogic.R.id.rb_createLead_buyer;
 import static com.loomlogic.R.id.rb_createLead_seller;
@@ -44,9 +60,14 @@ public class CreateLeadActivity extends BaseActivity implements View.OnClickList
     private static final int RESULT_PICK_SOURCE = 124;
     private static final int RESULT_PICK_STATE = 125;
 
-    private LLEditTextWithHint nameEt, phoneEt, emailEt, sourceEt, stateEt;
+    private LLEditTextWithHint nameEt, additionalNameEt, phoneEt, emailEt, sourceEt, noteEt;
+    private LLEditTextWithHint addressEt, unitEt, cityEt, zipCodeEt, stateEt;
+    private Switch dripCompaignsSwitch;
+
     private LeadSourceItem sourceSelected;
-    private State stateSelected;
+    private State stateSelected = new State();
+    private LeadManager leadManager;
+    private LeadRequestData leadRequestData;
 
     public static Intent getCreateLeadActivityIntent(Context context, boolean isFromContact) {
         Intent intent = new Intent(context, CreateLeadActivity.class);
@@ -60,9 +81,14 @@ public class CreateLeadActivity extends BaseActivity implements View.OnClickList
         setContentView(R.layout.activity_create_lead);
         setTitle(R.string.create_new_lead_title);
 
-        initViews();
+        leadRequestData = new LeadRequestData();
+        leadRequestData.setLeadType(LeadRequestData.LeadType.BUYER);
 
+        initViews();
         openContactPickerIfNeed();
+
+        leadManager = Model.instance().getLeadManager();
+        leadManager.addDataFetchCompleteListener(completeListener);
     }
 
     @Override
@@ -73,60 +99,98 @@ public class CreateLeadActivity extends BaseActivity implements View.OnClickList
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        leadManager.removeDataFetchCompleteListener(completeListener);
+    }
+
     private void initViews() {
-        initRoleViews();
+        initTypeViews();
 
         nameEt = (LLEditTextWithHint) findViewById(R.id.et_createLead_name);
+        additionalNameEt = (LLEditTextWithHint) findViewById(R.id.et_createLead_additionalName);
         phoneEt = (LLEditTextWithHint) findViewById(R.id.et_createLead_phone);
         emailEt = (LLEditTextWithHint) findViewById(R.id.et_createLead_email);
         sourceEt = ((LLEditTextWithHint) findViewById(R.id.et_createLead_source));
         stateEt = ((LLEditTextWithHint) findViewById(R.id.et_createLead_state));
 
+        noteEt = ((LLEditTextWithHint) findViewById(R.id.et_createLead_note));
+        addressEt = ((LLEditTextWithHint) findViewById(R.id.et_createLead_address));
+        unitEt = ((LLEditTextWithHint) findViewById(R.id.et_createLead_unit));
+        cityEt = ((LLEditTextWithHint) findViewById(R.id.et_createLead_city));
+        zipCodeEt = ((LLEditTextWithHint) findViewById(R.id.et_createLead_zip));
+
+        dripCompaignsSwitch = (Switch) findViewById(R.id.sw_createLead_dripCompaigns);
+
         findViewById(R.id.view_createLead_source).setOnClickListener(this);
         findViewById(R.id.view_createLead_state).setOnClickListener(this);
 
-        phoneEt.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
+        phoneEt.addTextChangedListener(new CustomPhoneTextWatcher());
+
+        emailEt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                phoneEt.removeError();
+                if (phoneEt.getEditText().getText().length() == 0) {
+                    phoneEt.setText("");
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
-    private void initRoleViews() {
+    private void initTypeViews() {
         final View addressContainer = findViewById(R.id.ll_createLead_addressContainer);
 
         final int colorBlack = ContextCompat.getColor(this, R.color.lead_create_new_black_text_color);
         final int colorGrey = ContextCompat.getColor(this, R.color.lead_create_new_grey_text_color);
 
-        final RadioButton buyerRole = (RadioButton) findViewById(rb_createLead_buyer);
-        final RadioButton sellerRole = (RadioButton) findViewById(rb_createLead_seller);
+        final RadioButton buyerType = (RadioButton) findViewById(rb_createLead_buyer);
+        final RadioButton sellerType = (RadioButton) findViewById(rb_createLead_seller);
 
-        buyerRole.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        buyerType.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     setRightMarginToAddressContainerView(addressContainer, 0);
                     collapse(addressContainer);
-                    sellerRole.setChecked(false);
-                    changeRadioBtnTextColor(buyerRole, colorGrey, colorBlack);
+                    sellerType.setChecked(false);
+                    changeRadioBtnTextColor(buyerType, colorGrey, colorBlack);
+                    leadRequestData.setLeadType(LeadRequestData.LeadType.BUYER);
+                    leadRequestData.clearAddress();
                 } else {
-                    changeRadioBtnTextColor(buyerRole, colorBlack, colorGrey);
+                    changeRadioBtnTextColor(buyerType, colorBlack, colorGrey);
                 }
             }
         });
 
-        sellerRole.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        sellerType.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     setRightMarginToAddressContainerView(addressContainer, (int) getResources().getDimension(R.dimen.margins15));
                     expand(addressContainer);
-                    buyerRole.setChecked(false);
-                    changeRadioBtnTextColor(sellerRole, colorGrey, colorBlack);
+                    buyerType.setChecked(false);
+                    changeRadioBtnTextColor(sellerType, colorGrey, colorBlack);
+                    leadRequestData.setLeadType(LeadRequestData.LeadType.SELLER);
                 } else {
-                    changeRadioBtnTextColor(sellerRole, colorBlack, colorGrey);
+                    changeRadioBtnTextColor(sellerType, colorBlack, colorGrey);
                 }
             }
         });
 
         // if (LeadPreferencesUtils.getCurrentLeadType() == LeadType.SELLER) {
-        //      sellerRole.setChecked(true);
+        //      sellerType.setChecked(true);
         //  }
     }
 
@@ -222,7 +286,6 @@ public class CreateLeadActivity extends BaseActivity implements View.OnClickList
     private void sourcePicked(Intent data) {
         sourceSelected = new Gson().fromJson(data.getExtras().getString(KEY_SOURCE), LeadSourceItem.class);
         sourceEt.setText(sourceSelected.name);
-        sourceEt.setError(null);
     }
 
     @Override
@@ -235,7 +298,8 @@ public class CreateLeadActivity extends BaseActivity implements View.OnClickList
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_ok:
-                if (validateFields()) {
+                //  createLead();
+                if (validateFields(false)) {
                     ViewUtils.hideSoftKeyboard(getCurrentFocus());
 // TODO: 3/29/17  only if user PRo Agent
                     openCreateLeadDialog();
@@ -244,26 +308,67 @@ public class CreateLeadActivity extends BaseActivity implements View.OnClickList
         return super.onOptionsItemSelected(item);
     }
 
-    public boolean validateFields() {
-        if (sourceSelected == null) {
-            sourceEt.setError("");
-            showErrorSnackBar(getString(R.string.create_new_lead_source_error));
-            return false;
+    public boolean validateFields(boolean validateEmailAndPhone) {
+        boolean isValid = true;
+        String errors = "";
+
+        if (validateEmailAndPhone && TextUtils.isEmpty(emailEt.getText()) && TextUtils.isEmpty(phoneEt.getText())) {
+            emailEt.setError();
+            phoneEt.setError();
+            errors = errors + getString(R.string.create_new_lead_email_phone_error) + "\n";
+            isValid = false;
         }
-        return true;
+
+        if (!TextUtils.isEmpty(emailEt.getText()) && !Utils.isEmailValid(emailEt.getText())) {
+            emailEt.setError();
+            errors = errors + getString(R.string.create_new_lead_email_error) + "\n";
+            isValid = false;
+        }
+        if (sourceSelected == null) {
+            sourceEt.setError();
+            errors = errors + getString(R.string.create_new_lead_source_error) + "\n";
+            isValid = false;
+        }
+
+        if (!isValid) {
+            errors = errors.substring(0, errors.length() - 1);
+            showErrorSnackBar(errors);
+        }
+        return isValid;
     }
 
     private void openCreateLeadDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.create_new_lead_dialog_title);
-        builder.setItems(R.array.create_new_lead_dialog_chooser, new DialogInterface.OnClickListener() {
+        builder.setItems(leadRequestData.isSeller() ? R.array.create_new_lead_seller_dialog_chooser : R.array.create_new_lead_buyer_dialog_chooser, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                showErrorSnackBar("Do something");
+                ListView lv = ((AlertDialog) dialog).getListView();
+                String checkedItem = (String) lv.getAdapter().getItem(which);
+                if (checkedItem.equals(getString(R.string.create_new_lead_dialog_create))) {
+                    leadRequestData.setSendToAction(LeadRequestData.SendToAction.CRM);
+
+                } else if (checkedItem.equals(getString(R.string.create_new_lead_dialog_send_to_lender))) {
+                    leadRequestData.setSendToAction(LeadRequestData.SendToAction.LENDER);
+                    openAgentLenderChoseActivity(SendToLenderActivity.class);
+                } else if (checkedItem.equals(getString(R.string.create_new_lead_dialog_send_to_agent))) {
+                    leadRequestData.setSendToAction(LeadRequestData.SendToAction.AGENT);
+                    openAgentLenderChoseActivity(SendToAgentActivity.class);
+                } else if (checkedItem.equals(getString(R.string.create_new_lead_dialog_send_to_team))) {
+                    leadRequestData.setSendToAction(LeadRequestData.SendToAction.TEAM);
+
+                }
+
             }
 
         });
         builder.show();
+    }
+
+    private void openAgentLenderChoseActivity(Class _class) {
+        if (validateFields(true)) {
+            startActivity(SendToActivity.getSendToActivityIntent(this, _class, leadRequestData));
+        }
     }
 
     @Override
@@ -275,6 +380,67 @@ public class CreateLeadActivity extends BaseActivity implements View.OnClickList
             case R.id.view_createLead_state:
                 startActivityForResult(new Intent(CreateLeadActivity.this, StateListActivity.class), RESULT_PICK_STATE);
                 break;
+        }
+    }
+
+    private void createLead() {
+        showProgressBar();
+        leadRequestData.setLeadData(
+                nameEt.getText(),
+                additionalNameEt.getText(),
+                phoneEt.getText(),
+                emailEt.getText(),
+                1, //todo set real
+                noteEt.getText(),
+                dripCompaignsSwitch.isChecked()
+        );
+        if (leadRequestData.isSeller()) {
+            leadRequestData.setAddress(addressEt.getText(), unitEt.getText(), cityEt.getText(), stateSelected.abbreviation, zipCodeEt.getText());
+        }
+        leadManager.createNewLead(leadRequestData);
+    }
+
+    private final BaseItemManager.OnDataFetchCompleteListener<UserData, LeadAction> completeListener
+            = new BaseItemManager.OnDataFetchCompleteListener<UserData, LeadAction>() {
+
+        @Override
+        public void onDataFetchComplete(UserData result, ResponseData response, LeadAction requestTag) {
+            if (requestTag == LeadAction.CREATE) {
+                hideProgressBar();
+
+            }
+        }
+
+        @Override
+        public void onDataFetchFailed(UserData result, ResponseData response, LeadAction requestTag) {
+            if (requestTag == LeadAction.CREATE) {
+                hideProgressBar();
+
+                if (response != null && response.getData() != null) {
+                    ResponseDataWrapper dataWrapper = (ResponseDataWrapper) response.getData();
+
+                    if (isValidationError(response)) {
+                        List<String> errors = dataWrapper.getErrors();
+                        for (String error : errors) {
+                            if (error.equals(ErrorsConstant.ERROR_CREDENTIALS)) {
+                                break;
+                            }
+                        }
+                    }
+                }
+                showResponseError(response);
+            }
+        }
+    };
+
+    class CustomPhoneTextWatcher extends PhoneNumberFormattingTextWatcher {
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            super.onTextChanged(s, start, before, count);
+            emailEt.removeError();
+            if (emailEt.getEditText().getText().length() == 0) {
+                emailEt.setText("");
+            }
         }
     }
 }

@@ -31,7 +31,7 @@
         <item name="android:textSize">18sp</item>
     </style>
 
-    <style name="MainLeadDivider">
+    <style name="MainEditTextDivider">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">1dp</item>
         <item name="android:background">#D7DDE4</item>
@@ -74,16 +74,36 @@
     <!--<item name="android:overlapAnchor">false</item>-->
     <!--</style>-->
 
-    <style name="LLTextInputLabel" parent="TextAppearance.AppCompat">
-        <!-- Hint color and label color in FALSE state -->
-        <item name="android:textColorHint">#ADB5BC</item>
-        <!-- Label color in TRUE state and bar color FALSE and TRUE State -->
-        <item name="colorAccent">#798591</item>
-        <item name="colorControlNormal">#D7DDE4</item>
-        <item name="colorControlActivated">#798591</item>
-    </style>
+    <!--<style name="LLTextInputLabel" parent="TextAppearance.AppCompat">-->
+    <!--&lt;!&ndash; Hint color and label color in FALSE state &ndash;&gt;-->
+    <!--<item name="android:textColorHint">#ADB5BC</item>-->
+    <!--&lt;!&ndash; Label color in TRUE state and bar color FALSE and TRUE State &ndash;&gt;-->
+    <!--<item name="colorAccent">#798591</item>-->
+    <!--<item name="colorControlNormal">#D7DDE4</item>-->
+    <!--<item name="colorControlActivated">#798591</item>-->
+    <!--</style>-->
 
     <style name="ColorSwitchStyle">
         <item name="colorControlActivated">@color/colorAccent</item>
     </style>
+
+    <style name="DatePickerDialogTheme" parent="android:Theme.Material.Light.Dialog">
+        <item name="android:colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="RatingBar" parent="Theme.AppCompat">
+        <item name="colorControlNormal">#E3E8EE</item>
+        <item name="colorControlActivated">#FF8410</item>
+    </style>
+
+    <!--<style name="EditTextError" parent="AppTheme">-->
+        <!--<item name="android:textColorPrimary">@color/colorMainEditTextError</item>-->
+        <!--<item name="android:textColor">@color/colorMainEditTextError</item>-->
+        <!--<item name="android:textColorHint">@color/colorMainEditTextError</item>-->
+    <!--</style>-->
+
+    <!--<style name="Active" parent="AppTheme">-->
+        <!--<item name="android:textColorPrimary">@android:color/black</item>-->
+        <!--<item name="android:textColor">@android:color/black</item>-->
+    <!--</style>-->
 </resources>

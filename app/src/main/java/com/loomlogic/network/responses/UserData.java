@@ -22,3 +22,5 @@ public class UserData extends TokenData{
                 "} " + super.toString();
     }
 }
+// {"success":true,"alert":"",
+// "data":{"user":{"id":1,"roles":["ROLE_AGENT","ROLE_ADMIN","ROLE_FREE"],"subscription_expires_at":"2017-05-05T23:59:59-07:00"}}}

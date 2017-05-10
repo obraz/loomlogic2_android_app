@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="76dp">
@@ -181,7 +182,8 @@
                 <com.loomlogic.leads.base.LeadAvatarView
                     android:id="@+id/view_leadAvatar"
                     android:layout_width="50dp"
-                    android:layout_height="50dp" />
+                    android:layout_height="50dp"
+                    custom:needEscrowMargin="true" />
 
                 <TextView
                     android:id="@+id/tv_leadQuality"

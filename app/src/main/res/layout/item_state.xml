@@ -16,5 +16,5 @@
         android:textColor="@color/lead_create_new_grey_text_color"
         android:textSize="14sp" />
 
-    <View style="@style/MainLeadDivider" />
+    <View style="@style/MainEditTextDivider" />
 </LinearLayout>

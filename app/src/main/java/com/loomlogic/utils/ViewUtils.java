@@ -5,11 +5,13 @@ import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.SearchView;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.view.Gravity;
@@ -201,5 +203,14 @@ public class ViewUtils {
                 }
             }
         };
+    }
+
+    public static void hideSearchPlate(SearchView searchView) {
+        try {
+            View searchPlate = (View) searchView.findViewById(android.support.v7.appcompat.R.id.search_plate);
+            searchPlate.getBackground().setColorFilter(ContextCompat.getColor(LoomLogicApp.getSharedContext(), R.color.transparent), PorterDuff.Mode.MULTIPLY);
+        } catch (Exception e) {
+
+        }
     }
 }

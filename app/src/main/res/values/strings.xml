@@ -222,17 +222,45 @@
     <string name="create_new_lead_hint_note">Note</string>
     <string name="create_new_lead_enableDripCompaigns">Enable Drip Compaigns</string>
     <string name="create_new_lead_source_error">Source can\'t be blank</string>
+    <string name="create_new_lead_email_error">Clients email is invalid</string>
+    <string name="create_new_lead_email_phone_error">Phone number or email address are required.</string>
     <string name="create_new_lead_source_title">Source</string>
     <string name="create_new_lead_state_title">State</string>
     <string name="create_new_lead_source_add_new_title">Add New Source</string>
     <string name="create_new_lead_state_add_new_hint">Input Source Name</string>
     <string name="create_new_lead_dialog_title">Add New Leads</string>
 
-    <array name="create_new_lead_dialog_chooser">
-        <item>Create</item>
-        <item>Send to Agent</item>
-        <item>Send to Team</item>
+    <string name="create_new_lead_dialog_create">Create</string>
+    <string name="create_new_lead_dialog_send_to_lender">Send to Lender</string>
+    <string name="create_new_lead_dialog_send_to_agent">Send to Agent</string>
+    <string name="create_new_lead_dialog_send_to_team">Send to Team</string>
+
+    <array name="create_new_lead_buyer_dialog_chooser">
+        <item>@string/create_new_lead_dialog_create</item>
+        <item>@string/create_new_lead_dialog_send_to_agent</item>
+        <item>@string/create_new_lead_dialog_send_to_team</item>
     </array>
+
+    <array name="create_new_lead_seller_dialog_chooser">
+        <item>@string/create_new_lead_dialog_create</item>
+        <item>@string/create_new_lead_dialog_send_to_lender</item>
+        <item>@string/create_new_lead_dialog_send_to_agent</item>
+        <item>@string/create_new_lead_dialog_send_to_team</item>
+    </array>
+
+    <string name="create_new_lead_send_to_agent_title">Send to Agent</string>
+    <string name="create_new_lead_send_to_lender_title">Send to Lender</string>
+    <string name="create_new_lead_send_to_agent">Agent</string>
+    <string name="create_new_lead_send_to_lender">Lender</string>
+    <string name="create_new_lead_send_future">Send Future Lead</string>
+    <string name="create_new_lead_send_to_specify_ime">Specify Time</string>
+    <string name="create_new_lead_send_to_time">By default lead will be sent at current time</string>
+    <string name="create_new_lead_send_to_claim">Claim Feature</string>
+    <string name="create_new_lead_need_agent_error">Agent can\'t be blank</string>
+    <string name="create_new_lead_need_lender_error">Lender can\'t be blank</string>
+
+    <string name="select_agent">Select Agent</string>
+    <string name="select_lender">Select Lender</string>
 
     <string name="edit_lead_address_title">Mailing Address</string>
 </resources>

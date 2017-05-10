@@ -79,6 +79,26 @@
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
+            android:name=".leads.create.SendToAgentActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="sensorPortrait"
+            android:theme="@style/AppLighterTheme" />
+        <activity
+            android:name=".leads.create.SendToLenderActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="sensorPortrait"
+            android:theme="@style/AppLighterTheme" />
+        <activity
+            android:name=".leads.create.AgentsListActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="sensorPortrait"
+            android:theme="@style/AppLighterTheme" />
+        <activity
+            android:name=".leads.create.LendersListActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="sensorPortrait"
+            android:theme="@style/AppLighterTheme" />
+        <activity
             android:name=".leads.list.LeadsFilterActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="sensorPortrait"

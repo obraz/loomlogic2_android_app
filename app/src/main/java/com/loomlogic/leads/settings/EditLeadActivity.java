@@ -43,7 +43,7 @@ public class EditLeadActivity extends CreateLeadActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_save:
-                if (validateFields()) {
+                if (validateFields(false)) {
                     showErrorSnackBar("save");
                 }
         }

@@ -14,7 +14,6 @@ public class RegisterRequestBuilder extends BaseLLRequestBuilder {
         super();
 
         setLocalPath("auth");
-        setLocalPath("auth/sign_in");
         Type dataType = new TypeToken<ResponseDataWrapper<UserData>>() {
         }.getType();
         this.setResponseClassSpecifier(dataType);
