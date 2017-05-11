@@ -1,5 +1,6 @@
 package com.loomlogic.leads.create;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -55,6 +56,7 @@ import static com.loomlogic.utils.ViewUtils.changeRadioBtnTextColor;
  */
 
 public class CreateLeadActivity extends BaseActivity implements View.OnClickListener {
+    public static final String KEY_CREATE_SUCCESS_MESSAGE = "KEY_CREATE_SUCCESS_MESSAGE";
     private static final String KEY_IS_FROM_CONTACT = "KEY_IS_FROM_CONTACT";
     private static final int RESULT_PICK_CONTACT = 123;
     private static final int RESULT_PICK_SOURCE = 124;
@@ -136,8 +138,7 @@ public class CreateLeadActivity extends BaseActivity implements View.OnClickList
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                phoneEt.removeError();
-                if (phoneEt.getEditText().getText().length() == 0) {
+                if (phoneEt.removeError() && phoneEt.getEditText().getText().length() == 0) {
                     phoneEt.setText("");
                 }
             }
@@ -298,7 +299,6 @@ public class CreateLeadActivity extends BaseActivity implements View.OnClickList
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_ok:
-                //  createLead();
                 if (validateFields(false)) {
                     ViewUtils.hideSoftKeyboard(getCurrentFocus());
 // TODO: 3/29/17  only if user PRo Agent
@@ -343,11 +343,13 @@ public class CreateLeadActivity extends BaseActivity implements View.OnClickList
         builder.setItems(leadRequestData.isSeller() ? R.array.create_new_lead_seller_dialog_chooser : R.array.create_new_lead_buyer_dialog_chooser, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                setLeadData();
+
                 ListView lv = ((AlertDialog) dialog).getListView();
                 String checkedItem = (String) lv.getAdapter().getItem(which);
                 if (checkedItem.equals(getString(R.string.create_new_lead_dialog_create))) {
                     leadRequestData.setSendToAction(LeadRequestData.SendToAction.CRM);
-
+                    createLead();
                 } else if (checkedItem.equals(getString(R.string.create_new_lead_dialog_send_to_lender))) {
                     leadRequestData.setSendToAction(LeadRequestData.SendToAction.LENDER);
                     openAgentLenderChoseActivity(SendToLenderActivity.class);
@@ -356,7 +358,7 @@ public class CreateLeadActivity extends BaseActivity implements View.OnClickList
                     openAgentLenderChoseActivity(SendToAgentActivity.class);
                 } else if (checkedItem.equals(getString(R.string.create_new_lead_dialog_send_to_team))) {
                     leadRequestData.setSendToAction(LeadRequestData.SendToAction.TEAM);
-
+                    createLead();
                 }
 
             }
@@ -383,12 +385,11 @@ public class CreateLeadActivity extends BaseActivity implements View.OnClickList
         }
     }
 
-    private void createLead() {
-        showProgressBar();
+    private void setLeadData() {
         leadRequestData.setLeadData(
                 nameEt.getText(),
                 additionalNameEt.getText(),
-                phoneEt.getText(),
+                Utils.clearPhoneNumber(phoneEt.getText()),
                 emailEt.getText(),
                 1, //todo set real
                 noteEt.getText(),
@@ -397,6 +398,10 @@ public class CreateLeadActivity extends BaseActivity implements View.OnClickList
         if (leadRequestData.isSeller()) {
             leadRequestData.setAddress(addressEt.getText(), unitEt.getText(), cityEt.getText(), stateSelected.abbreviation, zipCodeEt.getText());
         }
+    }
+
+    private void createLead() {
+        showProgressBar();
         leadManager.createNewLead(leadRequestData);
     }
 
@@ -407,7 +412,7 @@ public class CreateLeadActivity extends BaseActivity implements View.OnClickList
         public void onDataFetchComplete(UserData result, ResponseData response, LeadAction requestTag) {
             if (requestTag == LeadAction.CREATE) {
                 hideProgressBar();
-
+                onCreateLeadSuccess();
             }
         }
 
@@ -433,12 +438,33 @@ public class CreateLeadActivity extends BaseActivity implements View.OnClickList
         }
     };
 
+    private void onCreateLeadSuccess() {
+        Intent bundle = new Intent();
+        String msg;
+        switch (leadRequestData.getSendToAction()) {
+            case AGENT:
+                msg = getString(R.string.create_new_lead_send_to_agent_success);
+                break;
+            case LENDER:
+                msg = getString(R.string.create_new_lead_send_to_lender_success);
+                break;
+            case TEAM:
+                msg = getString(R.string.create_new_lead_send_to_team_success);
+                break;
+            case CRM:
+            default:
+                msg = getString(R.string.create_new_lead_success);
+                break;
+        }
+        bundle.putExtra(KEY_CREATE_SUCCESS_MESSAGE, msg);
+        setResult(Activity.RESULT_OK, bundle);
+        finish();
+    }
+
     class CustomPhoneTextWatcher extends PhoneNumberFormattingTextWatcher {
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
-            super.onTextChanged(s, start, before, count);
-            emailEt.removeError();
-            if (emailEt.getEditText().getText().length() == 0) {
+            if (emailEt.removeError() && emailEt.getEditText().getText().length() == 0) {
                 emailEt.setText("");
             }
         }

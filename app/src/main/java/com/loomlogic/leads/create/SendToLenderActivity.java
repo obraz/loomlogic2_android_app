@@ -25,6 +25,11 @@ public class SendToLenderActivity extends SendToActivity {
     }
 
     @Override
+    void setSendToData() {
+        setSendToLenderData();
+    }
+
+    @Override
     Intent getListIntent() {
         return new Intent(this, LendersListActivity.class);
     }

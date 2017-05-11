@@ -247,6 +247,12 @@ public class BaseActivity extends ActivityResultFixActivity {
         showAlertSnackBar(getString(R.string.general_error), callback);
     }
 
+    public void showSuccessSnackBar(String successMsg) {
+        if (view != null && successMsg != null) {
+            hideSoftKeyboard();
+            ViewUtils.showSuccessSnackBar(view, successMsg);
+        }
+    }
 
     public void showErrorSnackBar(String errorMsg) {
         if (view != null && errorMsg != null) {

@@ -34,6 +34,17 @@ import com.loomlogic.network.RetryRequestCallback;
 
 public class ViewUtils {
 
+    public static void showSuccessSnackBar(View view, String message) {
+        TSnackbar snackbar = TSnackbar.make(view, message, Snackbar.LENGTH_LONG);
+
+        View snackbarView = snackbar.getView();
+        snackbarView.setBackgroundColor(ContextCompat.getColor(view.getContext(), R.color.successMessageBgColor));
+        TextView textView = (TextView) snackbarView.findViewById(com.androidadvance.topsnackbar.R.id.snackbar_text);
+        textView.setTextColor(ContextCompat.getColor(view.getContext(), R.color.successMessageTextColor));
+        textView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_alert_success, 0, 0, 0);
+        textView.setCompoundDrawablePadding((int) view.getContext().getResources().getDimension(R.dimen.success_alert_drawable_padding));
+        snackbar.show();
+    }
 
     public static void showErrorSnackBar(View view, String message) {
         TSnackbar snackbar = TSnackbar.make(view, message, Snackbar.LENGTH_LONG);

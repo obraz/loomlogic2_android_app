@@ -186,14 +186,16 @@ public class LLEditTextWithHint extends TextInputLayout {
         divider.invalidate();
     }
 
-    public void removeError() {
+    public boolean removeError() {
         if (isError) {
             setInputTextLayoutColor(R.color.colorMainEditTextHint);
             divider.getBackground().mutate().setColorFilter(ContextCompat.getColor(getContext(), R.color.colorMainEditTextDivider), PorterDuff.Mode.SRC_ATOP);
 
             divider.invalidate();
             isError = false;
+            return true;
         }
+        return false;
     }
 
     public String getText() {

@@ -7,7 +7,7 @@ import java.util.List;
 public class ResponseDataWrapper<T> {
     public boolean success;
     public T data;
-    private List<String> alert1;
+    private List<String> alert;
     private List<String> errors;
 
     public T getData() {
@@ -19,7 +19,7 @@ public class ResponseDataWrapper<T> {
     }
 
     public List<String> getAlert() {
-        return alert1;
+        return alert;
     }
 
     public List<String> getErrors() {
@@ -27,11 +27,11 @@ public class ResponseDataWrapper<T> {
     }
 
     public String getHumanizedAlert() {
-        if (alert1 == null) {
+        if (alert == null) {
             return "";
         }
         String humanizedAlert = "";
-        for (String txt : alert1) {
+        for (String txt : alert) {
             humanizedAlert = humanizedAlert + txt + "\n";
         }
         if (!TextUtils.isEmpty(humanizedAlert)) {

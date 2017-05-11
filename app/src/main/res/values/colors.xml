@@ -8,6 +8,8 @@
     <color name="alertMessageTextColor">#2C2E30</color>
     <color name="alertMessageBgColor">#F0F7FD</color>
     <color name="errorMessageBgColor">#F44336</color>
+    <color name="successMessageBgColor">#EDF9DF</color>
+    <color name="successMessageTextColor">#2C2E30</color>
 
     <color name="errorIconColor">#F44336</color>
 

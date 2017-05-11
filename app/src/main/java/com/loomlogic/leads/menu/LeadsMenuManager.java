@@ -26,7 +26,6 @@ import com.loomlogic.home.HomeActivity;
 import com.loomlogic.leads.base.LeadOwner;
 import com.loomlogic.leads.base.LeadType;
 import com.loomlogic.leads.base.LeadUtils;
-import com.loomlogic.leads.create.CreateLeadActivity;
 import com.loomlogic.utils.LeadPreferencesUtils;
 import com.loomlogic.utils.ViewUtils;
 import com.loomlogic.view.EventListeningSpinner;
@@ -39,8 +38,13 @@ import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
  */
 
 public class LeadsMenuManager {
+   public interface LeadsMenuListener {
+        void onCreateLeadClicked(boolean isFromContact);
+    }
+
     public static final int TYPE_BUYER_MENU_POSITION = 0;
     public static final int TYPE_BUYER_SELLER_POSITION = 1;
+    private LeadsMenuListener callback;
     private HomeActivity activity;
     private View mainContent;
     private DrawerLayout drawer;
@@ -57,6 +61,10 @@ public class LeadsMenuManager {
         this.navigationViewContainer = navigationViewContainer;
         initViews();
         initNavigation();
+    }
+
+    public void setCallback(LeadsMenuListener callback) {
+        this.callback = callback;
     }
 
     private void initViews() {
@@ -86,11 +94,11 @@ public class LeadsMenuManager {
 
             @Override
             public void onPageSelected(int position) {
-                boolean roleWasChanged = false;
+                boolean typeWasChanged = false;
                 switch (position) {
                     case TYPE_BUYER_MENU_POSITION:
                         if (LeadPreferencesUtils.getCurrentLeadType() == LeadType.SELLER) {
-                            roleWasChanged = true;
+                            typeWasChanged = true;
                         }
                         LeadPreferencesUtils.setCurrentLeadType(LeadType.BUYER);
                         buyersTv.setTextColor(ContextCompat.getColor(activity, R.color.lead_menu_title_active));
@@ -98,7 +106,7 @@ public class LeadsMenuManager {
                         break;
                     case TYPE_BUYER_SELLER_POSITION:
                         if (LeadPreferencesUtils.getCurrentLeadType() == LeadType.BUYER) {
-                            roleWasChanged = true;
+                            typeWasChanged = true;
                         }
                         LeadPreferencesUtils.setCurrentLeadType(LeadType.SELLER);
                         buyersTv.setTextColor(ContextCompat.getColor(activity, R.color.lead_menu_title_notactive));
@@ -109,9 +117,9 @@ public class LeadsMenuManager {
                 titleIndicator.setSelectedColor(ContextCompat.getColor(activity, LeadUtils.getCurrentLeadTypeColor()));
                 newLeadFAB.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(activity, LeadUtils.getCurrentLeadTypeColor())));
 
-                if (roleWasChanged) {
-                    activity.refreshNavBar();
-                }
+//                if (typeWasChanged) {
+                //                    activity.refreshNavBar();
+//                }
             }
 
             @Override
@@ -270,7 +278,7 @@ public class LeadsMenuManager {
         builder.setAdapter(adapter, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                activity.startActivity(CreateLeadActivity.getCreateLeadActivityIntent(activity, which == 0));
+                callback.onCreateLeadClicked(which == 0);
             }
         });
         builder.show();

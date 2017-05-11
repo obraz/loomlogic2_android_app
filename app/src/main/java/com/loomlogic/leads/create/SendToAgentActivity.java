@@ -25,6 +25,11 @@ public class SendToAgentActivity extends SendToActivity {
     }
 
     @Override
+    void setSendToData() {
+        setSendToAgentData();
+    }
+
+    @Override
     Intent getListIntent() {
         return new Intent(this, AgentsListActivity.class);
     }

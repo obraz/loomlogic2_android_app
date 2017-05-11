@@ -18,14 +18,23 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.google.gson.Gson;
+import com.kt.http.base.ResponseData;
 import com.loomlogic.R;
 import com.loomlogic.base.BaseActivity;
+import com.loomlogic.network.Model;
+import com.loomlogic.network.managers.BaseItemManager;
+import com.loomlogic.network.managers.LeadManager;
 import com.loomlogic.network.requests.data.LeadRequestData;
+import com.loomlogic.network.responses.ResponseDataWrapper;
+import com.loomlogic.network.responses.UserData;
+import com.loomlogic.network.responses.errors.ErrorsConstant;
+import com.loomlogic.utils.TimeUtils;
 import com.loomlogic.utils.ViewUtils;
 import com.loomlogic.view.LLEditTextWithHint;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -43,6 +52,9 @@ public abstract class SendToActivity extends BaseActivity implements DatePickerD
     private LLEditTextWithHint sendToEt;
     private Switch sendFutureSw, claimSw;
     private TextView dateTv, timeTv;
+    private LeadManager leadManager;
+    private LeadRequestData leadRequestData;
+    private Calendar sendToCalendar;
 
     public static Intent getSendToActivityIntent(Context context, Class _class, LeadRequestData leadRequestData) {
         Intent intent = new Intent(context, _class);
@@ -56,8 +68,20 @@ public abstract class SendToActivity extends BaseActivity implements DatePickerD
         setContentView(R.layout.activity_lead_send_to);
         setTitle(getTitleRes());
 
+        sendToCalendar = Calendar.getInstance();
+
         initViews();
         setCurrentDateTime();
+        leadManager = Model.instance().getLeadManager();
+        leadManager.addDataFetchCompleteListener(completeListener);
+
+        leadRequestData = new Gson().fromJson(getIntent().getStringExtra(KEY_LEAD_REQUEST_DATA), LeadRequestData.class);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        leadManager.removeDataFetchCompleteListener(completeListener);
     }
 
     @Override
@@ -76,6 +100,8 @@ public abstract class SendToActivity extends BaseActivity implements DatePickerD
 
     @StringRes
     abstract int getValidationError();
+
+    abstract void setSendToData();
 
     abstract Intent getListIntent();
 
@@ -127,24 +153,21 @@ public abstract class SendToActivity extends BaseActivity implements DatePickerD
     }
 
     protected void openDatePickerDialog() {
-        Calendar cal = Calendar.getInstance();
-        DatePickerDialog datePickerDialog = new DatePickerDialog(this, R.style.DatePickerDialogTheme, this, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH));
-        datePickerDialog.getDatePicker().setMinDate(cal.getTimeInMillis());
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this, R.style.DatePickerDialogTheme, this, sendToCalendar.get(Calendar.YEAR), sendToCalendar.get(Calendar.MONTH), sendToCalendar.get(Calendar.DAY_OF_MONTH));
+        datePickerDialog.getDatePicker().setMinDate(sendToCalendar.getTimeInMillis());
 
         datePickerDialog.show();
     }
 
     protected void openTimePickerDialog() {
-        Calendar cal = Calendar.getInstance();
-        TimePickerDialog timePickerDialog = new TimePickerDialog(this, R.style.DatePickerDialogTheme, this, cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), false);
+        TimePickerDialog timePickerDialog = new TimePickerDialog(this, R.style.DatePickerDialogTheme, this, sendToCalendar.get(Calendar.HOUR_OF_DAY), sendToCalendar.get(Calendar.MINUTE), false);
 
         timePickerDialog.show();
     }
 
     protected void setCurrentDateTime() {
-        Calendar cal = Calendar.getInstance();
-        dateTv.setText(dateFormat.format(cal.getTime()));
-        timeTv.setText(timeFormat.format(cal.getTime()));
+        // dateTv.setText(dateFormat.format(sendToCalendar.getTime()));
+        // timeTv.setText(timeFormat.format(sendToCalendar.getTime()));
 
 //        Date date = new Date();
 //        SimpleDateFormat sdf = new SimpleDateFormat();
@@ -164,26 +187,24 @@ public abstract class SendToActivity extends BaseActivity implements DatePickerD
 
         dateFormat.setTimeZone(TimeZone.getTimeZone("PST8PDT"));
         timeFormat.setTimeZone(TimeZone.getTimeZone("PST8PDT"));
-        dateTv.setText(dateFormat.format(cal.getTime()));
-        timeTv.setText(timeFormat.format(cal.getTime()));
+        dateTv.setText(dateFormat.format(sendToCalendar.getTime()));
+        timeTv.setText(timeFormat.format(sendToCalendar.getTime()));
 
     }
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int day) {
-        openTimePickerDialog();
+        sendToCalendar.set(year, month, day);
+        dateTv.setText(dateFormat.format(sendToCalendar.getTime()));
 
-        Calendar cal = Calendar.getInstance();
-        cal.set(year, month, day);
-        dateTv.setText(dateFormat.format(cal.getTime()));
+        openTimePickerDialog();
     }
 
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-        Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.HOUR_OF_DAY, hourOfDay);
-        cal.set(Calendar.MINUTE, minute);
-        timeTv.setText(timeFormat.format(cal.getTime()));
+        sendToCalendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+        sendToCalendar.set(Calendar.MINUTE, minute);
+        timeTv.setText(timeFormat.format(sendToCalendar.getTime()));
     }
 
     @Override
@@ -210,7 +231,7 @@ public abstract class SendToActivity extends BaseActivity implements DatePickerD
             case R.id.action_ok:
                 ViewUtils.hideSoftKeyboard(getCurrentFocus());
                 if (validateFields()) {
-
+                    createLead();
                 }
         }
         return super.onOptionsItemSelected(item);
@@ -224,4 +245,53 @@ public abstract class SendToActivity extends BaseActivity implements DatePickerD
         }
         return true;
     }
+
+    private void createLead() {
+        showProgressBar();
+        setSendToData();
+
+        leadManager.createNewLead(leadRequestData);
+    }
+
+    protected void setSendToAgentData() {
+        leadRequestData.setSendToAgentData(312, claimSw.isChecked(), TimeUtils.getFormattedDateToRequest(sendToCalendar));
+    }
+
+    protected void setSendToLenderData() {
+        leadRequestData.setSendToLenderData(6, claimSw.isChecked(), TimeUtils.getFormattedDateToRequest(sendToCalendar));
+    }
+
+    private final BaseItemManager.OnDataFetchCompleteListener<UserData, LeadAction> completeListener
+            = new BaseItemManager.OnDataFetchCompleteListener<UserData, LeadAction>() {
+
+        @Override
+        public void onDataFetchComplete(UserData result, ResponseData response, LeadAction requestTag) {
+            if (requestTag == LeadAction.CREATE) {
+                hideProgressBar();
+                finish();
+            }
+        }
+
+        @Override
+        public void onDataFetchFailed(UserData result, ResponseData response, LeadAction requestTag) {
+            if (requestTag == LeadAction.CREATE) {
+                hideProgressBar();
+
+                if (response != null && response.getData() != null) {
+                    ResponseDataWrapper dataWrapper = (ResponseDataWrapper) response.getData();
+
+                    if (isValidationError(response)) {
+                        List<String> errors = dataWrapper.getErrors();
+                        for (String error : errors) {
+                            if (error.equals(ErrorsConstant.ERROR_CREDENTIALS)) {
+                                break;
+                            }
+                        }
+                    }
+                }
+                showResponseError(response);
+            }
+
+        }
+    };
 }

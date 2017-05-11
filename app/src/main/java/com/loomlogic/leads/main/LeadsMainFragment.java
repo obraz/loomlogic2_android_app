@@ -1,5 +1,7 @@
 package com.loomlogic.leads.main;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.ColorRes;
 import android.support.annotation.Nullable;
@@ -20,6 +22,7 @@ import com.loomlogic.base.MessageEvent;
 import com.loomlogic.home.BaseHomeFragment;
 import com.loomlogic.leads.base.LeadData;
 import com.loomlogic.leads.base.LeadUtils;
+import com.loomlogic.leads.create.CreateLeadActivity;
 import com.loomlogic.leads.list.LeadsFilterActivity;
 import com.loomlogic.leads.menu.LeadsMenuManager;
 import com.loomlogic.utils.ViewUtils;
@@ -33,8 +36,9 @@ import org.greenrobot.eventbus.ThreadMode;
  * Created by alex on 3/14/17.
  */
 
-public class LeadsMainFragment extends BaseHomeFragment implements TabLayout.OnTabSelectedListener {
+public class LeadsMainFragment extends BaseHomeFragment implements TabLayout.OnTabSelectedListener, LeadsMenuManager.LeadsMenuListener {
     public static final String KEY_LEAD_DATA = "KEY_LEAD_DATA";
+    private static final int REQUEST_CODE_CREATE_LEAD = 345;
 
     public static LeadsMainFragment newInstance(LeadData leadData) {
         LeadsMainFragment fragment = new LeadsMainFragment();
@@ -71,7 +75,7 @@ public class LeadsMainFragment extends BaseHomeFragment implements TabLayout.OnT
         }
     }
 
-    private LeadData getLeadData(){
+    private LeadData getLeadData() {
         return new Gson().fromJson(getArguments().getString(KEY_LEAD_DATA), LeadData.class);
     }
 
@@ -86,7 +90,7 @@ public class LeadsMainFragment extends BaseHomeFragment implements TabLayout.OnT
         View navigationViewContainer = view.findViewById(R.id.leadMenuLayout);
 
         leadsMenuManager = new LeadsMenuManager(getHomeActivity(), mainContent, drawerLayout, navigationViewContainer);
-
+        leadsMenuManager.setCallback(this);
 
         view.findViewById(R.id.view_leadMenuBtn).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -231,4 +235,18 @@ public class LeadsMainFragment extends BaseHomeFragment implements TabLayout.OnT
     }
 
 
+    @Override
+    public void onCreateLeadClicked(boolean isFromContact) {
+        startActivityForResult(CreateLeadActivity.getCreateLeadActivityIntent(getContext(), isFromContact), REQUEST_CODE_CREATE_LEAD);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE_CREATE_LEAD) {
+            leadsMenuManager.closeDrawer();
+            String msg = data.getStringExtra(CreateLeadActivity.KEY_CREATE_SUCCESS_MESSAGE);
+            getHomeActivity().showSuccessSnackBar(msg);
+        }
+    }
 }

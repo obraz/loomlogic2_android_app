@@ -71,4 +71,8 @@ public class Utils {
         clipboard.setPrimaryClip(clip);
     }
 
+    public static String clearPhoneNumber(String phone) {
+        return phone.replace("+","").replace(" ","").replace("-","").replace("(","").replace(")","");
+    }
+
 }
