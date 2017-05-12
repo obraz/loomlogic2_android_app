@@ -35,7 +35,6 @@ import com.loomlogic.network.managers.BaseItemManager;
 import com.loomlogic.network.managers.LeadManager;
 import com.loomlogic.network.requests.data.LeadRequestData;
 import com.loomlogic.network.responses.ResponseDataWrapper;
-import com.loomlogic.network.responses.UserData;
 import com.loomlogic.network.responses.errors.ErrorsConstant;
 import com.loomlogic.utils.Utils;
 import com.loomlogic.utils.ViewUtils;
@@ -58,6 +57,7 @@ import static com.loomlogic.utils.ViewUtils.changeRadioBtnTextColor;
 public class CreateLeadActivity extends BaseActivity implements View.OnClickListener {
     public static final String KEY_CREATE_SUCCESS_MESSAGE = "KEY_CREATE_SUCCESS_MESSAGE";
     private static final String KEY_IS_FROM_CONTACT = "KEY_IS_FROM_CONTACT";
+    private static final int REQUEST_SEND_TO = 122;
     private static final int RESULT_PICK_CONTACT = 123;
     private static final int RESULT_PICK_SOURCE = 124;
     private static final int RESULT_PICK_STATE = 125;
@@ -229,6 +229,9 @@ public class CreateLeadActivity extends BaseActivity implements View.OnClickList
                 case RESULT_PICK_SOURCE:
                     sourcePicked(data);
                     break;
+                case REQUEST_SEND_TO:
+                    onValidationError(data);
+                    break;
             }
         } else {
             switch (requestCode) {
@@ -369,7 +372,7 @@ public class CreateLeadActivity extends BaseActivity implements View.OnClickList
 
     private void openAgentLenderChoseActivity(Class _class) {
         if (validateFields(true)) {
-            startActivity(SendToActivity.getSendToActivityIntent(this, _class, leadRequestData));
+            startActivityForResult(SendToActivity.getSendToActivityIntent(this, _class, leadRequestData), REQUEST_SEND_TO);
         }
     }
 
@@ -401,23 +404,34 @@ public class CreateLeadActivity extends BaseActivity implements View.OnClickList
     }
 
     private void createLead() {
+        if (!isOnline()){
+            showNoConnectionSnackBar();
+            return;
+        }
         showProgressBar();
+        leadRequestData.clearAgentData();
+        leadRequestData.clearLenderData();
         leadManager.createNewLead(leadRequestData);
     }
 
-    private final BaseItemManager.OnDataFetchCompleteListener<UserData, LeadAction> completeListener
-            = new BaseItemManager.OnDataFetchCompleteListener<UserData, LeadAction>() {
+    private final BaseItemManager.OnDataFetchCompleteListener<Void, LeadAction> completeListener
+            = new BaseItemManager.OnDataFetchCompleteListener<Void, LeadAction>() {
 
         @Override
-        public void onDataFetchComplete(UserData result, ResponseData response, LeadAction requestTag) {
+        public void onDataFetchComplete(Void result, ResponseData response, LeadAction requestTag) {
             if (requestTag == LeadAction.CREATE) {
                 hideProgressBar();
-                onCreateLeadSuccess();
+                ResponseDataWrapper dataWrapper = (ResponseDataWrapper) response.getData();
+                if (dataWrapper.isSuccess()) {
+                    onCreateLeadSuccess();
+                } else {
+                    showResponseError(response);
+                }
             }
         }
 
         @Override
-        public void onDataFetchFailed(UserData result, ResponseData response, LeadAction requestTag) {
+        public void onDataFetchFailed(Void result, ResponseData response, LeadAction requestTag) {
             if (requestTag == LeadAction.CREATE) {
                 hideProgressBar();
 
@@ -427,8 +441,14 @@ public class CreateLeadActivity extends BaseActivity implements View.OnClickList
                     if (isValidationError(response)) {
                         List<String> errors = dataWrapper.getErrors();
                         for (String error : errors) {
-                            if (error.equals(ErrorsConstant.ERROR_CREDENTIALS)) {
-                                break;
+                            if (error.equals(ErrorsConstant.ERROR_PHONE)) {
+                                phoneEt.setError();
+                            }
+                            if (error.equals(ErrorsConstant.ERROR_EMAIL)) {
+                                emailEt.setError();
+                            }
+                            if (error.equals(ErrorsConstant.ERROR_SOURCE)) {
+                                sourceEt.setError();
                             }
                         }
                     }
@@ -459,6 +479,11 @@ public class CreateLeadActivity extends BaseActivity implements View.OnClickList
         bundle.putExtra(KEY_CREATE_SUCCESS_MESSAGE, msg);
         setResult(Activity.RESULT_OK, bundle);
         finish();
+    }
+
+
+    private void onValidationError(Intent data) {
+        leadRequestData = new Gson().fromJson(data.getExtras().getString(SendToActivity.KEY_LEAD_REQUEST_DATA), LeadRequestData.class);
     }
 
     class CustomPhoneTextWatcher extends PhoneNumberFormattingTextWatcher {

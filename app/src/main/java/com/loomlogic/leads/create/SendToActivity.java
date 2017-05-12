@@ -1,5 +1,6 @@
 package com.loomlogic.leads.create;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
@@ -26,9 +27,7 @@ import com.loomlogic.network.managers.BaseItemManager;
 import com.loomlogic.network.managers.LeadManager;
 import com.loomlogic.network.requests.data.LeadRequestData;
 import com.loomlogic.network.responses.ResponseDataWrapper;
-import com.loomlogic.network.responses.UserData;
 import com.loomlogic.network.responses.errors.ErrorsConstant;
-import com.loomlogic.utils.TimeUtils;
 import com.loomlogic.utils.ViewUtils;
 import com.loomlogic.view.LLEditTextWithHint;
 
@@ -43,7 +42,7 @@ import java.util.TimeZone;
  */
 
 public abstract class SendToActivity extends BaseActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
-    private static final String KEY_LEAD_REQUEST_DATA = "KEY_LEAD_REQUEST_DATA";
+    public static final String KEY_LEAD_REQUEST_DATA = "KEY_LEAD_REQUEST_DATA";
     private static final int RESULT_PICK_ITEM = 17;
 
     public static SimpleDateFormat dateFormat = new SimpleDateFormat("MMM d, yyyy", Locale.getDefault());
@@ -69,13 +68,16 @@ public abstract class SendToActivity extends BaseActivity implements DatePickerD
         setTitle(getTitleRes());
 
         sendToCalendar = Calendar.getInstance();
+        leadRequestData = new Gson().fromJson(getIntent().getStringExtra(KEY_LEAD_REQUEST_DATA), LeadRequestData.class);
 
         initViews();
+
+        setDataIfNeed();
         setCurrentDateTime();
+
         leadManager = Model.instance().getLeadManager();
         leadManager.addDataFetchCompleteListener(completeListener);
 
-        leadRequestData = new Gson().fromJson(getIntent().getStringExtra(KEY_LEAD_REQUEST_DATA), LeadRequestData.class);
     }
 
     @Override
@@ -101,7 +103,9 @@ public abstract class SendToActivity extends BaseActivity implements DatePickerD
     @StringRes
     abstract int getValidationError();
 
-    abstract void setSendToData();
+    abstract void setSendToRequestData();
+
+    abstract void setDataIfNeed();
 
     abstract Intent getListIntent();
 
@@ -152,6 +156,30 @@ public abstract class SendToActivity extends BaseActivity implements DatePickerD
 
     }
 
+    protected void setAgentData() {
+        leadRequestData.clearLenderData();
+        if (leadRequestData.getSendToAgentName() != null) {
+            sendToEt.setText(leadRequestData.getSendToAgentName());
+        }
+        if (leadRequestData.getSendToAgentDateCal() != null) {
+            sendFutureSw.setChecked(true);
+            sendToCalendar = leadRequestData.getSendToAgentDateCal();
+        }
+        claimSw.setChecked(leadRequestData.isNeedClaimAgent());
+    }
+
+    protected void setLenderData() {
+        leadRequestData.clearAgentData();
+        if (leadRequestData.getSendToLenderName() != null) {
+            sendToEt.setText(leadRequestData.getSendToLenderName());
+        }
+        if (leadRequestData.getSendToLenderDateCal() != null) {
+            sendFutureSw.setChecked(true);
+            sendToCalendar = leadRequestData.getSendToLenderDateCal();
+        }
+        claimSw.setChecked(leadRequestData.isNeedClaimLenders());
+    }
+
     protected void openDatePickerDialog() {
         DatePickerDialog datePickerDialog = new DatePickerDialog(this, R.style.DatePickerDialogTheme, this, sendToCalendar.get(Calendar.YEAR), sendToCalendar.get(Calendar.MONTH), sendToCalendar.get(Calendar.DAY_OF_MONTH));
         datePickerDialog.getDatePicker().setMinDate(sendToCalendar.getTimeInMillis());
@@ -184,7 +212,7 @@ public abstract class SendToActivity extends BaseActivity implements DatePickerD
 
         // cal.setTime(date);
 
-
+        sendToCalendar.setTimeZone(TimeZone.getTimeZone("PST8PDT"));
         dateFormat.setTimeZone(TimeZone.getTimeZone("PST8PDT"));
         timeFormat.setTimeZone(TimeZone.getTimeZone("PST8PDT"));
         dateTv.setText(dateFormat.format(sendToCalendar.getTime()));
@@ -247,33 +275,42 @@ public abstract class SendToActivity extends BaseActivity implements DatePickerD
     }
 
     private void createLead() {
+        if (!isOnline()) {
+            showNoConnectionSnackBar();
+            return;
+        }
         showProgressBar();
-        setSendToData();
+        setSendToRequestData();
 
         leadManager.createNewLead(leadRequestData);
     }
 
     protected void setSendToAgentData() {
-        leadRequestData.setSendToAgentData(312, claimSw.isChecked(), TimeUtils.getFormattedDateToRequest(sendToCalendar));
+        leadRequestData.setSendToAgentData(sendToEt.getText(), 312, claimSw.isChecked(), sendFutureSw.isChecked() ? sendToCalendar : null);
     }
 
     protected void setSendToLenderData() {
-        leadRequestData.setSendToLenderData(6, claimSw.isChecked(), TimeUtils.getFormattedDateToRequest(sendToCalendar));
+        leadRequestData.setSendToLenderData(sendToEt.getText(), 6, claimSw.isChecked(), sendFutureSw.isChecked() ? sendToCalendar : null);
     }
 
-    private final BaseItemManager.OnDataFetchCompleteListener<UserData, LeadAction> completeListener
-            = new BaseItemManager.OnDataFetchCompleteListener<UserData, LeadAction>() {
+    private final BaseItemManager.OnDataFetchCompleteListener<Void, LeadAction> completeListener
+            = new BaseItemManager.OnDataFetchCompleteListener<Void, LeadAction>() {
 
         @Override
-        public void onDataFetchComplete(UserData result, ResponseData response, LeadAction requestTag) {
+        public void onDataFetchComplete(Void result, ResponseData response, LeadAction requestTag) {
             if (requestTag == LeadAction.CREATE) {
                 hideProgressBar();
-                finish();
+                ResponseDataWrapper dataWrapper = (ResponseDataWrapper) response.getData();
+                if (dataWrapper.isSuccess()) {
+                    finish();
+                } else {
+                    showResponseError(response);
+                }
             }
         }
 
         @Override
-        public void onDataFetchFailed(UserData result, ResponseData response, LeadAction requestTag) {
+        public void onDataFetchFailed(Void result, ResponseData response, LeadAction requestTag) {
             if (requestTag == LeadAction.CREATE) {
                 hideProgressBar();
 
@@ -283,8 +320,11 @@ public abstract class SendToActivity extends BaseActivity implements DatePickerD
                     if (isValidationError(response)) {
                         List<String> errors = dataWrapper.getErrors();
                         for (String error : errors) {
-                            if (error.equals(ErrorsConstant.ERROR_CREDENTIALS)) {
-                                break;
+                            if (error.equals(ErrorsConstant.ERROR_LENDER) || error.equals(ErrorsConstant.ERROR_SOURCE)) {
+                                sendToEt.setError();
+                            } else {
+                                onErrorValidationOnPreviousStep();
+                                return;
                             }
                         }
                     }
@@ -294,4 +334,11 @@ public abstract class SendToActivity extends BaseActivity implements DatePickerD
 
         }
     };
+
+    protected void onErrorValidationOnPreviousStep() {
+        Intent intent = new Intent();
+        intent.putExtra(KEY_LEAD_REQUEST_DATA, new Gson().toJson(leadRequestData));
+        setResult(Activity.RESULT_OK, intent);
+        finish();
+    }
 }

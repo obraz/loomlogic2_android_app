@@ -1,6 +1,10 @@
 package com.loomlogic.network.requests.data;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.loomlogic.utils.TimeUtils;
+
+import java.util.Calendar;
 
 /**
  * Created by alex on 5/5/17.
@@ -50,7 +54,7 @@ public class LeadRequestData {
     private String email;
 
     @SerializedName("source_id")
-    private int sourceId;
+    private Integer sourceId;
 
     @SerializedName("lead_type")
     private String leadType;
@@ -97,9 +101,22 @@ public class LeadRequestData {
     @SerializedName("sent_to_lender_at_access")
     private String sentToLenderDate;
 
-    private transient SendToAction sendToAction;
+    @Expose
+    private SendToAction sendToAction;
 
-    public void setLeadData(String name, String additionalName, String phone, String email, int sourceId, String note, boolean dripCompaigns) {
+    @Expose
+    private String sendToAgentName;
+
+    @Expose
+    private String sendToLenderName;
+
+    @Expose
+    private Calendar sendToAgentDateCal;
+
+    @Expose
+    private Calendar sendToLenderDateCal;
+
+    public void setLeadData(String name, String additionalName, String phone, String email, Integer sourceId, String note, boolean dripCompaigns) {
         this.name = name;
         this.additionalName = additionalName;
         this.phone = phone;
@@ -126,16 +143,24 @@ public class LeadRequestData {
         this.zipCode = zipCode;
     }
 
-    public void setSendToAgentData(int agentId, boolean needClaimAgent, String sentToAgentDate) {
+    public void setSendToAgentData(String sendToAgentName, int agentId, boolean needClaimAgent, Calendar sendToAgentDateCal) {
+        this.sendToAgentName = sendToAgentName;
         this.agentId = agentId;
         this.needClaimAgent = needClaimAgent;
-        this.sentToAgentDate = sentToAgentDate;
+        this.sendToAgentDateCal = sendToAgentDateCal;
+        if (sendToAgentDateCal != null) {
+            this.sentToAgentDate = TimeUtils.getFormattedDateToRequest(sendToAgentDateCal);
+        }
     }
 
-    public void setSendToLenderData(int lenderId, boolean needClaimLender, String sentToLenderDate) {
+    public void setSendToLenderData(String sendToLenderName, int lenderId, boolean needClaimLender, Calendar sendToLenderDateCal) {
+        this.sendToLenderName = sendToLenderName;
         this.lenderId = lenderId;
         this.needClaimLenders = needClaimLender;
-        this.sentToLenderDate = sentToLenderDate;
+        this.sendToLenderDateCal = sendToLenderDateCal;
+        if (sendToLenderDateCal != null) {
+            this.sentToLenderDate = TimeUtils.getFormattedDateToRequest(sendToLenderDateCal);
+        }
     }
 
     public void clearAddress() {
@@ -146,12 +171,52 @@ public class LeadRequestData {
         this.zipCode = "";
     }
 
+    public void clearAgentData() {
+        this.agentId = null;
+        this.needClaimAgent = false;
+        this.sendToAgentName = "";
+        this.sendToAgentDateCal = null;
+        this.sentToAgentDate = null;
+    }
+
+    public void clearLenderData() {
+        this.lenderId = null;
+        this.needClaimLenders = false;
+        this.sendToLenderName = "";
+        this.sendToLenderDateCal = null;
+        this.sentToLenderDate = null;
+    }
+
     public boolean isSeller() {
         return leadType.equals(LeadType.SELLER.toString());
     }
 
     public SendToAction getSendToAction() {
         return sendToAction;
+    }
+
+    public boolean isNeedClaimAgent() {
+        return needClaimAgent;
+    }
+
+    public boolean isNeedClaimLenders() {
+        return needClaimLenders;
+    }
+
+    public String getSendToAgentName() {
+        return sendToAgentName;
+    }
+
+    public String getSendToLenderName() {
+        return sendToLenderName;
+    }
+
+    public Calendar getSendToAgentDateCal() {
+        return sendToAgentDateCal;
+    }
+
+    public Calendar getSendToLenderDateCal() {
+        return sendToLenderDateCal;
     }
 
     /*

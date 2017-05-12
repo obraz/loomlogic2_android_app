@@ -54,6 +54,9 @@ public class ViewUtils {
         TextView textView = (TextView) snackbarView.findViewById(com.androidadvance.topsnackbar.R.id.snackbar_text);
         textView.setTextColor(Color.WHITE);
         textView.setGravity(Gravity.CENTER);
+
+        int lines = message.split("\n").length + 1;
+        textView.setLines(lines);
         snackbar.show();
     }
 

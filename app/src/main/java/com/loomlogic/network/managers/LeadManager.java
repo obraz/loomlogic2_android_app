@@ -10,14 +10,14 @@ import com.kt.http.base.client.KTClient;
 import com.loomlogic.leads.create.LeadAction;
 import com.loomlogic.network.requests.LeadRequestBuilder;
 import com.loomlogic.network.requests.data.LeadRequestData;
-import com.loomlogic.network.responses.UserData;
+import com.loomlogic.network.responses.ResponseDataWrapper;
 
 
 /**
  * Created by alex on 5/5/17.
  */
 
-public class LeadManager extends BaseItemManager<UserData, Bundle, LeadAction> {
+public class LeadManager extends BaseItemManager<Void, Bundle, LeadAction> {
     public static final String KEY_LEAD_DATA = "KEY_LEAD_DATA";
 
     public LeadManager(@NonNull KTClient client) {
@@ -41,17 +41,18 @@ public class LeadManager extends BaseItemManager<UserData, Bundle, LeadAction> {
     }
 
     @Override
-    protected UserData readResponseFromRequest(BaseRequest request, ResponseData data, LeadAction tag) {
-        return null;
+    protected Void readResponseFromRequest(BaseRequest request, ResponseData data, LeadAction tag) {
+        ResponseDataWrapper<Void> dataWrapper = (ResponseDataWrapper<Void>) data.getData();
+        return dataWrapper.data;
     }
 
     @Override
-    protected boolean storeResponse(UserData response, LeadAction tag) {
+    protected boolean storeResponse(Void response, LeadAction tag) {
         return false;
     }
 
     @Override
-    protected UserData restoreResponse(LeadAction tag) {
+    protected Void restoreResponse(LeadAction tag) {
         return null;
     }
 

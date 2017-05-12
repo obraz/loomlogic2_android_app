@@ -11,6 +11,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -217,7 +218,12 @@ public class BaseActivity extends ActivityResultFixActivity {
                     if (isValidationError(data)) {
                         showErrorSnackBar(dataWrapper.getHumanizedAlert());
                     } else {
-                        showAlertSnackBar(dataWrapper.getHumanizedAlert(), callback);
+                        if (TextUtils.isEmpty(dataWrapper.getHumanizedAlert())) {
+                            showGeneralAlertSnackBar(callback);
+                        } else {
+                            showAlertSnackBar(dataWrapper.getHumanizedAlert(), callback);
+                        }
+
                     }
                 } else {
                     showGeneralAlertSnackBar(callback);

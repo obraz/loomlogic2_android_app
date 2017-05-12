@@ -25,8 +25,13 @@ public class SendToLenderActivity extends SendToActivity {
     }
 
     @Override
-    void setSendToData() {
+    void setSendToRequestData() {
         setSendToLenderData();
+    }
+
+    @Override
+    void setDataIfNeed() {
+        setLenderData();
     }
 
     @Override

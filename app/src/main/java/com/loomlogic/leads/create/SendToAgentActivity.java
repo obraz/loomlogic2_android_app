@@ -25,8 +25,13 @@ public class SendToAgentActivity extends SendToActivity {
     }
 
     @Override
-    void setSendToData() {
+    void setSendToRequestData() {
         setSendToAgentData();
+    }
+
+    @Override
+    void setDataIfNeed() {
+        setAgentData();
     }
 
     @Override
