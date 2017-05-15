@@ -19,6 +19,7 @@ import android.widget.RelativeLayout;
 import com.kt.http.base.ResponseData;
 import com.loomlogic.BuildConfig;
 import com.loomlogic.R;
+import com.loomlogic.Test;
 import com.loomlogic.home.HomeActivity;
 import com.loomlogic.network.Model;
 import com.loomlogic.network.responses.ResponseDataWrapper;
@@ -51,11 +52,11 @@ public class SignInActivity extends BaseSignInActivity implements View.OnClickLi
         initView();
 
         if (BuildConfig.FLAVOR.equals("loomlogicDebug")) {
-            // startActivity(new Intent(SignInActivity.this, SendToAgentActivity.class));
+             startActivity(new Intent(SignInActivity.this, Test.class));
             // startActivity(CreateLeadActivity.getCreateLeadActivityIntent(this, false));
         }
         if (Model.instance().getLoginManager().canRestoreLogin()) {
-            HomeActivity.start(this);
+           // HomeActivity.start(this);
             //    startActivity(CreateLeadActivity.getCreateLeadActivityIntent(this, false));
         }//HomeActivity.start(this);
     }
